@@ -8,6 +8,11 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            href:  https://github.com/CYXNBNBNB/ad688-employability-sp25A1-group6.git
 
 format:
   html:
