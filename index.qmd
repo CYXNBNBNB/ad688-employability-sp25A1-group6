@@ -6,6 +6,7 @@ format:
   html:
     bibliography: references.bib
     csl: csl/econometrica.csl
+    nocite: '@*' 
     theme: cosmo
     toc: true
 --- 
@@ -37,3 +38,5 @@ Through this research, we anticipate identifying key patterns in data science sa
 - A widening salary gap between regions due to remote work policies and cost-of-living differences.
 - Industry-specific salary trends, where certain sectors may offer higher compensation based on their reliance on data-driven insights.
 
+
+# References
