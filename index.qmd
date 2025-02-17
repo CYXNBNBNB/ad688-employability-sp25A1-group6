@@ -10,7 +10,7 @@ format:
 # Salary & Compensation Trends
 Group 6 Job Market Analysis.  
 
----
+
 # Salary trends in data science 2024
 The field of data science continues to be one of the most lucrative and dynamic career paths in 2024. As businesses increasingly rely on data-driven decision-making, the demand for skilled data scientists has grown across industries, including technology, finance, healthcare, and e-commerce. However, salary trends in data science are influenced by a variety of factors, such as emerging technologies, economic conditions, geographic location, and skill specialization. This research aims to analyze salary patterns in data science in 2024, providing insights into compensation disparities and growth opportunities within the industry.
 
@@ -26,7 +26,7 @@ Several key trends make this topic particularly relevant in 2024:
 
 - 5.Industry-Specific Variations: Different industries offer varying compensation packages for data science roles, with sectors such as finance and healthcare often providing higher salaries compared to non-tech industries.
 
---- 
+
 # Expected Findings
 Through this research, we anticipate identifying key patterns in data science salaries, such as:
 
@@ -35,4 +35,4 @@ Through this research, we anticipate identifying key patterns in data science sa
 - A widening salary gap between regions due to remote work policies and cost-of-living differences.
 - Industry-specific salary trends, where certain sectors may offer higher compensation based on their reliance on data-driven insights.
 
----
+
