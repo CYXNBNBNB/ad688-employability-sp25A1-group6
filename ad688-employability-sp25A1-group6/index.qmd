@@ -1,5 +1,14 @@
 ---
 title: "Job Market Analysis -2024"
+author: "Your Name"
+date: "2025-01-31"
+format:
+  html:
+    theme: journal
+    toc: true
+---
+# Hello, World!  
+Welcome to group 6 Job Market Analysis.  
 ---
 
 This is a Quarto website.
