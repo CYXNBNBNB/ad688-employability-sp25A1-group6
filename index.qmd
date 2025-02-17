@@ -9,6 +9,7 @@ format:
     nocite: '@*' 
     theme: cosmo
     toc: true
+    css: styles.css
 --- 
 Group 6 Job Market Analysis.
 
