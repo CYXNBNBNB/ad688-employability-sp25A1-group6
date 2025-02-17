@@ -7,7 +7,8 @@ format:
     theme: cosmo
     toc: true
 --- 
-Group 6 Job Market Analysis. 
+Group 6 Job Market Analysis.
+
 # Salary & Compensation Trends 
 
 ## Salary trends in data science 2024
