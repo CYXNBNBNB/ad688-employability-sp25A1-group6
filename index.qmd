@@ -1,5 +1,5 @@
 ---
-title: "Job Market Analysis -2024"
+title: "Job Market Analysis -- 2024"
 author: "Group 6: Yuxuan, Shangxuan, Qimin, Altyn"
 date: "2025-02-16"
 format:
