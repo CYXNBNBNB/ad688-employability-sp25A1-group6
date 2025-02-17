@@ -8,7 +8,8 @@ format:
     toc: true
 ---
 # Hello, World!  
-Welcome to group 6 Job Market Analysis.  
+Salary & Compensation Trends
+Group 6 Job Market Analysis.  
 ---
 
 This is a Quarto website.
