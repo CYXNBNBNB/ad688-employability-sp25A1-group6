@@ -4,6 +4,8 @@ author: "Group 6: Yuxuan, Shangxuan, Qimin, Altyn"
 date: "2025-02-16"
 format:
   html:
+    bibliography: references.bib
+    csl: csl/econometrica.csl
     theme: cosmo
     toc: true
 --- 
