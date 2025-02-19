@@ -1,5 +1,5 @@
 ---
-title: "Group 6 Job Market Analysis -- 2024"
+title: "Group 6 &nbsp;&nbsp; Job Market Analysis -- 2024"
 author:
   - name: Yuxuan Chen
     affiliations:
