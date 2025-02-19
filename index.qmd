@@ -1,7 +1,24 @@
 ---
 title: "Job Market Analysis -- 2024"
-author: "Group 6: Yuxuan, Shangxuan, Qimin, Altyn"
+author:
+  - name: Yuxuan Chen
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Shangxuan
+    affiliations:
+      - ref: bu
+  - name: Qimin
+    affiliations:
+      - ref: bu
+  - name: Altyn
+    affiliations:
+      - ref: bu
 date: "2025-02-16"
+date-modified: today
+date-format: long
 format:
   html:
     bibliography: references.bib
