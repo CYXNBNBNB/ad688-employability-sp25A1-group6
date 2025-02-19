@@ -1,5 +1,5 @@
 ---
-title: "Job Market Analysis -- 2024"
+title: "Group 6 Job Market Analysis -- 2024"
 author:
   - name: Yuxuan Chen
     affiliations:
@@ -28,7 +28,6 @@ format:
     toc: true
     css: styles.css
 --- 
-Group 6 Job Market Analysis.
 
 # Research Introduction: Salary & Compensation Trends 
 
