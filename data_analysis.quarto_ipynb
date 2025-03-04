@@ -1,0 +1,190 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Data Analysis\"\n",
+        "subtitle: \"Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends\"\n",
+        "date-modified: today\n",
+        "date-format: long\n",
+        "\n",
+        "#bibliography: references_analysis.bib\n",
+        "csl: csl/econometrica.csl\n",
+        "#nocite: '@*'  #show all references\n",
+        "format: \n",
+        "  html:\n",
+        "    toc: true\n",
+        "    number-sections: true\n",
+        "    df-print: paged\n",
+        "---"
+      ],
+      "id": "b4c12f99"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Load dataset\n",
+        "df = pd.read_csv(\"data/lightcast_job_postings.csv\")"
+      ],
+      "id": "f0d06edf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1.  Data Cleaning & Preprocessing\n",
+        "  1.1 Drop Unnecessary Columns\n",
+        "  Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job \"Data analysts\", we do not need to know whether its code name is \"10001\", or \"A-001\", or something like this, because it's useless and there's no real significance to it, we can change these code names at will.\n",
+        "\n",
+        "  Also, columns like \"LAST_UPDATED_TIMESTAMP\", duplicates the meaning of the other variable \"LAST_UPDATED_DATE\". Since we basically only need to know the last update date, and don't have to be specific to a moment in that day, we'll remove such columns as well.\n",
+        "\n",
+        "  We remove redundant NAICS/SOC codes and tracking data to simplify our dataset. Keeping only the latest NAICS_2022_6 and SOC_2021_4 ensures that our analysis reflects current industry and occupational classifications.\n"
+      ],
+      "id": "af126f10"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "columns_to_drop = [\n",
+        "    \"ID\", \"URL\", \"ACTIVE_URLS\", \"DUPLICATES\", \"LAST_UPDATED_TIMESTAMP\",\n",
+        "    \"NAICS2\", \"NAICS3\", \"NAICS4\", \"NAICS5\", \"NAICS6\",\n",
+        "    \"SOC_2\", \"SOC_3\", \"SOC_5\"\n",
+        "]\n",
+        "df.drop(columns=columns_to_drop, inplace=True)"
+      ],
+      "id": "2af7fa7f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "  1.2 Handle Missing Values\n",
+        "  We use different strategies for missing values:\n",
+        "  - Numerical fields (e.g., Salary) are filled with the median.\n",
+        "  - Categorical fields (e.g., Industry) are replaced with \"Unknown\".\n",
+        "  - Columns with >50% missing values are dropped.\n"
+      ],
+      "id": "36e0a11e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import missingno as msno\n",
+        "\n",
+        "# Visualize missing data\n",
+        "msno.heatmap(df)\n",
+        "plt.title(\"Missing Values Heatmap\")\n",
+        "plt.show()\n",
+        "\n",
+        "# Drop columns with >50% missing values\n",
+        "df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)\n",
+        "\n",
+        "# Fill missing values\n",
+        "df[\"SALARY\"].fillna(df[\"SALARY\"].median(), inplace=True)\n",
+        "df[\"Industry\"].fillna(\"Unknown\", inplace=True)"
+      ],
+      "id": "29f4c05e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1.3 Remove Duplicates\n",
+        "To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.\n"
+      ],
+      "id": "d3bb6ac0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df = df.drop_duplicates(subset=[\"TITLE\", \"COMPANY\", \"LOCATION\", \"POSTED\"], keep=\"first\")"
+      ],
+      "id": "cce42438",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "2. Exploratory Data Analysis (EDA)\n",
+        "  2.1 Job Postings by Industry\n"
+      ],
+      "id": "df8dfe58"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.bar(df[\"Industry\"].value_counts(), title=\"Job Postings by Industry\")\n",
+        "fig.show()"
+      ],
+      "id": "7b894908",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "  2.2 Salary Distribution by Industry\n"
+      ],
+      "id": "3abdcc4a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.box(df, x=\"Industry\", y=\"SALARY\", title=\"SALARY Distribution by Industry\")\n",
+        "fig.show()"
+      ],
+      "id": "267919c2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "  2.3 Remote vs. On-Site Jobs\n"
+      ],
+      "id": "aee3cef5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = px.pie(df, names=\"REMOTE_TYPE_NAME\", title=\"Remote vs. On-Site Jobs\")\n",
+        "fig.show()"
+      ],
+      "id": "68aa330a",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/usr/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

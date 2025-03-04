@@ -27,11 +27,11 @@ format:
     css: styles.css
 --- 
 
-# Research Introduction: Salary & Compensation Trends 
+## Research Introduction: Salary & Compensation Trends 
 
 
-# Data Analysis
+## Data Analysis
 
 
-# Career Strategy
+## Career Strategy
 

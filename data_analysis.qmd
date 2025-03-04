@@ -6,6 +6,7 @@ date-format: long
 
 #bibliography: references_analysis.bib
 csl: csl/econometrica.csl
+#nocite: '@*'  #show all references
 format: 
   html:
     toc: true
@@ -15,6 +16,7 @@ format:
 
 ```{python}
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Load dataset
 df = pd.read_csv("data/lightcast_job_postings.csv")
@@ -56,7 +58,7 @@ plt.show()
 df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)
 
 # Fill missing values
-df["Salary"].fillna(df["Salary"].median(), inplace=True)
+df["SALARY"].fillna(df["SALARY"].median(), inplace=True)
 df["Industry"].fillna("Unknown", inplace=True)
 ```
 
@@ -77,7 +79,7 @@ fig.show()
 
   2.2 Salary Distribution by Industry
 ```{python}
-fig = px.box(df, x="Industry", y="Salary", title="Salary Distribution by Industry")
+fig = px.box(df, x="Industry", y="SALARY", title="SALARY Distribution by Industry")
 fig.show()
 ```
 
