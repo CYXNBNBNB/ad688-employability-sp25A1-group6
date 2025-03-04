@@ -1,7 +1,7 @@
 ---
 title: "Career Plan"
 #subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-aauthor:
+author:
   - name: Yuxuan Chen
     affiliations:
       - id: bu

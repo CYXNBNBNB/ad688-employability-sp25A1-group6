@@ -1,7 +1,7 @@
 ---
 title: "Data Analysis"
 subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-aauthor:
+author:
   - name: Yuxuan Chen
     affiliations:
       - id: bu
