@@ -6,7 +6,7 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: "Intro"
+        text: "Introduction"
       - href: data_analysis.qmd
         text: "Data Analysis"
       - href: career_plan.qmd
