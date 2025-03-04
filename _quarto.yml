@@ -6,9 +6,7 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: "Home"
-      - href: research_introduction.qmd
-        text: "Research"
+        text: "Intro"
       - href: data_analysis.qmd
         text: "Data Analysis"
       - href: career_plan.qmd
