@@ -18,19 +18,6 @@ website:
         menu:
           - text: Source Code
             href:  https://github.com/CYXNBNBNB/ad688-employability-sp25A1-group6.git
-website:
-  title: "Job Market Analysis 2024"
-  navbar:
-    left:
-      - href: index.qmd
-        text: "Home"
-      - href: research_introduction.qmd
-        text: "Research"
-      - href: data_analysis.qmd
-        text: "Data Analysis"
-      - href: career_plan.qmd
-        text: "Career Strategy"
-
 
 format:
   html:
