@@ -16,14 +16,12 @@ author:
   - name: Altyn Baigaliyeva
     affiliations:
       - ref: bu
-date: "2025-02-16"
 date-modified: today
 date-format: long
 format:
   html:
-    bibliography: references.bib
+    #bibliography: references_home.bib
     csl: csl/econometrica.csl
-    nocite: '@*' 
     theme: cosmo
     toc: true
     css: styles.css

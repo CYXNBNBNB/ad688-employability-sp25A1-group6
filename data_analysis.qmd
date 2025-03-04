@@ -1,23 +1,10 @@
 ---
 title: "Data Analysis"
 subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
-author:
-  - name: Yuxuan Chen
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Shangxuan Zhong
-    affiliations:
-      - ref: bu
-  - name: Qimin Shen
-    affiliations:
-      - ref: bu
-  - name: Altyn Baigaliyeva
-    affiliations:
-      - ref: bu
-bibliography: references.bib
+date-modified: today
+date-format: long
+
+#bibliography: references_analysis.bib
 csl: csl/econometrica.csl
 format: 
   html:

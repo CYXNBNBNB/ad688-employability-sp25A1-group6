@@ -1,29 +1,16 @@
 ---
 title: "Research Introduction"
 subtitle: "Salary & Compensation Trends"
-author:
-  - name: Yuxuan Chen
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Shangxuan Zhong
-    affiliations:
-      - ref: bu
-  - name: Qimin Shen
-    affiliations:
-      - ref: bu
-  - name: Altyn Baigaliyeva
-    affiliations:
-      - ref: bu
-bibliography: references.bib
+date-modified: today
+date-format: long
+
+bibliography: references_intro.bib
 csl: csl/econometrica.csl
 format:
   html:
-    bibliography: references.bib
+    bibliography: references_intro.bib
     csl: csl/econometrica.csl
-    nocite: '@*' 
+    nocite: '@*'  #show all references
     theme: cosmo
     toc: true
     css: styles.css

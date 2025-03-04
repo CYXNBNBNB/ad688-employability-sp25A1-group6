@@ -1,5 +1,5 @@
 /* css styles */
-.title, .subtitle {
+/*.title {
   background-image: url("images/background.jpg"); 
   background-size: cover; 
   background-position: center;
@@ -7,4 +7,19 @@
   padding: 40px;
   border-radius: 10px;
   text-align: center;
+}*/
+
+.title-container {
+  background-image: url("images/background.jpg"); 
+  background-size: cover; 
+  background-position: center;
+  color: white; 
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.title, .subtitle {
+  margin: 0;
+  padding: 10px;
 }
