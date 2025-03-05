@@ -71,9 +71,11 @@ df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)
 # Fill missing values
 def fill_missing_values(df):
     for col in df.select_dtypes(include=['number']).columns:
-        df[col].fillna(df[col].median(), inplace=True)
+        df[col] = df[col].fillna(df[col].median()) 
     for col in df.select_dtypes(exclude=['number']).columns:
-        df[col].fillna("Unknown", inplace=True)
+        df[col] = df[col].fillna("Unknown")  
+    return df
+
 fill_missing_values(df)
 ```
 
