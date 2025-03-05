@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="ec4d8516" class="cell" data-execution_count="1">
+<div id="7d958c35" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -221,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job “Data analysts”, we do not need to know whether its code name is “10001”, or “A-001”, or something like this, because it’s useless and there’s no real significance to it, we can change these code names at will.</p>
 <p>Also, columns like “LAST_UPDATED_TIMESTAMP”, duplicates the meaning of the other variable “LAST_UPDATED_DATE”. Since we basically only need to know the last update date, and don’t have to be specific to a moment in that day, we’ll remove such columns as well.</p>
 <p>We remove redundant ONET/NAICS/SOC/LOR codes and tracking data to simplify our dataset. Keeping only the latest ONET_2019, NAICS_2022_6, SOC_2021_5, and LOT_V6 ensures that our analysis reflects current industry and occupational classifications.</p>
-<div id="00274b66" class="cell" data-execution_count="2">
+<div id="d011932d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [<span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>, <span class="st">"ACTIVE_SOURCES_INFO"</span>,</span>
@@ -249,18 +249,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Categorical fields (e.g., Company Name) are replaced with “Unknown”.</li>
 <li>Columns with &gt;50% missing values are dropped.</li>
 </ul>
-<div id="7029b70e" class="cell" data-execution_count="3">
+<div id="8793ead4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize missing data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>msno.heatmap(df)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Missing Values Heatmap"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"./images/missing_data.png"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig("./images/missing_data.png")  ##save the pic</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="./images/missing_data.png" class="img-fluid"></p>
-<div id="354bb1d5" class="cell" data-execution_count="4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/missing_data.png" class="img-fluid figure-img"></p>
+<figcaption>The picture is missing.</figcaption>
+</figure>
+</div>
+<div id="bc284a00" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop columns with &gt;50% missing values</span></span>
@@ -281,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="remove-duplicates" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="remove-duplicates"><span class="header-section-number">1.3</span> Remove Duplicates</h3>
 <p>To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.</p>
-<div id="0e1d7dd8" class="cell" data-execution_count="5">
+<div id="afeaed4d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
