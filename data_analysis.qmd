@@ -24,8 +24,8 @@ df = pd.read_csv("data/lightcast_job_postings.csv")
 ```
 
 
-1.  Data Cleaning & Preprocessing
-  1.1 Drop Unnecessary Columns
+##  Data Cleaning & Preprocessing
+###  Drop Unnecessary Columns
 
   Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job "Data analysts", we do not need to know whether its code name is "10001", or "A-001", or something like this, because it's useless and there's no real significance to it, we can change these code names at will.
 
@@ -51,7 +51,7 @@ columns_to_drop = ["ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMES
 df.drop(columns=columns_to_drop, inplace=True)
 ```
 
-  1.2 Handle Missing Values
+### Handle Missing Values
 
   We use different strategies for missing values:
 
@@ -79,7 +79,7 @@ def fill_missing_values(df):
 fill_missing_values(df)
 ```
 
-1.3 Remove Duplicates
+### Remove Duplicates
 
 To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.
 
@@ -87,4 +87,4 @@ To ensure each job is counted only once, we remove duplicates based on job title
 df = df.drop_duplicates(subset=["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTED"], keep="first")
 ```
 
-2. Exploratory Data Analysis (EDA)
+## Exploratory Data Analysis (EDA)
