@@ -86,21 +86,3 @@ df = df.drop_duplicates(subset=["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTE
 ```
 
 2. Exploratory Data Analysis (EDA)
-  2.1 Job Postings by Industry
-
-```{python}
-fig = px.bar(df["Industry"].value_counts(), title="Job Postings by Industry")
-fig.show()
-```
-
-  2.2 Salary Distribution by Industry
-```{python}
-fig = px.box(df, x="Industry", y="SALARY", title="SALARY Distribution by Industry")
-fig.show()
-```
-
-  2.3 Remote vs. On-Site Jobs
-```{python}
-fig = px.pie(df, names="REMOTE_TYPE_NAME", title="Remote vs. On-Site Jobs")
-fig.show()
-```
