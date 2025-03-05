@@ -69,11 +69,11 @@ df.drop(columns=columns_to_drop, inplace=True)
 # Visualize missing data
 msno.heatmap(df)
 plt.title("Missing Values Heatmap")
-plt.savefig("./images/missing_data.png")
+#plt.savefig("./images/missing_data.png")  ##save the pic
 plt.show()
 ```
 
-![](./images/missing_data.png)
+![The picture is missing.](./images/missing_data.png)
 
 ```{python}
 # Drop columns with >50% missing values
