@@ -12,6 +12,12 @@ format:
     toc: true
     number-sections: true
     df-print: paged
+    code-fold: true
+
+execute:
+  eval: false #false 不运行  true 运行
+  echo: true
+
 ---
 
 ```{python}
@@ -63,8 +69,13 @@ df.drop(columns=columns_to_drop, inplace=True)
 # Visualize missing data
 msno.heatmap(df)
 plt.title("Missing Values Heatmap")
+plt.savefig("./images/missing_data.png")
 plt.show()
+```
 
+![](./images/missing_data.png)
+
+```{python}
 # Drop columns with >50% missing values
 df.dropna(thresh=len(df) * 0.5, axis=1, inplace=True)
 
@@ -78,6 +89,7 @@ def fill_missing_values(df):
 
 fill_missing_values(df)
 ```
+
 
 ### Remove Duplicates
 
