@@ -98,7 +98,7 @@ df = df.drop_duplicates(subset=["TITLE_NAME", "COMPANY_NAME", "LOCATION", "POSTE
 
 ## Exploratory Data Analysis (EDA)
 
-### 1. Comparison of salary between remote and on-site work (box chart)
+### Comparison of salary between remote and on-site work (box chart)
 First clean up REMOTE_TYPE_NAME, split all data into field, remote, and hybrid, and then plot.
 
 Convert values to string and clean unnecessary characters
@@ -130,7 +130,7 @@ fig.show()
 
 ![Figure 1.1](./images/box_chart.png)
 
-### 2. Salary by region (map)
+### Salary by region (map)
 Originally, the state names in "STATE_NAME" were all full names, so abbreviate them before drawing them
 
 Convert full state names to abbreviations
@@ -158,7 +158,7 @@ fig.show()
 
 ![Figure 1.2](./images/map.png)
 
-### 3. The highest paying job
+### The highest paying job
 ```{python}
 fig = px.bar(df.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(ascending=False).head(10),
              title="Top 10 Industries with Highest Salaries",
@@ -168,7 +168,7 @@ fig.show()
 
 ![Figure 1.3](./images/highest_paying_job.png)
 
-### 4. Salary comparison between AI and non-AI positions
+### Salary comparison between AI and non-AI positions
 First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.
 
 Define AI-related keywords based on LIGHTCAST_SECTORS_NAME
