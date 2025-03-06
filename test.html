@@ -195,13 +195,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Import required libraries</p>
-<div id="cell-2" class="cell" data-execution_count="2">
+<div id="cell-2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno <span class="im">as</span> msno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Load the dataset</p>
-<div id="cell-4" class="cell" data-execution_count="8">
+<div id="cell-4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/lightcast_job_postings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job “Data analysts”, we do not need to know whether its code name is “10001”, or “A-001”, or something like this, because it’s useless and there’s no real significance to it, we can change these code names at will.</p>
 <p>Also, columns like “LAST_UPDATED_TIMESTAMP”, duplicates the meaning of the other variable “LAST_UPDATED_DATE”. Since we basically only need to know the last update date, and don’t have to be specific to a moment in that day, we’ll remove such columns as well.</p>
 <p>We remove redundant ONET/NAICS/SOC/LOR codes and tracking data to simplify our dataset. Keeping only the latest ONET_2019, NAICS_2022_6, SOC_2021_5, and LOT_V6 ensures that our analysis reflects current industry and occupational classifications.</p>
-<div id="cell-7" class="cell" data-execution_count="9">
+<div id="cell-7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [<span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>, <span class="st">"ACTIVE_SOURCES_INFO"</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">"TITLE_RAW"</span>, <span class="st">"COMPANY"</span>, <span class="st">"COMPANY_RAW"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"MIN_EDULEVELS"</span>, <span class="st">"MAX_EDULEVELS"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"CITY"</span>, <span class="st">"COUNTY"</span>, <span class="st">"MSA"</span>, <span class="st">"STATE"</span>, <span class="st">"COUNTY_OUTGOING"</span>,</span>
@@ -234,37 +234,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Categorical fields (e.g., Company Name) are replaced with “Unknown”.</li>
 <li>Columns with &gt;50% missing values are dropped.</li>
 </ul>
-<div id="cell-9" class="cell">
+<div id="cell-9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize missing data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>msno.heatmap(df)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Missing Values Heatmap"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig("./images/missing_data.png")  ##save the pic</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-10" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#![The picture is missing.](./images/missing_data.png)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-11" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop columns with &gt;50% missing values</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df.dropna(thresh<span class="op">=</span><span class="bu">len</span>(df) <span class="op">*</span> <span class="fl">0.5</span>, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing values</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_missing_values(df):</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'number'</span>]).columns:</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(df[col].median()) </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.select_dtypes(exclude<span class="op">=</span>[<span class="st">'number'</span>]).columns:</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">"Unknown"</span>)  </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>fill_missing_values(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig("./images/missing_data.png")  ##save the pic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="test_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+</div>
+<div id="cell-10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop columns with &gt;50% missing values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.dropna(thresh<span class="op">=</span><span class="bu">len</span>(df) <span class="op">*</span> <span class="fl">0.5</span>, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing values</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_missing_values(df):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'number'</span>]).columns:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(df[col].median()) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.select_dtypes(exclude<span class="op">=</span>[<span class="st">'number'</span>]).columns:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        df[col] <span class="op">=</span> df[col].fillna(<span class="st">"Unknown"</span>)  </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>fill_missing_values(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -569,79 +567,194 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>1.3 Remove Duplicates</p>
 <p>To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.</p>
-<div id="cell-13" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-12" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-14" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Index(['LAST_UPDATED_DATE', 'POSTED', 'EXPIRED', 'DURATION', 'SOURCE_TYPES',
-       'SOURCES', 'BODY', 'MODELED_EXPIRED', 'MODELED_DURATION',
-       'COMPANY_NAME', 'COMPANY_IS_STAFFING', 'EDUCATION_LEVELS_NAME',
-       'MIN_EDULEVELS_NAME', 'EMPLOYMENT_TYPE_NAME', 'MIN_YEARS_EXPERIENCE',
-       'IS_INTERNSHIP', 'REMOTE_TYPE_NAME', 'LOCATION', 'CITY_NAME',
-       'COUNTY_NAME', 'MSA_NAME', 'STATE_NAME', 'COUNTY_NAME_OUTGOING',
-       'COUNTY_NAME_INCOMING', 'MSA_NAME_OUTGOING', 'MSA_NAME_INCOMING',
-       'TITLE_NAME', 'SKILLS_NAME', 'SPECIALIZED_SKILLS_NAME',
-       'CERTIFICATIONS_NAME', 'COMMON_SKILLS_NAME', 'SOFTWARE_SKILLS_NAME',
-       'ONET_2019_NAME', 'CIP6_NAME', 'CIP4_NAME', 'CIP2_NAME',
-       'SOC_2021_5_NAME', 'LOT_V6_SPECIALIZED_OCCUPATION_NAME',
-       'LOT_V6_OCCUPATION_NAME', 'LOT_V6_OCCUPATION_GROUP_NAME',
-       'LOT_V6_CAREER_AREA_NAME', 'NAICS_2022_6_NAME'],
-      dtype='object')</code></pre>
-</div>
-</div>
+<ol start="2" type="1">
+<li><p>Exploratory Data Analysis (EDA)</p></li>
+<li><p>Comparison of salary between remote and on-site work (box chart)</p></li>
+</ol>
+<p>First clean up REMOTE_TYPE_NAME, split all data into field, remote, and hybrid, and then plot.</p>
 <div id="cell-15" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.isna().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>LAST_UPDATED_DATE                     0
-POSTED                                0
-EXPIRED                               0
-DURATION                              0
-SOURCE_TYPES                          0
-SOURCES                               0
-BODY                                  0
-MODELED_EXPIRED                       0
-MODELED_DURATION                      0
-COMPANY_NAME                          0
-COMPANY_IS_STAFFING                   0
-EDUCATION_LEVELS_NAME                 0
-MIN_EDULEVELS_NAME                    0
-EMPLOYMENT_TYPE_NAME                  0
-MIN_YEARS_EXPERIENCE                  0
-IS_INTERNSHIP                         0
-REMOTE_TYPE_NAME                      0
-LOCATION                              0
-CITY_NAME                             0
-COUNTY_NAME                           0
-MSA_NAME                              0
-STATE_NAME                            0
-COUNTY_NAME_OUTGOING                  0
-COUNTY_NAME_INCOMING                  0
-MSA_NAME_OUTGOING                     0
-MSA_NAME_INCOMING                     0
-TITLE_NAME                            0
-SKILLS_NAME                           0
-SPECIALIZED_SKILLS_NAME               0
-CERTIFICATIONS_NAME                   0
-COMMON_SKILLS_NAME                    0
-SOFTWARE_SKILLS_NAME                  0
-ONET_2019_NAME                        0
-CIP6_NAME                             0
-CIP4_NAME                             0
-CIP2_NAME                             0
-SOC_2021_5_NAME                       0
-LOT_V6_SPECIALIZED_OCCUPATION_NAME    0
-LOT_V6_OCCUPATION_NAME                0
-LOT_V6_OCCUPATION_GROUP_NAME          0
-LOT_V6_CAREER_AREA_NAME               0
-NAICS_2022_6_NAME                     0
-dtype: int64</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert values to string and clean unnecessary characters</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"REMOTE_TYPE_NAME"</span>] <span class="op">=</span> df[<span class="st">"REMOTE_TYPE_NAME"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="vs">r"[\[\]']"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">True</span>).<span class="bu">str</span>.strip()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">### Standardize Remote Work Types</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"REMOTE_TYPE_NAME"</span>] <span class="op">=</span> df[<span class="st">"REMOTE_TYPE_NAME"</span>].replace({</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"None"</span>: <span class="st">"On-Site"</span>,  </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Not Remote"</span>: <span class="st">"On-Site"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hybrid Remote"</span>: <span class="st">"Hybrid"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Remote"</span>: <span class="st">"Remote"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_4163/2955443620.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df["REMOTE_TYPE_NAME"] = df["REMOTE_TYPE_NAME"].astype(str).str.replace(r"[\[\]']", "", regex=True).str.strip()
+/tmp/ipykernel_4163/2955443620.py:5: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df["REMOTE_TYPE_NAME"] = df["REMOTE_TYPE_NAME"].replace({</code></pre>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove invalid values (numbers and locations)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>valid_remote_types <span class="op">=</span> [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"REMOTE_TYPE_NAME"</span>].isin(valid_remote_types)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"REMOTE_TYPE_NAME"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Salary Comparison: Remote vs. On-Site Jobs"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>             category_orders<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]},</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: <span class="st">"Job Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"./images/box_chart.png"</span>)  <span class="co">##save the pic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[11]</span><span class="ansi-green-fg">, line 3</span>
+<span class="ansi-green-fg">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">plotly</span><span class="ansi-blue-fg ansi-bold">.</span><span class="ansi-blue-fg ansi-bold">express</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">as</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">px</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span> fig = <span class="ansi-yellow-bg">px</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">box</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">df</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">REMOTE_TYPE_NAME</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">SALARY</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-yellow-bg">             </span><span class="ansi-yellow-bg">title</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">Salary Comparison: Remote vs. On-Site Jobs</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-yellow-bg">             </span><span class="ansi-yellow-bg">category_orders</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">{</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">REMOTE_TYPE_NAME</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">On-Site</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">Hybrid</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">Remote</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">}</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">      6</span> <span class="ansi-yellow-bg">             </span><span class="ansi-yellow-bg">labels</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">{</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">REMOTE_TYPE_NAME</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">Job Type</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">SALARY</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">Salary ($)</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">}</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">      7</span> fig.show()
+<span class="ansi-green-fg">      8</span> plt.savefig(<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">./images/box_chart.png</span><span class="ansi-yellow-fg">"</span>)  <span style="font-style:italic;color:rgb(95,135,135)">##save the pic</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/plotly/express/_chart_types.py:679</span>, in <span class="ansi-cyan-fg">box</span><span class="ansi-blue-fg">(data_frame, x, y, color, facet_row, facet_col, facet_col_wrap, facet_row_spacing, facet_col_spacing, hover_name, hover_data, custom_data, animation_frame, animation_group, category_orders, labels, color_discrete_sequence, color_discrete_map, orientation, boxmode, log_x, log_y, range_x, range_y, points, notched, title, subtitle, template, width, height)</span>
+<span class="ansi-green-fg">    637</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">box</span>(
+<span class="ansi-green-fg">    638</span>     data_frame=<span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">    639</span>     x=<span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">    668</span>     height=<span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
+<span class="ansi-green-fg">    669</span> ) -&gt; go.Figure:
+<span class="ansi-green-fg">    670</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic" class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">    671</span> <span style="font-style:italic" class="ansi-yellow-fg">    In a box plot, rows of `data_frame` are grouped together into a</span>
+<span class="ansi-green-fg">    672</span> <span style="font-style:italic" class="ansi-yellow-fg">    box-and-whisker mark to visualize their distribution.</span>
+<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">    677</span> <span style="font-style:italic" class="ansi-yellow-fg">    range (IQR: Q3-Q1), see "points" for other options.</span>
+<span class="ansi-green-fg">    678</span> <span style="font-style:italic" class="ansi-yellow-fg">    """</span>
+<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">679</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">make_figure</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">    680</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">locals</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    681</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">constructor</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">go</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">Box</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    682</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">trace_patch</span><span class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">dict</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">boxpoints</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">points</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">notched</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">notched</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x0</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y0</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    683</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">layout_patch</span><span class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">dict</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">boxmode</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">boxmode</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    684</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/plotly/express/_core.py:2477</span>, in <span class="ansi-cyan-fg">make_figure</span><span class="ansi-blue-fg">(args, constructor, trace_patch, layout_patch)</span>
+<span class="ansi-green-fg">   2474</span> layout_patch = layout_patch <span style="font-weight:bold;color:rgb(175,0,255)">or</span> {}
+<span class="ansi-green-fg">   2475</span> apply_default_cascade(args)
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">2477</span> args = <span class="ansi-yellow-bg">build_dataframe</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">constructor</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">   2478</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> constructor <span style="font-weight:bold;color:rgb(175,0,255)">in</span> [go.Treemap, go.Sunburst, go.Icicle] <span style="font-weight:bold;color:rgb(175,0,255)">and</span> args[<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">path</span><span class="ansi-yellow-fg">"</span>] <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">   2479</span>     args = process_dataframe_hierarchy(args)
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/plotly/express/_core.py:1727</span>, in <span class="ansi-cyan-fg">build_dataframe</span><span class="ansi-blue-fg">(args, constructor)</span>
+<span class="ansi-green-fg">   1724</span>     args[<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">color</span><span class="ansi-yellow-fg">"</span>] = <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+<span class="ansi-green-fg">   1725</span> <span style="font-style:italic;color:rgb(95,135,135)"># now that things have been prepped, we do the systematic rewriting of `args`</span>
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1727</span> df_output, wide_id_vars = <span class="ansi-yellow-bg">process_args_into_dataframe</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">   1728</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1729</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">wide_mode</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1730</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">var_name</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1731</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">value_name</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1732</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">is_pd_like</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1733</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">native_namespace</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">   1734</span> <span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">   1735</span> df_output: nw.DataFrame
+<span class="ansi-green-fg">   1736</span> <span style="font-style:italic;color:rgb(95,135,135)"># now that `df_output` exists and `args` contains only references, we complete</span>
+<span class="ansi-green-fg">   1737</span> <span style="font-style:italic;color:rgb(95,135,135)"># the special-case and wide-mode handling by further rewriting args and/or mutating</span>
+<span class="ansi-green-fg">   1738</span> <span style="font-style:italic;color:rgb(95,135,135)"># df_output</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/plotly/express/_core.py:1328</span>, in <span class="ansi-cyan-fg">process_args_into_dataframe</span><span class="ansi-blue-fg">(args, wide_mode, var_name, value_name, is_pd_like, native_namespace)</span>
+<span class="ansi-green-fg">   1326</span>         <span style="font-weight:bold;color:rgb(0,135,0)">if</span> argument == <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">index</span><span class="ansi-yellow-fg">"</span>:
+<span class="ansi-green-fg">   1327</span>             err_msg += <span class="ansi-yellow-fg">"</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span class="ansi-yellow-fg"> To use the index, pass it in directly as `df.index`.</span><span class="ansi-yellow-fg">"</span>
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1328</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ValueError</span>(err_msg)
+<span class="ansi-green-fg">   1329</span> <span style="font-weight:bold;color:rgb(0,135,0)">elif</span> length <span style="font-weight:bold;color:rgb(175,0,255)">and</span> (actual_len := <span style="color:rgb(0,135,0)">len</span>(df_input)) != length:
+<span class="ansi-green-fg">   1330</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ValueError</span>(
+<span class="ansi-green-fg">   1331</span>         <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">All arguments should have the same length. </span><span class="ansi-yellow-fg">"</span>
+<span class="ansi-green-fg">   1332</span>         <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">The length of column argument `df[</span><span style="font-weight:bold;color:rgb(175,95,135)">%s</span><span class="ansi-yellow-fg">]` is </span><span style="font-weight:bold;color:rgb(175,95,135)">%d</span><span class="ansi-yellow-fg">, whereas the </span><span class="ansi-yellow-fg">"</span>
+<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">   1339</span>         )
+<span class="ansi-green-fg">   1340</span>     )
+
+<span class="ansi-red-fg">ValueError</span>: Value of 'y' is not the name of a column in 'data_frame'. Expected one of ['LAST_UPDATED_DATE', 'POSTED', 'EXPIRED', 'DURATION', 'SOURCE_TYPES', 'SOURCES', 'BODY', 'MODELED_EXPIRED', 'MODELED_DURATION', 'COMPANY_NAME', 'COMPANY_IS_STAFFING', 'EDUCATION_LEVELS_NAME', 'MIN_EDULEVELS_NAME', 'EMPLOYMENT_TYPE_NAME', 'MIN_YEARS_EXPERIENCE', 'IS_INTERNSHIP', 'REMOTE_TYPE_NAME', 'LOCATION', 'CITY_NAME', 'COUNTY_NAME', 'MSA_NAME', 'STATE_NAME', 'COUNTY_NAME_OUTGOING', 'COUNTY_NAME_INCOMING', 'MSA_NAME_OUTGOING', 'MSA_NAME_INCOMING', 'TITLE_NAME', 'SKILLS_NAME', 'SPECIALIZED_SKILLS_NAME', 'CERTIFICATIONS_NAME', 'COMMON_SKILLS_NAME', 'SOFTWARE_SKILLS_NAME', 'ONET_2019_NAME', 'CIP6_NAME', 'CIP4_NAME', 'CIP2_NAME', 'SOC_2021_5_NAME', 'LOT_V6_SPECIALIZED_OCCUPATION_NAME', 'LOT_V6_OCCUPATION_NAME', 'LOT_V6_OCCUPATION_GROUP_NAME', 'LOT_V6_CAREER_AREA_NAME', 'NAICS_2022_6_NAME'] but received: SALARY</pre>
+</div>
 </div>
 </div>
 <ol start="2" type="1">
-<li>Exploratory Data Analysis (EDA)</li>
+<li>Salary by region (map)</li>
 </ol>
+<p>Originally, the state names in “STATE_NAME” were all full names, so abbreviate them before drawing them</p>
+<div id="cell-19" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert full state names to abbreviations</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> us</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"STATE_NAME"</span>] <span class="op">=</span> df[<span class="st">"STATE_NAME"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: us.states.lookup(x).abbr <span class="cf">if</span> pd.notna(x) <span class="cf">else</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Verify conversion</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"STATE_NAME"</span>].unique())  <span class="co"># Should now contain abbreviations like 'CA', 'TX', 'ME'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(df, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span><span class="st">"STATE_NAME"</span>, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                    locationmode<span class="op">=</span><span class="st">"USA-states"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"SALARY"</span>, </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"STATE_NAME"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                    scope<span class="op">=</span><span class="st">"usa"</span>, </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">"Average Salary by State"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">"Viridis"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">"SALARY"</span>: <span class="st">"Average Salary ($)"</span>})</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"./images/map.png"</span>)  <span class="co">##save the pic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>The highest paying job</li>
+</ol>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(df.groupby(<span class="st">"LIGHTCAST_SECTORS_NAME"</span>)[<span class="st">"SALARY"</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>),</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Top 10 Industries with Highest Salaries"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"LIGHTCAST_SECTORS_NAME"</span>: <span class="st">"Industry"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"./images/highest_paying_job.png"</span>)  <span class="co">##save the pic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Salary comparison between AI and non-AI positions</li>
+</ol>
+<p>First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.</p>
+<div id="cell-24" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Define AI-related keywords based on LIGHTCAST_SECTORS_NAME</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ai_keywords <span class="op">=</span> [</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Artificial Intelligence"</span>, <span class="st">"Machine Learning"</span>, <span class="st">"Data Science"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cybersecurity"</span>, <span class="st">"Computational Science"</span>, <span class="st">"Deep Learning"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Data Privacy"</span>, <span class="st">"Computer Vision"</span>, <span class="st">"Natural Language Processing"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Big Data"</span>, <span class="st">"Cloud Computing"</span>, <span class="st">"Quantum Computing"</span>, <span class="st">"Robotics"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-25" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Classify AI-related vs. Non-AI industries</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AI_RELATED"</span>] <span class="op">=</span> df[<span class="st">"LIGHTCAST_SECTORS_NAME"</span>].<span class="bu">apply</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="st">"AI-related"</span> <span class="cf">if</span> <span class="bu">any</span>(keyword <span class="kw">in</span> <span class="bu">str</span>(x) <span class="cf">for</span> keyword <span class="kw">in</span> ai_keywords) <span class="cf">else</span> <span class="st">"Non-AI"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Show counts of AI vs. Non-AI jobs</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"AI_RELATED"</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-26" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"AI_RELATED"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"AI-related vs. Non-AI Industries Salary Comparison"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"AI_RELATED"</span>: <span class="st">"Industry Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>},</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>             color<span class="op">=</span><span class="st">"AI_RELATED"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"./images/salary_comparision.png"</span>)  <span class="co">##save the pic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 
