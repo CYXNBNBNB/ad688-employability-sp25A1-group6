@@ -170,7 +170,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#handle-missing-values" id="toc-handle-missing-values" class="nav-link" data-scroll-target="#handle-missing-values"><span class="header-section-number">1.2</span> Handle Missing Values</a></li>
   <li><a href="#remove-duplicates" id="toc-remove-duplicates" class="nav-link" data-scroll-target="#remove-duplicates"><span class="header-section-number">1.3</span> Remove Duplicates</a></li>
   </ul></li>
-  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda"><span class="header-section-number">2</span> Exploratory Data Analysis (EDA)</a></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda"><span class="header-section-number">2</span> Exploratory Data Analysis (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#comparison-of-salary-between-remote-and-on-site-work-box-chart" id="toc-comparison-of-salary-between-remote-and-on-site-work-box-chart" class="nav-link" data-scroll-target="#comparison-of-salary-between-remote-and-on-site-work-box-chart"><span class="header-section-number">2.1</span> 1. Comparison of salary between remote and on-site work (box chart)</a></li>
+  <li><a href="#salary-by-region-map" id="toc-salary-by-region-map" class="nav-link" data-scroll-target="#salary-by-region-map"><span class="header-section-number">2.2</span> 2. Salary by region (map)</a></li>
+  <li><a href="#the-highest-paying-job" id="toc-the-highest-paying-job" class="nav-link" data-scroll-target="#the-highest-paying-job"><span class="header-section-number">2.3</span> 3. The highest paying job</a></li>
+  <li><a href="#salary-comparison-between-ai-and-non-ai-positions" id="toc-salary-comparison-between-ai-and-non-ai-positions" class="nav-link" data-scroll-target="#salary-comparison-between-ai-and-non-ai-positions"><span class="header-section-number">2.4</span> 4. Salary comparison between AI and non-AI positions</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -192,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 5, 2025</p>
+      <p class="date-modified">March 6, 2025</p>
     </div>
   </div>
     
@@ -203,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="7d958c35" class="cell" data-execution_count="1">
+<div id="6b3be251" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -221,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job “Data analysts”, we do not need to know whether its code name is “10001”, or “A-001”, or something like this, because it’s useless and there’s no real significance to it, we can change these code names at will.</p>
 <p>Also, columns like “LAST_UPDATED_TIMESTAMP”, duplicates the meaning of the other variable “LAST_UPDATED_DATE”. Since we basically only need to know the last update date, and don’t have to be specific to a moment in that day, we’ll remove such columns as well.</p>
 <p>We remove redundant ONET/NAICS/SOC/LOR codes and tracking data to simplify our dataset. Keeping only the latest ONET_2019, NAICS_2022_6, SOC_2021_5, and LOT_V6 ensures that our analysis reflects current industry and occupational classifications.</p>
-<div id="d011932d" class="cell" data-execution_count="2">
+<div id="6b259940" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [<span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>, <span class="st">"ACTIVE_SOURCES_INFO"</span>,</span>
@@ -249,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Categorical fields (e.g., Company Name) are replaced with “Unknown”.</li>
 <li>Columns with &gt;50% missing values are dropped.</li>
 </ul>
-<div id="8793ead4" class="cell" data-execution_count="3">
+<div id="5599f247" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize missing data</span></span>
@@ -265,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>The picture is missing.</figcaption>
 </figure>
 </div>
-<div id="bc284a00" class="cell" data-execution_count="4">
+<div id="bae0ea13" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop columns with &gt;50% missing values</span></span>
@@ -286,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="remove-duplicates" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="remove-duplicates"><span class="header-section-number">1.3</span> Remove Duplicates</h3>
 <p>To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.</p>
-<div id="afeaed4d" class="cell" data-execution_count="5">
+<div id="6727f7d4" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -296,8 +302,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exploratory-data-analysis-eda" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="exploratory-data-analysis-eda"><span class="header-section-number">2</span> Exploratory Data Analysis (EDA)</h2>
+<section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart"><span class="header-section-number">2.1</span> 1. Comparison of salary between remote and on-site work (box chart)</h3>
+<p>First clean up REMOTE_TYPE_NAME, split all data into field, remote, and hybrid, and then plot.</p>
+<p>Convert values to string and clean unnecessary characters</p>
+<div id="120da99d" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"REMOTE_TYPE_NAME"</span>] <span class="op">=</span> df[<span class="st">"REMOTE_TYPE_NAME"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="vs">r"[\[\]']"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">True</span>).<span class="bu">str</span>.strip()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">### Standardize Remote Work Types</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"REMOTE_TYPE_NAME"</span>] <span class="op">=</span> df[<span class="st">"REMOTE_TYPE_NAME"</span>].replace({</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"None"</span>: <span class="st">"On-Site"</span>,  </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Not Remote"</span>: <span class="st">"On-Site"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hybrid Remote"</span>: <span class="st">"Hybrid"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Remote"</span>: <span class="st">"Remote"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Remove invalid values (numbers and locations)</p>
+<div id="b96a7848" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>valid_remote_types <span class="op">=</span> [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"REMOTE_TYPE_NAME"</span>].isin(valid_remote_types)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cdb9f8e3" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"REMOTE_TYPE_NAME"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Salary Comparison: Remote vs. On-Site Jobs"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             category_orders<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]},</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: <span class="st">"Job Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="salary-by-region-map" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="salary-by-region-map"><span class="header-section-number">2.2</span> 2. Salary by region (map)</h3>
+<p>Originally, the state names in “STATE_NAME” were all full names, so abbreviate them before drawing them</p>
+<p>Convert full state names to abbreviations</p>
+<div id="567ebfdb" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> us</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"STATE_NAME"</span>] <span class="op">=</span> df[<span class="st">"STATE_NAME"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: us.states.lookup(x).abbr <span class="cf">if</span> pd.notna(x) <span class="cf">else</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Verify conversion</p>
+<div id="4a4cf4e5" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"STATE_NAME"</span>].unique())  <span class="co"># Should now contain abbreviations like 'CA', 'TX', 'ME'</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(df, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span><span class="st">"STATE_NAME"</span>, </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                    locationmode<span class="op">=</span><span class="st">"USA-states"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"SALARY"</span>, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"STATE_NAME"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                    scope<span class="op">=</span><span class="st">"usa"</span>, </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">"Average Salary by State"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">"Viridis"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">"SALARY"</span>: <span class="st">"Average Salary ($)"</span>})</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="the-highest-paying-job" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="the-highest-paying-job"><span class="header-section-number">2.3</span> 3. The highest paying job</h3>
+<div id="ba9d4882" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(df.groupby(<span class="st">"LIGHTCAST_SECTORS_NAME"</span>)[<span class="st">"SALARY"</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>),</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Top 10 Industries with Highest Salaries"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"LIGHTCAST_SECTORS_NAME"</span>: <span class="st">"Industry"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="salary-comparison-between-ai-and-non-ai-positions" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions"><span class="header-section-number">2.4</span> 4. Salary comparison between AI and non-AI positions</h3>
+<p>First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.</p>
+<p>Define AI-related keywords based on LIGHTCAST_SECTORS_NAME</p>
+<div id="fbb8e40a" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ai_keywords <span class="op">=</span> [</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Artificial Intelligence"</span>, <span class="st">"Machine Learning"</span>, <span class="st">"Data Science"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cybersecurity"</span>, <span class="st">"Computational Science"</span>, <span class="st">"Deep Learning"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Data Privacy"</span>, <span class="st">"Computer Vision"</span>, <span class="st">"Natural Language Processing"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Big Data"</span>, <span class="st">"Cloud Computing"</span>, <span class="st">"Quantum Computing"</span>, <span class="st">"Robotics"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Classify AI-related vs.&nbsp;Non-AI industries</p>
+<div id="bb285006" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AI_RELATED"</span>] <span class="op">=</span> df[<span class="st">"LIGHTCAST_SECTORS_NAME"</span>].<span class="bu">apply</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="st">"AI-related"</span> <span class="cf">if</span> <span class="bu">any</span>(keyword <span class="kw">in</span> <span class="bu">str</span>(x) <span class="cf">for</span> keyword <span class="kw">in</span> ai_keywords) <span class="cf">else</span> <span class="st">"Non-AI"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show counts of AI vs. Non-AI jobs</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"AI_RELATED"</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="1668699d" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"AI_RELATED"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"AI-related vs. Non-AI Industries Salary Comparison"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"AI_RELATED"</span>: <span class="st">"Industry Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>},</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>             color<span class="op">=</span><span class="st">"AI_RELATED"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
