@@ -69,7 +69,6 @@ df.drop(columns=columns_to_drop, inplace=True)
 # Visualize missing data
 msno.heatmap(df)
 plt.title("Missing Values Heatmap")
-#plt.savefig("./images/missing_data.png")  ##save the pic
 plt.show()
 ```
 
@@ -133,6 +132,8 @@ fig = px.box(df, x="REMOTE_TYPE_NAME", y="SALARY",
 fig.show()
 ```
 
+![The picture is missing.](./images/box_chart.png)
+
 ### 2. Salary by region (map)
 Originally, the state names in "STATE_NAME" were all full names, so abbreviate them before drawing them
 
@@ -161,6 +162,8 @@ fig = px.choropleth(df,
 fig.show()
 ```
 
+![The picture is missing.](./images/map.png)
+
 ### 3. The highest paying job
 ```{python}
 fig = px.bar(df.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(ascending=False).head(10),
@@ -168,6 +171,8 @@ fig = px.bar(df.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(a
              labels={"LIGHTCAST_SECTORS_NAME": "Industry", "SALARY": "Salary ($)"})
 fig.show()
 ```
+
+![The picture is missing.](./images/highest_paying_job.png)
 
 ### 4. Salary comparison between AI and non-AI positions
 First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.
@@ -202,3 +207,5 @@ fig = px.box(df, x="AI_RELATED", y="SALARY",
 
 fig.show()
 ```
+
+![The picture is missing.](./images/salary_comparision.png)
