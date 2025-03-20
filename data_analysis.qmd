@@ -130,6 +130,8 @@ fig.show()
 
 ![Figure 2.1](./images/box_chart.png)
 
+This box plot is a comparison of on-site, hybrid, and remote salaries. Overall, on-site positions have a slightly higher median salary, but hybrid and remote positions aren't too far behind, indicating a fairly even salary breakdown. With that being said, the biggest difference is in high-end outliers—on-site positions have a much higher salary ceiling, with some positions exceeding $500K, while remote and hybrid positions typically max out at $300K–$350K. This would mean that on-site work is more likely to be higher paying, possibly due to leadership, high-level finance roles, or specialties that rely on in-office teamwork. Remote and hybrid work has more pay consistency, though, with less crazy variation, so we're less likely to see huge pay discrepancies. Concisely, while on-site work might offer higher earning potential, hybrid and remote work provides more secure earnings prospects. Such trends most likely depend on industry characteristics, where tech professions are more amenable to remote work, while finance, healthcare, and manufacturing professions are more inclined towards on-site interaction.
+
 ### Salary by region (map)
 Originally, the state names in "STATE_NAME" were all full names, so abbreviate them before drawing them
 
@@ -158,6 +160,8 @@ fig.show()
 
 ![Figure 2.2](./images/map.png)
 
+This heatmap shows average salaries by state, with darker areas representing lower salaries and lighter areas representing higher salaries. From the highlighted regions, we can discern some significant trends. The states in the north, such as Montana and North Dakota, have relatively higher salaries, as seen by their light blue-green hue. This could be due to well-paying industries like energy, specialty tech, or resource-based industries. On the other hand, the interior states, e.g., Missouri and Arkansas, are darker and represent lower mean wages. This is in keeping with past tendencies where cost of living is cheaper but so are wages, particularly in industries such as agriculture, manufacturing, and local services. The Northeastern states, particularly the area surrounding New York and Massachusetts, have some of the whitest colors, indicating greater compensation, likely due to financial centers, biotech companies, and big corporate headquarters. However, high salaries in these areas come with a higher cost of living that negates the benefit of greater earnings. On a larger scale, the color gradation successfully depicts salary differences within various states and underscores the relation between location, industry, and wages.
+
 ### The highest paying job
 ```{python}
 fig = px.bar(df.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(ascending=False).head(10),
@@ -167,6 +171,8 @@ fig.show()
 ```
 
 ![Figure 2.3](./images/highest_paying_job.png)
+
+This bar chart indicates the top 10 highest-paying industries, whose salaries are likely to range from $120K to $150K. Surprisingly, cybersecurity and data privacy/protection appear twice since there is a growing demand for experts in these fields with increased cyber attacks and more data regulations. Similarly, artificial intelligence (AI) jobs also continue to fetch high paychecks, which reflect the rapidly growing industry and need for niche skill sets. Another powerful trend is the presence of green jobs (enabled and enabling), which means that jobs in sustainability are becoming increasingly lucrative, perhaps driven by corporate sustainability efforts and governmental incentives.
 
 ### Salary comparison between AI and non-AI positions
 First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.
@@ -201,3 +207,9 @@ fig.show()
 ```
 
 ![Figure 2.4](./images/salary_comparision.png)
+
+This box plot is a comparison of non-AI and AI industry salaries, with each distribution and set of outliers. The median salaries for both AI and non-AI industries at first sight appear to be the same, and it may be concluded that AI-related employment does not have a significantly higher median salary than non-AI employment. However, there are some significant salary distribution differences.
+
+There is an enormous spread of salaries in both categories of industries, and there are many outliers higher than $300K. The non-AI industry has higher high-earning outliers, with some salaries exceeding $400K, which suggests that high pay is not exclusive only to AI jobs. It could be that the industries possess highly paying jobs in finance, medicine, or executive jobs outside of the AI sector. Still, AI work also possesses a high number of high earners, which suggests that the AI sector remains profitable.
+
+In general, while AI disciplines are competitive in salary, non-AI disciplines offer the same income potential, particularly at the high end.
