@@ -198,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 6, 2025</p>
+      <p class="date-modified">March 20, 2025</p>
     </div>
   </div>
     
@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="4750a66d" class="cell" data-execution_count="1">
+<div id="d9d24fa8" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Many variables in the dataset has two columns, one is code name of the variable, and the other is the real name of the variable. We will delete all the columns with code name of the variables, since they are meaningless. For example, we have a job “Data analysts”, we do not need to know whether its code name is “10001”, or “A-001”, or something like this, because it’s useless and there’s no real significance to it, we can change these code names at will.</p>
 <p>Also, columns like “LAST_UPDATED_TIMESTAMP”, duplicates the meaning of the other variable “LAST_UPDATED_DATE”. Since we basically only need to know the last update date, and don’t have to be specific to a moment in that day, we’ll remove such columns as well.</p>
 <p>We remove redundant ONET/NAICS/SOC/LOR codes and tracking data to simplify our dataset. Keeping only the latest ONET_2019, NAICS_2022_6, SOC_2021_5, and LOT_V6 ensures that our analysis reflects current industry and occupational classifications.</p>
-<div id="19440cd1" class="cell" data-execution_count="2">
+<div id="bd83aff0" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [<span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>, <span class="st">"ACTIVE_SOURCES_INFO"</span>,</span>
@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Categorical fields (e.g., Company Name) are replaced with “Unknown”.</li>
 <li>Columns with &gt;50% missing values are dropped.</li>
 </ul>
-<div id="d78302a6" class="cell" data-execution_count="3">
+<div id="f077e4ea" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize missing data</span></span>
@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Figure 1.1</figcaption>
 </figure>
 </div>
-<div id="ed1d628c" class="cell" data-execution_count="4">
+<div id="94d3b365" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing values</span></span>
@@ -289,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="remove-duplicates" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="remove-duplicates"><span class="header-section-number">1.3</span> Remove Duplicates</h3>
 <p>To ensure each job is counted only once, we remove duplicates based on job title, company, location, and posting date.</p>
-<div id="53cf5752" class="cell" data-execution_count="5">
+<div id="f60d2e65" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE_NAME"</span>, <span class="st">"COMPANY_NAME"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="2.1" class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart"><span class="header-section-number">2.1</span> Comparison of salary between remote and on-site work (box chart)</h3>
 <p>First clean up REMOTE_TYPE_NAME, split all data into field, remote, and hybrid, and then plot.</p>
 <p>Convert values to string and clean unnecessary characters</p>
-<div id="0ba3805b" class="cell" data-execution_count="6">
+<div id="1bbccd9e" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"REMOTE_TYPE_NAME"</span>] <span class="op">=</span> df[<span class="st">"REMOTE_TYPE_NAME"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="vs">r"[\[\]']"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">True</span>).<span class="bu">str</span>.strip()</span>
@@ -318,14 +318,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Remove invalid values (numbers and locations)</p>
-<div id="f05e0645" class="cell" data-execution_count="7">
+<div id="d1de6b43" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>valid_remote_types <span class="op">=</span> [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"REMOTE_TYPE_NAME"</span>].isin(valid_remote_types)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="c9a0b882" class="cell" data-execution_count="8">
+<div id="ea09655d" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"REMOTE_TYPE_NAME"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
@@ -341,12 +341,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Figure 2.1</figcaption>
 </figure>
 </div>
+<p>This box plot is a comparison of on-site, hybrid, and remote salaries. Overall, on-site positions have a slightly higher median salary, but hybrid and remote positions aren’t too far behind, indicating a fairly even salary breakdown. With that being said, the biggest difference is in high-end outliers—on-site positions have a much higher salary ceiling, with some positions exceeding $500K, while remote and hybrid positions typically max out at $300K–$350K. This would mean that on-site work is more likely to be higher paying, possibly due to leadership, high-level finance roles, or specialties that rely on in-office teamwork. Remote and hybrid work has more pay consistency, though, with less crazy variation, so we’re less likely to see huge pay discrepancies. Concisely, while on-site work might offer higher earning potential, hybrid and remote work provides more secure earnings prospects. Such trends most likely depend on industry characteristics, where tech professions are more amenable to remote work, while finance, healthcare, and manufacturing professions are more inclined towards on-site interaction.</p>
 </section>
 <section id="salary-by-region-map" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="salary-by-region-map"><span class="header-section-number">2.2</span> Salary by region (map)</h3>
 <p>Originally, the state names in “STATE_NAME” were all full names, so abbreviate them before drawing them</p>
 <p>Convert full state names to abbreviations</p>
-<div id="59106c96" class="cell" data-execution_count="9">
+<div id="79c0d432" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> us</span>
@@ -354,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Verify conversion</p>
-<div id="d2f68f61" class="cell" data-execution_count="10">
+<div id="0fa2cfc6" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"STATE_NAME"</span>].unique())  <span class="co"># Should now contain abbreviations like 'CA', 'TX', 'ME'</span></span>
@@ -378,10 +379,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Figure 2.2</figcaption>
 </figure>
 </div>
+<p>This heatmap shows average salaries by state, with darker areas representing lower salaries and lighter areas representing higher salaries. From the highlighted regions, we can discern some significant trends. The states in the north, such as Montana and North Dakota, have relatively higher salaries, as seen by their light blue-green hue. This could be due to well-paying industries like energy, specialty tech, or resource-based industries. On the other hand, the interior states, e.g., Missouri and Arkansas, are darker and represent lower mean wages. This is in keeping with past tendencies where cost of living is cheaper but so are wages, particularly in industries such as agriculture, manufacturing, and local services. The Northeastern states, particularly the area surrounding New York and Massachusetts, have some of the whitest colors, indicating greater compensation, likely due to financial centers, biotech companies, and big corporate headquarters. However, high salaries in these areas come with a higher cost of living that negates the benefit of greater earnings. On a larger scale, the color gradation successfully depicts salary differences within various states and underscores the relation between location, industry, and wages.</p>
 </section>
 <section id="the-highest-paying-job" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="the-highest-paying-job"><span class="header-section-number">2.3</span> The highest paying job</h3>
-<div id="d371428e" class="cell" data-execution_count="11">
+<div id="904a9038" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(df.groupby(<span class="st">"LIGHTCAST_SECTORS_NAME"</span>)[<span class="st">"SALARY"</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>),</span>
@@ -396,12 +398,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Figure 2.3</figcaption>
 </figure>
 </div>
+<p>This bar chart indicates the top 10 highest-paying industries, whose salaries are likely to range from $120K to $150K. Surprisingly, cybersecurity and data privacy/protection appear twice since there is a growing demand for experts in these fields with increased cyber attacks and more data regulations. Similarly, artificial intelligence (AI) jobs also continue to fetch high paychecks, which reflect the rapidly growing industry and need for niche skill sets. Another powerful trend is the presence of green jobs (enabled and enabling), which means that jobs in sustainability are becoming increasingly lucrative, perhaps driven by corporate sustainability efforts and governmental incentives.</p>
 </section>
 <section id="salary-comparison-between-ai-and-non-ai-positions" class="level3" data-number="2.4">
 <h3 data-number="2.4" class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions"><span class="header-section-number">2.4</span> Salary comparison between AI and non-AI positions</h3>
 <p>First define in LIGHTCAST_SECTORS_NAME what is an AI job and what is not an AI job.</p>
 <p>Define AI-related keywords based on LIGHTCAST_SECTORS_NAME</p>
-<div id="bcc906db" class="cell" data-execution_count="12">
+<div id="d1f32bf8" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ai_keywords <span class="op">=</span> [</span>
@@ -413,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Classify AI-related vs.&nbsp;Non-AI industries</p>
-<div id="61b8c383" class="cell" data-execution_count="13">
+<div id="576f479e" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AI_RELATED"</span>] <span class="op">=</span> df[<span class="st">"LIGHTCAST_SECTORS_NAME"</span>].<span class="bu">apply</span>(</span>
@@ -424,7 +427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"AI_RELATED"</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="4ab9e7d5" class="cell" data-execution_count="14">
+<div id="b2c7e8c2" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df, x<span class="op">=</span><span class="st">"AI_RELATED"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
@@ -441,6 +444,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Figure 2.4</figcaption>
 </figure>
 </div>
+<p>This box plot is a comparison of non-AI and AI industry salaries, with each distribution and set of outliers. The median salaries for both AI and non-AI industries at first sight appear to be the same, and it may be concluded that AI-related employment does not have a significantly higher median salary than non-AI employment. However, there are some significant salary distribution differences.</p>
+<p>There is an enormous spread of salaries in both categories of industries, and there are many outliers higher than $300K. The non-AI industry has higher high-earning outliers, with some salaries exceeding $400K, which suggests that high pay is not exclusive only to AI jobs. It could be that the industries possess highly paying jobs in finance, medicine, or executive jobs outside of the AI sector. Still, AI work also possesses a high number of high earners, which suggests that the AI sector remains profitable.</p>
+<p>In general, while AI disciplines are competitive in salary, non-AI disciplines offer the same income potential, particularly at the high end.</p>
 
 
 </section>
