@@ -1,5 +1,5 @@
 ---
-title: "Data Analysis"
+title: "Data Cleaning & Exploration"
 subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
 date-modified: today
 date-format: long
