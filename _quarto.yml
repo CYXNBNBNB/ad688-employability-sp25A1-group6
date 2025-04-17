@@ -10,9 +10,15 @@ website:
       - href: research_introduction.qmd
         text: "Introduction"
       - href: data_analysis.qmd
-        text: "Data Analysis"
-      - href: career_plan.qmd
-        text: "Career Strategy"
+        text: "Data Cleaning & Exploration"
+      - href: eda.qmd
+        text: "Exploratory Data Analysis"
+      - href: skill_gap_analysis.qmd
+        text: "Skill Gap Analysis"
+      - href: ml_methods.qmd
+        text: "ML Methods"
+      - href: nlp_methods.qmd
+        text: "NLP Methods"
     tools:
       - icon: github
         menu:
