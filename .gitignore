@@ -172,3 +172,4 @@ cython_debug/
 
 /.quarto/
 lightcast_job_postings.csv
+lightcast_cleaned.csv
