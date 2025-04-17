@@ -1,0 +1,20 @@
+---
+title: "NLP Methods"
+date-modified: today
+date-format: long
+
+#bibliography: references_analysis.bib
+csl: csl/econometrica.csl
+#nocite: '@*'  #show all references
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code-fold: true
+
+execute:
+  eval: false #false 不运行  true 运行
+  echo: true  #显示代码
+
+---
