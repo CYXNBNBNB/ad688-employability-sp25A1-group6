@@ -154,23 +154,22 @@ The dataset is overly complex, with more than 100 different variables and column
 
 ```{python}
 # save data
-# 1. 使用 coalesce(1) 将所有分区的数据合并为一个文件
+# 1. use coalesce(1) to merge all partitions into one file
 df.coalesce(1).write.option("header", "true").csv("data/lightcast_cleaned_temp")
 
-# 2. 查找生成的文件并重命名
+# 2. Find and rename the generated files
 import os
 import shutil
 
-# 获取生成的文件路径
+# get path
 generated_file_path = 'data/lightcast_cleaned_temp'
 
-# 获取文件夹中的所有文件（应只有一个文件）
 for filename in os.listdir(generated_file_path):
-    if filename.startswith('part-'):  # 找到 part 文件
-        # 重命名并移动到目标位置
+    if filename.startswith('part-'):  # find file
+        # rename and move
         shutil.move(os.path.join(generated_file_path, filename), 'data/lightcast_cleaned.csv')
 
-# 删除临时文件夹
+# delete useless folder
 shutil.rmtree(generated_file_path)
 ```
 
@@ -186,10 +185,10 @@ shutil.rmtree(generated_file_path)
 ```{python}
 spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 
-# 重新加载处理后的数据
+# reload cleaned data
 df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
 
-# 查看数据样本
+# show dataset
 df_cleaned.show()
 ```
 
