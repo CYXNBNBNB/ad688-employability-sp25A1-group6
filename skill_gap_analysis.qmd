@@ -106,6 +106,7 @@ plt.show()
 ```
 
 
+
 ## 将团队技能与行业要求进行比较
 ```{python}
 from pyspark.sql.functions import col, when
@@ -120,73 +121,58 @@ df_compare.select("MIN_EDULEVELS", "EDUCATION_LEVELS", "EDU_MATCH").show(truncat
 
 # 统计不匹配的行数
 unmatched_count = df_cleaned.filter(col("MIN_EDULEVELS") != col("EDUCATION_LEVELS")).count()
-print(f"不匹配的行数：{unmatched_count}")
+print(f"Not Match：{unmatched_count}")
 
 # 说明EDUCATION_LEVELS和MIN_EDULEVELS一样
-
-#生成对应关系
-df_cleaned.select("MIN_EDULEVELS", "MIN_EDULEVELS_NAME").distinct().orderBy(col("MIN_EDULEVELS").asc()).show(truncate=False)
-
-#4 - PHD
-#3 - Master's
-#2 - Bachelor's
-#1 - Associate
-#0 - High school or GED
-#99 - No Education Listed
 
 ```
 
 
 对每个工作的包含的每个software skills name打分
 ```{python}
-from pyspark.sql.functions import col
+from pyspark.sql.functions import when, lit, col
 
+#打分表
 job_expectation = df_cleaned.select(
     col("MIN_EDULEVELS").alias("EDU_LEVEL"),
     col("MIN_EDULEVELS_NAME").alias("EDU_LEVELS_NAME")
 ).distinct().orderBy(col("EDU_LEVEL").asc())
 
-edu_level_lookup.show(truncate=False)
-
-
-```
-
-```{python}
-
-df_cleaned.select("SOFTWARE_SKILLS_NAME").show(truncate=False)
-
-
-```
-
-```{python}
-from pyspark.sql import Row
-from pyspark.sql.functions import col, when
-
-# Step 1: 替换空值为 "Unknown"
-df_with_unknown = df_cleaned.withColumn(
-    "SOFTWARE_SKILLS_NAME",
-    when(col("SOFTWARE_SKILLS_NAME").isNull(), "Unknown").otherwise(col("SOFTWARE_SKILLS_NAME"))
+job_expectation = job_expectation.withColumn(
+    "SCORE",
+    when(col("EDU_LEVEL") == 4, lit(5)) # Ph.D. or professional degree
+    .when(col("EDU_LEVEL") == 3, lit(4)) # Master's degree
+    .when(col("EDU_LEVEL") == 2, lit(3)) # Bachelor's degree 
+    .when(col("EDU_LEVEL") == 1, lit(2)) # Associate degree
+    .when(col("EDU_LEVEL") == 0, lit(1)) # High school or GED
+    .when(col("EDU_LEVEL") == 99, lit(0)) # No Education Listed
 )
 
-# Step 2: 拆分技能并处理
-skills_rows = df_with_unknown.select("SOFTWARE_SKILLS_NAME").collect()
-
-all_skills = []
-for row in skills_rows:
-    skill_list = [s.strip() for s in row["SOFTWARE_SKILLS_NAME"].split(",")]
-    all_skills.extend(skill_list)
-
-# Step 3: 去重并排序
-unique_skills = sorted(set(all_skills))
-
-# Step 4: 转成 Spark DataFrame
-skill_rows = [Row(Skill=s) for s in unique_skills]
-df_skills = spark.createDataFrame(skill_rows)
-
-# Step 5: 显示表格
-df_skills.show(truncate=False)
+job_expectation.show(truncate=False)
 
 ```
+
+```{python}
+from pyspark.sql.functions import split, explode, trim
+
+# 2. 拆分技能字符串为数组（按逗号）
+df_split = df_cleaned.withColumn("Skill", split("SOFTWARE_SKILLS_NAME", ","))
+
+# 3. 展平数组为多行 + 去掉每个技能前后的空格
+df_exploded = df_split.select(explode("Skill").alias("Skill")).withColumn("Skill", trim("Skill"))
+
+# 4. 去重并排序
+unique_skills = df_exploded.dropDuplicates().orderBy("Skill")
+
+# 5. 显示前几行结果
+unique_skills.show(truncate=False)
+# unique_skills.show(n=3000,truncate=False)  仅检查用
+```
+
+```{python}
+
+```
+
 
 ```{python}
 
