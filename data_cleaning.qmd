@@ -59,21 +59,22 @@ df = df.withColumn(
 )
 ```
 
+## 2. Clean the columns
+
+Cleans up multiple text columns in the DataFrame by extracting and formatting the content originally enclosed in double quotes. Columns to clean contain those string values often wrapped in brackets, double quotes, or cluttered with newlines and extra spaces. For each of these columns, using regular expressions to remove square brackets, line breaks, and excess whitespace, formats comma-separated items with a proper space after each comma, and removes all double quotes, resulting in cleaner, more readable text entries across the specified columns.
+
 ```{python}
-# 2.SOURCE_TYPES, SOURCES, URL等列只保留双引号内容
+# 2. Remove square brackets, line breaks, spaces, and replace the formatting between commas with “,”, then remove the double quotes
 
 from pyspark.sql.functions import regexp_replace, col
 
-# 假设你已经有了DataFrame df，并且列名已经在 columns_to_clean 列表中
 columns_to_clean = ["SOURCE_TYPES", "SOURCES", "URL", "EDUCATION_LEVELS_NAME", "SKILLS", 
                     "SKILLS_NAME", "SPECIALIZED_SKILLS", "SPECIALIZED_SKILLS_NAME", "CERTIFICATIONS", 
                     "CERTIFICATIONS_NAME", "COMMON_SKILLS", "COMMON_SKILLS_NAME", "SOFTWARE_SKILLS", 
                     "SOFTWARE_SKILLS_NAME", "CIP6", "CIP6_NAME", "CIP4", "CIP4_NAME", "CIP2", 
                     "CIP2_NAME", "LIGHTCAST_SECTORS", "LIGHTCAST_SECTORS_NAME"]  
 
-# 批量处理每一列
 for col_name in columns_to_clean:
-    # 去除方括号、换行符、空格，并替换逗号之间的格式为", "，然后去掉双引号
     df = df.withColumn(col_name, 
                        regexp_replace(regexp_replace(regexp_replace(col(col_name), r'[\[\]\n\s]+', ''), r'","', '", '), r'"', ''))
 
