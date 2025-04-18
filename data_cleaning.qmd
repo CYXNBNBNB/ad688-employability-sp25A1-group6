@@ -199,7 +199,6 @@ fig.write_image("./images/REMOTE_TYPE_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-插入图片
 ![Salary of different remote type](/images/REMOTE_TYPE_NAME%26SALARY.png)
 
 ##  Analysis
@@ -244,7 +243,6 @@ fig.write_image("./images/STATE_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-插入图片
 ![Salary of different states](/images/STATE_NAME%26SALARY.png)
 
 ##  Analysis
@@ -272,7 +270,6 @@ fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-插入图片
 
 
 ## 4. Salary comparison between AI and non-AI positions
@@ -316,4 +313,3 @@ fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-插入图片
