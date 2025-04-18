@@ -318,3 +318,8 @@ fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
 fig.show()
 ```
 
+![Salary of AI related](/images/AI_RELATED%26SALARY.png)
+
+##  Analysis
+
+This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.
