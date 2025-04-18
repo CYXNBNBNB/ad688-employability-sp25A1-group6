@@ -152,7 +152,7 @@ job_expectation.show(truncate=False)
 ```
 
 ```{python}
-from pyspark.sql.functions import count, row_number
+from pyspark.sql.functions import count, row_number, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
 from pyspark.sql.window import Window
 
 # Step 1: 原始操作（你已完成）
@@ -176,8 +176,6 @@ skill_most_common_score = skill_score_counts.withColumn("rank", row_number().ove
                                             .select("Skill", "SCORE", "count") \
                                             .orderBy(col("SCORE").desc())
 
-from pyspark.sql.functions import col, count, lit, greatest, when
-
 # 假设你已经得到了 skill_score_counts 表（Skill + SCORE + count）
 
 # Step 1: pivot 展开为列
@@ -185,9 +183,6 @@ skill_score_pivot = skill_score_counts.groupBy("Skill") \
     .pivot("SCORE", [5, 4, 3, 2, 1, 0]) \
     .agg(count("count")) \
     .na.fill(0)  
-
-# Step 2: 添加 Most_Common_SCORE 列，找出最大频次对应的 SCORE
-from pyspark.sql.functions import array, struct, sort_array, expr, size, element_at
 
 # Step 2: 用数组和过滤方式处理并列最大值，找中间那个分数
 score_structs = array(
@@ -199,14 +194,10 @@ score_structs = array(
     struct(lit(0).alias("score"), col("0").alias("cnt"))
 )
 
-from pyspark.sql.functions import expr
-
 skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs) \
     .withColumn("max_count", greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0"))) \
     .withColumn("filtered", expr("filter(score_array, x -> x.cnt = max_count)")) \
     .withColumn("Proficiency_Levels", expr("aggregate(filtered, -1, (acc, x) -> IF(acc = -1 OR x.score < acc, x.score, acc))"))
-
-
 
 # Step 3: 显示最终结果
 skill_score_labeled.select(
