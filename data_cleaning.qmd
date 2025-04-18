@@ -142,8 +142,18 @@ df = df.withColumn(
 )
 ```
 
+## 7. Reason of not filling NAs this time
+
+Although filling missing values is a common data cleaning strategy, we chose not to do it in this case to preserve the integrity and accuracy of the original dataset. Imputing numerical fields like salary with the median could distort salary distributions and mask meaningful patterns or outliers. Similarly, replacing missing categorical fields with "Unknown" may introduce noise and reduce the reliability of downstream analysis, especially in modeling or clustering tasks. Additionally, dropping columns with over 50% missing data might lead to the loss of potentially valuable or unique information. By keeping the missing values intact, we allow for more transparent analysis and leave room for context-aware handling in specific use cases.
+
+## 8. Reason of not dropping unnecessary columns
+
+The dataset is overly complex, with more than 100 different variables and columns. Therefore, we have taken the approach of directly extracting a specific column or columns of the data to be analyzed to generate a dataframe and analyze it. This way we don't need to remove unwanted columns.
+
+## 9. Save the cleaned data
+
 ```{python}
-# 保存数据：
+# save data
 # 1. 使用 coalesce(1) 将所有分区的数据合并为一个文件
 df.coalesce(1).write.option("header", "true").csv("data/lightcast_cleaned_temp")
 
