@@ -80,12 +80,14 @@ for col_name in columns_to_clean:
 
 ```
 
-```{python}
-# 3.EDUCATION_LEVELS列只保留数字
+## 3. Clean the education level column
 
+Cleans the EDUCATION_LEVELS column by extracting and retaining only the numeric portion of each entry. Removing surrounding text or symbols, leaving just the numeric education level in the column. This makes the data more consistent and easier to work with for analysis or modeling purposes.
+
+```{python}
+# 3.EDUCATION_LEVELS only keeps digits
 from pyspark.sql.functions import regexp_extract
 
-# 对 'EDUCATION_LEVELS' 列进行清理，只保留数字
 df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
 ```
 
