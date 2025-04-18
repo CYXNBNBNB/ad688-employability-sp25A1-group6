@@ -208,7 +208,7 @@ data = df_cleaned.select("REMOTE_TYPE_NAME", "SALARY").collect()
 # Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["REMOTE_TYPE_NAME"], row["SALARY"]) for row in data]
 
-# 创建一个 Pandas DataFrame
+# Create Pandas DataFrame
 import pandas as pd
 df_pandas = pd.DataFrame(data_list, columns=["REMOTE_TYPE_NAME", "SALARY"])
 
@@ -239,7 +239,7 @@ data = df_cleaned.select("STATE_NAME", "SALARY").collect()
 # Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["STATE_NAME"], row["SALARY"]) for row in data]
 
-# 创建一个 Pandas DataFrame
+# Create Pandas DataFrame
 import pandas as pd
 df_pandas = pd.DataFrame(data_list, columns=["STATE_NAME", "SALARY"])
 
@@ -247,7 +247,7 @@ df_pandas["STATE_NAME"] = df_pandas["STATE_NAME"].apply(
     lambda x: us.states.lookup(x).abbr if pd.notna(x) and us.states.lookup(x) else x
 )
 
-#Verify conversion
+# Verify conversion
 
 import plotly.express as px
 
@@ -280,7 +280,7 @@ data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 # Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
 
-# 创建一个 Pandas DataFrame
+# Create Pandas DataFrame
 import pandas as pd
 df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
 
@@ -318,7 +318,7 @@ data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 # Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
 
-# 创建一个 Pandas DataFrame
+# Create Pandas DataFrame
 import pandas as pd
 df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
 
