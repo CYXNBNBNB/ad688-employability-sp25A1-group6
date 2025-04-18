@@ -10,7 +10,7 @@ csl: csl/econometrica.csl
 format: 
   html:
     toc: true
-    number-sections: true
+    number-sections: false
     df-print: paged
     code-fold: true
 

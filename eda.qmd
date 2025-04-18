@@ -9,7 +9,7 @@ csl: csl/econometrica.csl
 format: 
   html:
     toc: true
-    number-sections: true
+    number-sections: false
     df-print: paged
     code-fold: true
 
@@ -60,7 +60,7 @@ fig.write_image("./images/REMOTE_TYPE_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-![Salary of different remote type](/images/REMOTE_TYPE_NAME%26SALARY.png)
+![Salary of different remote type](/images/REMOTE_TYPE_NAME&SALARY.png)
 
 ###  Analysis
 
@@ -104,7 +104,7 @@ fig.write_image("./images/STATE_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-![Salary of different states](/images/STATE_NAME%26SALARY.png)
+![Salary of different states](/images/STATE_NAME&SALARY.png)
 
 ###  Analysis
 
@@ -131,7 +131,7 @@ fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-![Salary of top 10 industries](/images/LIGHTCAST_SECTORS_NAME%26SALARY.png)
+![Salary of top 10 industries](/images/LIGHTCAST_SECTORS_NAME&SALARY.png)
 
 ###  Analysis
 
@@ -179,7 +179,7 @@ fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
 fig.show()
 ```
 
-![Salary of AI related](/images/AI_RELATED%26SALARY.png)
+![Salary of AI related](/images/AI_RELATED&SALARY.png)
 
 ###  Analysis
 
