@@ -96,15 +96,17 @@ df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+
 Cleans the LOCATION column, ensures that all location information appears on one line, and removes curly braces, resulting a cleaner, more uniform LOCATION column for reading and analyzing
 
 ```{python}
-# 4.对LOCATION列进行处理
-
+# 4. LOCATION only keeps data
 from pyspark.sql.functions import col, regexp_replace
 
-# 去除大括号，并处理换行符和空格
 df = df.withColumn("LOCATION", 
                            regexp_replace(regexp_replace(col("LOCATION"), r"\s*\n\s*", " "), r"[{}]", ""))
 
 ```
+
+## 5. Update Modeled Duration
+
+Similarly as in updating duration, fills in the value with the number of days between MODELED_EXPIRED and POSTED, helps standardize and complete the duration data for modeled job postings
 
 ```{python}
 # 5.MODELED_DURATION = MODELED_EXPIRED - POSTED
@@ -113,10 +115,8 @@ spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
 
 from pyspark.sql.functions import datediff, when, to_date, col
 
-# 将日期列转换为日期格式
 df = df.withColumn("MODELED_EXPIRED", to_date("MODELED_EXPIRED", "MM/dd/yyyy"))
 
-# 直接用日期差填充 DURATION
 df = df.withColumn(
     "MODELED_DURATION",
     when(col("MODELED_DURATION").isNull(), datediff("MODELED_EXPIRED", "POSTED"))
