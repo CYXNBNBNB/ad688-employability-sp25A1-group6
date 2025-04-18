@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="a96bf89f" class="cell" data-execution_count="1">
+<div id="04d08d25" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="47945d86" class="cell" data-execution_count="2">
+<div id="8d03360c" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -254,11 +254,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Change to dataframe and show</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>df_skill_counts <span class="op">=</span> pd.DataFrame(top_skills, columns<span class="op">=</span>[<span class="st">"Skill"</span>, <span class="st">"Frequency"</span>])</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_skill_counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#print(df_skill_counts)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="d88ff5ae" class="cell" data-execution_count="3">
+<div id="286972e9" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="将团队技能与行业要求进行比较" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="将团队技能与行业要求进行比较"><span class="header-section-number">2</span> 将团队技能与行业要求进行比较</h2>
-<div id="61d8b1f1" class="cell" data-execution_count="4">
+<div id="629b7e43" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>对每个工作的包含的每个software skills name打分</p>
-<div id="00bdd0ff" class="cell" data-execution_count="5">
+<div id="3d59f06f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col</span>
@@ -344,54 +344,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    .when(col(<span class="st">"EDU_LEVEL"</span>) <span class="op">==</span> <span class="dv">99</span>, lit(<span class="dv">0</span>)) <span class="co"># No Education Listed</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>job_expectation.show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># job_expectation.show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="04fedb17" class="cell" data-execution_count="6">
+<div id="1c2f6f79" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> split, explode, trim</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> split, explode, trim, col</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 拆分技能字符串为数组（按逗号）</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df_split <span class="op">=</span> df_cleaned.withColumn(<span class="st">"Skill"</span>, split(<span class="st">"SOFTWARE_SKILLS_NAME"</span>, <span class="st">","</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 展平数组为多行 + 去掉每个技能前后的空格</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df_exploded <span class="op">=</span> df_split.select(explode(<span class="st">"Skill"</span>).alias(<span class="st">"Skill"</span>)).withColumn(<span class="st">"Skill"</span>, trim(<span class="st">"Skill"</span>))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 去重并排序</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>unique_skills <span class="op">=</span> df_exploded.dropDuplicates().orderBy(<span class="st">"Skill"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 显示前几行结果</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>unique_skills.show(truncate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># unique_skills.show(n=3000,truncate=False)  仅检查用</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: 加分字段与原始数据 join</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df_with_score <span class="op">=</span> df_cleaned.join(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    job_expectation.select(<span class="st">"EDU_LEVEL"</span>, <span class="st">"SCORE"</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    df_cleaned[<span class="st">"MIN_EDULEVELS"</span>] <span class="op">==</span> job_expectation[<span class="st">"EDU_LEVEL"</span>],</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 拆分技能字符串为数组</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>df_with_skills <span class="op">=</span> df_with_score.withColumn(<span class="st">"Skill"</span>, split(col(<span class="st">"SOFTWARE_SKILLS_NAME"</span>), <span class="st">","</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 展平为多行，并去除空格</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>df_exploded <span class="op">=</span> df_with_skills.select(explode(<span class="st">"Skill"</span>).alias(<span class="st">"Skill"</span>), col(<span class="st">"SCORE"</span>))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>df_exploded <span class="op">=</span> df_exploded.withColumn(<span class="st">"Skill"</span>, trim(col(<span class="st">"Skill"</span>)))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: 聚合技能得分</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">sum</span> <span class="im">as</span> _sum</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>skill_score_summary <span class="op">=</span> df_exploded.groupBy(<span class="st">"Skill"</span>).agg(_sum(<span class="st">"SCORE"</span>).alias(<span class="st">"Total_Score"</span>)).orderBy(col(<span class="st">"Total_Score"</span>).desc())</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看前几行结果</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># skill_score_summary.show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="330abaaa" class="cell" data-execution_count="7">
+<div id="93bc5619" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> split, explode, trim, col</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: 加分字段与原始数据 join</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df_with_score <span class="op">=</span> df_cleaned.join(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    job_expectation.select(<span class="st">"EDU_LEVEL"</span>, <span class="st">"SCORE"</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    df_cleaned[<span class="st">"MIN_EDULEVELS"</span>] <span class="op">==</span> job_expectation[<span class="st">"EDU_LEVEL"</span>],</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.window <span class="im">import</span> Window</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> ntile</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义窗口：按照 Total_Score 降序排列</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>windowSpec <span class="op">=</span> Window.orderBy(col(<span class="st">"Total_Score"</span>).desc())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 ntile(5) 划分成五个等级，从1到5，再转换成 5 到 1</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>skill_score_with_level <span class="op">=</span> skill_score_summary.withColumn(<span class="st">"Score_Level"</span>, <span class="dv">6</span> <span class="op">-</span> ntile(<span class="dv">5</span>).over(windowSpec))</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 拆分技能字符串为数组</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>df_with_skills <span class="op">=</span> df_with_score.withColumn(<span class="st">"Skill"</span>, split(col(<span class="st">"SOFTWARE_SKILLS_NAME"</span>), <span class="st">","</span>))</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 展平为多行，并去除空格</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>df_exploded <span class="op">=</span> df_with_skills.select(explode(<span class="st">"Skill"</span>).alias(<span class="st">"Skill"</span>), col(<span class="st">"SCORE"</span>))</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>df_exploded <span class="op">=</span> df_exploded.withColumn(<span class="st">"Skill"</span>, trim(col(<span class="st">"Skill"</span>)))</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: 聚合技能得分</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">sum</span> <span class="im">as</span> _sum</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>skill_score_summary <span class="op">=</span> df_exploded.groupBy(<span class="st">"Skill"</span>).agg(_sum(<span class="st">"SCORE"</span>).alias(<span class="st">"Total_Score"</span>)).orderBy(col(<span class="st">"Total_Score"</span>).desc())</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看前几行结果</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>skill_score_summary.show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看结果</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># skill_score_with_level.show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="c76d1bce" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 先定义目标技能列表</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>target_skills <span class="op">=</span> [</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SQL(ProgrammingLanguage)"</span>, <span class="st">"MicrosoftExcel"</span>, <span class="st">"Python(ProgrammingLanguage)"</span>, <span class="st">"SAPApplications"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Dashboard"</span>, <span class="st">"Tableau(BusinessIntelligenceSoftware)"</span>, <span class="st">"PowerBI"</span>, <span class="st">"MicrosoftPowerPoint"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"R(ProgrammingLanguage)"</span>, <span class="st">"MicrosoftAzure"</span>, <span class="st">"AmazonWebServices"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选技能行</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>selected_skill_levels <span class="op">=</span> skill_score_with_level.<span class="bu">filter</span>(col(<span class="st">"Skill"</span>).isin(target_skills))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 显示结果</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>selected_skill_levels.select(<span class="st">"Skill"</span>, <span class="st">"Score_Level"</span>).show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="801da4f5" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>selected_skill_levels.show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
