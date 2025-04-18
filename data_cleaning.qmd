@@ -205,7 +205,7 @@ import plotly.express as px
 # Collecting data with .collect()
 data = df_cleaned.select("REMOTE_TYPE_NAME", "SALARY").collect()
 
-# 将数据转换为适合绘图的格式（如列表）
+# Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["REMOTE_TYPE_NAME"], row["SALARY"]) for row in data]
 
 # 创建一个 Pandas DataFrame
@@ -236,7 +236,7 @@ import us
 # Collecting data with .collect()
 data = df_cleaned.select("STATE_NAME", "SALARY").collect()
 
-# 将数据转换为适合绘图的格式（如列表）
+# Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["STATE_NAME"], row["SALARY"]) for row in data]
 
 # 创建一个 Pandas DataFrame
@@ -277,7 +277,7 @@ The map titled "Average Salary by State" shows clear differences in average sala
 # Collecting data with .collect()
 data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 
-# 将数据转换为适合绘图的格式（如列表）
+# Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
 
 # 创建一个 Pandas DataFrame
@@ -315,7 +315,7 @@ ai_keywords = [
 # Collecting data with .collect()
 data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 
-# 将数据转换为适合绘图的格式（如列表）
+# Converting data into a format suitable for plotting (e.g., a list)
 data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
 
 # 创建一个 Pandas DataFrame
