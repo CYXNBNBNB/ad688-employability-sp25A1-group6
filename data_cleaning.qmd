@@ -91,6 +91,10 @@ from pyspark.sql.functions import regexp_extract
 df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
 ```
 
+## 4. Clean the location column
+
+Cleans the LOCATION column, ensures that all location information appears on one line, and removes curly braces, resulting a cleaner, more uniform LOCATION column for reading and analyzing
+
 ```{python}
 # 4.对LOCATION列进行处理
 
