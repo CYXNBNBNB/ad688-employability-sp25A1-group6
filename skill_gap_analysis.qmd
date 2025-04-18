@@ -37,17 +37,18 @@ df_cleaned.show()
 
 ```{python}
 from collections import Counter
-from pyspark.sql.functions import col
 import pandas as pd
 
-# Step 1: 提取技能字段（ SOFTWARE_SKILLS_NAME），转换为 Pandas 列表
-skills_series = df_cleaned.select("SOFTWARE_SKILLS_NAME").dropna().toPandas()["SOFTWARE_SKILLS_NAME"]
+# Step 1: 使用 .collect() 提取数据
+skills_rows = df_cleaned.select("SOFTWARE_SKILLS_NAME").dropna().collect()
 
 # Step 2: 拆分每行字符串为技能列表，并展开统计
 all_skills = []
-for skills in skills_series:
-    skill_list = [s.strip() for s in skills.split(",")]
-    all_skills.extend(skill_list)
+for row in skills_rows:
+    skills = row["SOFTWARE_SKILLS_NAME"]  # 提取字符串
+    if isinstance(skills, str):  # 确保技能名称是字符串
+        skill_list = [s.strip() for s in skills.split(",")]  # 分割并去除空格
+        all_skills.extend(skill_list)
 
 # Step 3: 统计词频
 skill_counts = Counter(all_skills)
