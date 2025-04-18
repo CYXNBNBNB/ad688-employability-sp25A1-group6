@@ -36,7 +36,10 @@ df_cleaned.show()
 ```
 
 
-## 创建基于团队的技能数据框架
+## Creating a team-based skills data framework
+
+We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills,  and puts them into a tidy table using pandas to make it easier to view.
+
 ```{python}
 from collections import Counter
 import pandas as pd
@@ -60,6 +63,8 @@ top_skills = skill_counts.most_common(30)  # 可以改为 10 或全部统计
 df_skill_counts = pd.DataFrame(top_skills, columns=["Skill", "Frequency"])
 print(df_skill_counts)
 ```
+
+We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person's strengths and weaknesses, making it easy to compare skill levels across the team. 
 
 ```{python}
 # Step 1: 导入必要库
