@@ -124,6 +124,10 @@ df = df.withColumn(
 )
 ```
 
+## 6. Standardize Remote Work Types
+
+Standardizes the values in the REMOTE_TYPE_NAME column to ensure consistency in describing remote work types. Replaces values None and Not Remote with On-Site, changes Hybrid Remote to Hybrid, and keeps Remote as is. Simplify and unify the classification of job postings based on work location
+
 ```{python}
 # 6. Standardize Remote Work Types
 from pyspark.sql.functions import when, col
@@ -134,9 +138,8 @@ df = df.withColumn(
     .when(col("REMOTE_TYPE_NAME") == "Not Remote", "On-Site")
     .when(col("REMOTE_TYPE_NAME") == "Hybrid Remote", "Hybrid")
     .when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
-    .otherwise(col("REMOTE_TYPE_NAME"))  # 保持其他不变
+    .otherwise(col("REMOTE_TYPE_NAME"))
 )
-
 ```
 
 ```{python}
