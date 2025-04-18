@@ -101,6 +101,20 @@ df = df.withColumn(
 ```
 
 ```{python}
+# 6. Standardize Remote Work Types
+from pyspark.sql.functions import when, col
+
+df = df.withColumn(
+    "REMOTE_TYPE_NAME",
+    when(col("REMOTE_TYPE_NAME") == "[None]", "On-Site")
+    .when(col("REMOTE_TYPE_NAME") == "Not Remote", "On-Site")
+    .when(col("REMOTE_TYPE_NAME") == "Hybrid Remote", "Hybrid")
+    .when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
+    .otherwise(col("REMOTE_TYPE_NAME"))  # 保持其他不变
+)
+```
+
+```{python}
 # 保存数据：
 # 1. 使用 coalesce(1) 将所有分区的数据合并为一个文件
 df.coalesce(1).write.option("header", "true").csv("data/lightcast_cleaned_temp")
