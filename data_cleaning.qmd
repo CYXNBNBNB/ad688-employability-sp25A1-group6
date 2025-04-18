@@ -230,7 +230,7 @@ This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the sala
 
 ## 2. Salary by region (map)
 ```{python}
-#STATE_NAME改为简写
+# STATE_NAME change to .abbr
 import us
 
 # Collecting data with .collect()
@@ -304,7 +304,7 @@ This bar chart titled "Top 10 Industries with Highest Salaries" highlights the m
 ```{python}
 import plotly.express as px
 
-#Define AI-related keywords based on LIGHTCAST_SECTORS_NAME
+# Define AI-related keywords based on LIGHTCAST_SECTORS_NAME
 ai_keywords = [
     "Artificial Intelligence", "Machine Learning", "Data Science",
     "Cybersecurity", "Computational Science", "Deep Learning",
