@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="a8a5f52d" class="cell" data-execution_count="1">
+<div id="09c1c48d" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="33b9ed61" class="cell" data-execution_count="2">
+<div id="8141bd56" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="d6dcc9e6" class="cell" data-execution_count="3">
+<div id="e53d937a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="将团队技能与行业要求进行比较" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="将团队技能与行业要求进行比较"><span class="header-section-number">2</span> 将团队技能与行业要求进行比较</h2>
-<div id="7a237707" class="cell" data-execution_count="4">
+<div id="36241aad" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>对每个工作的包含的每个software skills name打分</p>
-<div id="c575fcca" class="cell" data-execution_count="5">
+<div id="ce6b5653" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col, trim</span>
@@ -346,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>job_expectation.show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="66f2c062" class="cell" data-execution_count="6">
+<div id="7952177a" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> count, row_number</span>
@@ -381,24 +381,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>skill_score_pivot <span class="op">=</span> skill_score_counts.groupBy(<span class="st">"Skill"</span>) <span class="op">\</span></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    .pivot(<span class="st">"SCORE"</span>, [<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">\</span></span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    .agg(count(<span class="st">"count"</span>)) <span class="op">\</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    .na.fill(<span class="dv">0</span>)  <span class="co"># 把 null 填成 0，表示没有出现过</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    .na.fill(<span class="dv">0</span>)  </span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 添加 Most_Common_SCORE 列，找出最大频次对应的 SCORE</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>skill_score_labeled <span class="op">=</span> skill_score_pivot.withColumn(</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Most_Common_SCORE"</span>,</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"5"</span>), lit(<span class="dv">5</span>))</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    .when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"4"</span>), lit(<span class="dv">4</span>))</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    .when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"3"</span>), lit(<span class="dv">3</span>))</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    .when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"2"</span>), lit(<span class="dv">2</span>))</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    .when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"1"</span>), lit(<span class="dv">1</span>))</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    .when(greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>)) <span class="op">==</span> col(<span class="st">"0"</span>), lit(<span class="dv">0</span>))</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 显示最终结果</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>skill_score_labeled.orderBy(<span class="st">"Most_Common_SCORE"</span>, ascending<span class="op">=</span><span class="va">False</span>).show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> array, struct, sort_array, expr, size, element_at</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 用数组和过滤方式处理并列最大值，找中间那个分数</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>score_structs <span class="op">=</span> array(</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">5</span>).alias(<span class="st">"score"</span>), col(<span class="st">"5"</span>).alias(<span class="st">"cnt"</span>)),</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">4</span>).alias(<span class="st">"score"</span>), col(<span class="st">"4"</span>).alias(<span class="st">"cnt"</span>)),</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">3</span>).alias(<span class="st">"score"</span>), col(<span class="st">"3"</span>).alias(<span class="st">"cnt"</span>)),</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">2</span>).alias(<span class="st">"score"</span>), col(<span class="st">"2"</span>).alias(<span class="st">"cnt"</span>)),</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">1</span>).alias(<span class="st">"score"</span>), col(<span class="st">"1"</span>).alias(<span class="st">"cnt"</span>)),</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    struct(lit(<span class="dv">0</span>).alias(<span class="st">"score"</span>), col(<span class="st">"0"</span>).alias(<span class="st">"cnt"</span>))</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> expr</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>skill_score_labeled <span class="op">=</span> skill_score_pivot.withColumn(<span class="st">"score_array"</span>, score_structs) <span class="op">\</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"max_count"</span>, greatest(col(<span class="st">"5"</span>), col(<span class="st">"4"</span>), col(<span class="st">"3"</span>), col(<span class="st">"2"</span>), col(<span class="st">"1"</span>), col(<span class="st">"0"</span>))) <span class="op">\</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"filtered"</span>, expr(<span class="st">"filter(score_array, x -&gt; x.cnt = max_count)"</span>)) <span class="op">\</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"Proficiency_Levels"</span>, expr(<span class="st">"aggregate(filtered, -1, (acc, x) -&gt; IF(acc = -1 OR x.score &lt; acc, x.score, acc))"</span>))</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 显示最终结果</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>skill_score_labeled.select(</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Skill"</span>, <span class="st">"5"</span>, <span class="st">"4"</span>, <span class="st">"3"</span>, <span class="st">"2"</span>, <span class="st">"1"</span>, <span class="st">"0"</span>, <span class="st">"Proficiency_Levels"</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>).orderBy(<span class="st">"Proficiency_Levels"</span>, ascending<span class="op">=</span><span class="va">False</span>).show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="8c56370b" class="cell" data-execution_count="7">
+<div id="8913da29" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.window <span class="im">import</span> Window</span>
@@ -414,7 +427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># skill_score_with_level.show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="039a3254" class="cell" data-execution_count="8">
+<div id="c6094fbd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 先定义目标技能列表</span></span>
@@ -431,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>selected_skill_levels.select(<span class="st">"Skill"</span>, <span class="st">"Score_Level"</span>).show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="2fa36c2c" class="cell" data-execution_count="9">
+<div id="235b1c3c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>selected_skill_levels.show(truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
