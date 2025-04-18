@@ -201,8 +201,10 @@ fig.show()
 
 插入图片
 ![Salary of different remote type](/images/REMOTE_TYPE_NAME%26SALARY.png)
+
 ##  Analysis
-    This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.
+
+This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.
 
 ## 2. Salary by region (map)
 ```{python}
@@ -243,7 +245,11 @@ fig.show()
 ```
 
 插入图片
+![Salary of different states](/images/STATE_NAME%26SALARY.png)
 
+##  Analysis
+
+The map titled "Average Salary by State" shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country.
 
 ## 3. The highest paying job
 ```{python}
