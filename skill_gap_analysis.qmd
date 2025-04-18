@@ -202,42 +202,61 @@ skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs)
 # Step 3: 显示最终结果
 skill_score_labeled.select(
     "Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels"
-).orderBy("Proficiency_Levels", ascending=False).show(truncate=False)
+).orderBy("Proficiency_Levels", ascending=False).show(n = 3000,truncate=False)
 
 ```
 
 ```{python}
-from pyspark.sql.window import Window
-from pyspark.sql.functions import ntile
+from pyspark.sql.functions import lit
 
-# 定义窗口：按照 Total_Score 降序排列
-windowSpec = Window.orderBy(col("Total_Score").desc())
-
-# 使用 ntile(5) 划分成五个等级，从1到5，再转换成 5 到 1
-skill_score_with_level = skill_score_summary.withColumn("Score_Level", 6 - ntile(5).over(windowSpec))
-
-# 查看结果
-# skill_score_with_level.show(truncate=False)
-```
-
-```{python}
-# 先定义目标技能列表
+# 定义目标技能列表
 target_skills = [
-    "SQL(ProgrammingLanguage)", "MicrosoftExcel", "Python(ProgrammingLanguage)", "SAPApplications",
-    "Dashboard", "Tableau(BusinessIntelligenceSoftware)", "PowerBI", "MicrosoftPowerPoint",
-    "R(ProgrammingLanguage)", "MicrosoftAzure", "AmazonWebServices"
+    "SQL(ProgrammingLanguage)", "MicrosoftExcel", "Python(ProgrammingLanguage)",
+    "SAPApplications", "Dashboard", "Tableau(BusinessIntelligenceSoftware)",
+    "PowerBI", "MicrosoftPowerPoint", "R(ProgrammingLanguage)",
+    "MicrosoftAzure", "AmazonWebServices"
 ]
 
-# 筛选技能行
-selected_skill_levels = skill_score_with_level.filter(col("Skill").isin(target_skills))
+# 从 skill_score_labeled 中筛选目标技能
+filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
+    .select("Skill", "Proficiency_Levels") \
+    .orderBy("Skill")
 
-# 显示结果
-selected_skill_levels.select("Skill", "Score_Level").show(truncate=False)
+# 展示结果
+filtered_skills.show(truncate=False)
 
 ```
 
 ```{python}
 
-selected_skill_levels.show(truncate=False)
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
 
 ```
