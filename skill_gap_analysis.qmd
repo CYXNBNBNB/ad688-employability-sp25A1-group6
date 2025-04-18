@@ -173,7 +173,6 @@ unique_skills.show(truncate=False)
 
 ```
 
-
 ```{python}
 
 ```
