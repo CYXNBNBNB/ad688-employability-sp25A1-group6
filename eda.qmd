@@ -18,3 +18,169 @@ execute:
   echo: true  #显示代码
 
 ---
+
+
+```{python}
+spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
+
+# reload cleaned data
+df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
+
+# show dataset
+df_cleaned.show()
+```
+
+
+
+
+# Exploratory Data Analysis (EDA)
+
+
+## 1. Comparison of salary between remote and on-site work (box chart)
+```{python}
+import pandas as pd
+import plotly.express as px
+# Collecting data with .collect()
+data = df_cleaned.select("REMOTE_TYPE_NAME", "SALARY").collect()
+
+# Converting data into a format suitable for plotting (e.g., a list)
+data_list = [(row["REMOTE_TYPE_NAME"], row["SALARY"]) for row in data]
+
+# Create Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["REMOTE_TYPE_NAME", "SALARY"])
+
+fig = px.box(df_pandas, x="REMOTE_TYPE_NAME", y="SALARY",
+             title="Salary Comparison: Remote vs. On-Site Jobs",
+             category_orders={"REMOTE_TYPE_NAME": ["On-Site", "Hybrid", "Remote"]},
+             labels={"REMOTE_TYPE_NAME": "Job Type", "SALARY": "Salary ($)"})
+
+fig.write_image("./images/REMOTE_TYPE_NAME&SALARY.png")  ##save the pic
+
+fig.show()
+```
+
+![Salary of different remote type](/images/REMOTE_TYPE_NAME%26SALARY.png)
+
+###  Analysis
+
+This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.
+
+## 2. Salary by region (map)
+```{python}
+# STATE_NAME change to .abbr
+import us
+
+# Collecting data with .collect()
+data = df_cleaned.select("STATE_NAME", "SALARY").collect()
+
+# Converting data into a format suitable for plotting (e.g., a list)
+data_list = [(row["STATE_NAME"], row["SALARY"]) for row in data]
+
+# Create Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["STATE_NAME", "SALARY"])
+
+df_pandas["STATE_NAME"] = df_pandas["STATE_NAME"].apply(
+    lambda x: us.states.lookup(x).abbr if pd.notna(x) and us.states.lookup(x) else x
+)
+
+# Verify conversion
+
+import plotly.express as px
+
+fig = px.choropleth(df_pandas, 
+                    locations="STATE_NAME", 
+                    locationmode="USA-states",
+                    color="SALARY", 
+                    hover_name="STATE_NAME",
+                    scope="usa", 
+                    title="Average Salary by State",
+                    color_continuous_scale="Viridis",
+                    labels={"SALARY": "Average Salary ($)"})
+
+fig.write_image("./images/STATE_NAME&SALARY.png")  ##save the pic
+
+fig.show()
+```
+
+![Salary of different states](/images/STATE_NAME%26SALARY.png)
+
+###  Analysis
+
+The map titled "Average Salary by State" shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country.
+
+## 3. The highest paying job
+```{python}
+# Collecting data with .collect()
+data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
+
+# Converting data into a format suitable for plotting (e.g., a list)
+data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
+
+# Create Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
+
+fig = px.bar(df_pandas.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(ascending=False).head(10),
+             title="Top 10 Industries with Highest Salaries",
+             labels={"LIGHTCAST_SECTORS_NAME": "Industry", "SALARY": "Salary ($)"})
+
+fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
+
+fig.show()
+```
+
+![Salary of top 10 industries](/images/LIGHTCAST_SECTORS_NAME%26SALARY.png)
+
+###  Analysis
+
+This bar chart titled "Top 10 Industries with Highest Salaries" highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as "GreenJobs:Enabled, Cybersecurity" or "Cybersecurity, DataPrivacy/Protection". These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives.
+
+
+## 4. Salary comparison between AI and non-AI positions
+```{python}
+import plotly.express as px
+
+# Define AI-related keywords based on LIGHTCAST_SECTORS_NAME
+ai_keywords = [
+    "Artificial Intelligence", "Machine Learning", "Data Science",
+    "Cybersecurity", "Computational Science", "Deep Learning",
+    "Data Privacy", "Computer Vision", "Natural Language Processing",
+    "Big Data", "Cloud Computing", "Quantum Computing", "Robotics"
+]
+
+# Collecting data with .collect()
+data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
+
+# Converting data into a format suitable for plotting (e.g., a list)
+data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
+
+# Create Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
+
+#Classify AI-related vs. Non-AI industries
+df_pandas["AI_RELATED"] = df_pandas["LIGHTCAST_SECTORS_NAME"].apply(
+    lambda x: "AI-related" if any(keyword in str(x) for keyword in ai_keywords) else "Non-AI"
+)
+
+# Show counts of AI vs. Non-AI jobs
+print(df_pandas["AI_RELATED"].value_counts())
+
+
+fig = px.box(df_pandas, x="AI_RELATED", y="SALARY",
+             title="AI-related vs. Non-AI Industries Salary Comparison",
+             labels={"AI_RELATED": "Industry Type", "SALARY": "Salary ($)"},
+             color="AI_RELATED")
+
+fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
+
+fig.show()
+```
+
+![Salary of AI related](/images/AI_RELATED%26SALARY.png)
+
+###  Analysis
+
+This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.
