@@ -44,22 +44,22 @@ We take a column of software skill names from the cleaned dataset, splits each e
 from collections import Counter
 import pandas as pd
 
-# Step 1: 使用 .collect() 提取数据
+# 1. Extracting data with .collect()
 skills_rows = df_cleaned.select("SOFTWARE_SKILLS_NAME").dropna().collect()
 
-# Step 2: 拆分每行字符串为技能列表，并展开统计
+# 2. Split each line of string into a list of skills and expand the statistics
 all_skills = []
 for row in skills_rows:
-    skills = row["SOFTWARE_SKILLS_NAME"]  # 提取字符串
-    if isinstance(skills, str):  # 确保技能名称是字符串
-        skill_list = [s.strip() for s in skills.split(",")]  # 分割并去除空格
+    skills = row["SOFTWARE_SKILLS_NAME"] 
+    if isinstance(skills, str):  
+        skill_list = [s.strip() for s in skills.split(",")]  # Split and remove spaces
         all_skills.extend(skill_list)
 
-# Step 3: 统计词频
+# 3. Counting word frequency
 skill_counts = Counter(all_skills)
-top_skills = skill_counts.most_common(30)  # 可以改为 10 或全部统计
+top_skills = skill_counts.most_common(30) 
 
-# Step 4: 转为 DataFrame 以方便展示和画图
+# 4. Change to dataframe and show
 df_skill_counts = pd.DataFrame(top_skills, columns=["Skill", "Frequency"])
 print(df_skill_counts)
 ```
@@ -67,12 +67,11 @@ print(df_skill_counts)
 We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person's strengths and weaknesses, making it easy to compare skill levels across the team. 
 
 ```{python}
-# Step 1: 导入必要库
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Step 2: 构建团队技能等级数据
+# 1. Construct team skill level data
 skills_data = {
     "Name": ["Yuxuan Chen", "Shangxuan Zhong", "Qimin Shen", "Altyn Baigaliyeva"],
     "SQL": [5, 3, 4, 2],
@@ -88,15 +87,15 @@ skills_data = {
     "Amazon Web Services": [2, 2, 3, 1]
 }
 
-# Step 3: 创建 DataFrame 并设置 Name 为索引
+# 2. Create dataframe and set Name as index
 df_skills = pd.DataFrame(skills_data)
 df_skills.set_index("Name", inplace=True)
 
-# Step 4: 展示技能等级表
-print("🔍 团队技能等级表：")
-display(df_skills)  # 如果在Jupyter中使用，display效果更好；否则使用 print(df_skills)
+# 3. Demonstrate the skill level chart
+print("Team Skill Rating Scale:")
+display(df_skills) 
 
-# Step 5: 可视化技能差距 - 热图
+# 4. Visualize the skills gap by heat map
 plt.figure(figsize=(8, 6))
 sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5, cbar_kws={'label': 'Skill Level'})
 plt.title("Team Skill Levels Heatmap")
