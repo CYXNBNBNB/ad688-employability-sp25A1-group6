@@ -19,3 +19,143 @@ execute:
   echo: true  #显示代码
 
 ---
+
+```{python}
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+pio.renderers.default = "vscode"
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import split, explode, col, regexp_replace, transform, isnan
+
+spark = SparkSession.builder.appName("LightcastData").getOrCreate()
+
+df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("./data/lightcast_job_postings.csv")
+
+df.show(5)
+```
+
+```{python}
+# 1.DURATION = EXPIRED - POSTED
+
+spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
+
+from pyspark.sql.functions import datediff, when, to_date, col
+
+df = df.withColumn("POSTED", to_date("POSTED", "MM/dd/yyyy")) \
+       .withColumn("EXPIRED", to_date("EXPIRED", "MM/dd/yyyy"))
+
+df = df.withColumn(
+    "DURATION",
+    when(col("DURATION").isNull(), datediff("EXPIRED", "POSTED"))
+    .otherwise(col("DURATION"))
+)
+```
+
+```{python}
+# 2.SOURCE_TYPES, SOURCES, URL等列只保留双引号内容
+
+from pyspark.sql.functions import regexp_extract, col
+from functools import reduce
+
+columns_to_clean = ["SOURCE_TYPES", "SOURCES", "URL", "EDUCATION_LEVELS_NAME", "SKILLS", "SKILLS_NAME", "SPECIALIZED_SKILLS", 
+                    "SPECIALIZED_SKILLS_NAME", "CERTIFICATIONS", "CERTIFICATIONS_NAME", "COMMON_SKILLS", "COMMON_SKILLS_NAME", 
+                    "SOFTWARE_SKILLS", "SOFTWARE_SKILLS_NAME", "CIP6", "CIP6_NAME", "CIP4", "CIP4_NAME", "CIP2", "CIP2_NAME", 
+                    "LIGHTCAST_SECTORS", "LIGHTCAST_SECTORS_NAME"]
+
+for col_name in columns_to_clean:
+    df = df.withColumn(col_name, regexp_extract(col(col_name), r'"(.*?)"', 1))
+```
+
+```{python}
+# 3.EDUCATION_LEVELS列只保留数字
+
+from pyspark.sql.functions import regexp_extract
+
+df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
+```
+
+```{python}
+# 4.对LOCATION列进行处理
+
+from pyspark.sql.functions import col, regexp_replace
+
+df = df.withColumn("LOCATION", 
+                           regexp_replace(regexp_replace(col("LOCATION"), r"\s*\n\s*", " "), r"[{}]", ""))
+```
+
+```{python}
+# 5.MODELED_DURATION = MODELED_EXPIRED - POSTED
+
+spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
+
+from pyspark.sql.functions import datediff, when, to_date, col
+
+df = df.withColumn("MODELED_EXPIRED", to_date("MODELED_EXPIRED", "MM/dd/yyyy"))
+
+df = df.withColumn(
+    "MODELED_DURATION",
+    when(col("MODELED_DURATION").isNull(), datediff("MODELED_EXPIRED", "POSTED"))
+    .otherwise(col("MODELED_DURATION"))
+)
+```
+
+```{python}
+# 保存数据：
+# 1. 使用 coalesce(1) 将所有分区的数据合并为一个文件
+df.coalesce(1).write.option("header", "true").csv("data/lightcast_cleaned_temp")
+
+# 2. 查找生成的文件并重命名
+import os
+import shutil
+
+# 获取生成的文件路径
+generated_file_path = 'data/lightcast_cleaned_temp'
+
+# 获取文件夹中的所有文件（应只有一个文件）
+for filename in os.listdir(generated_file_path):
+    if filename.startswith('part-'):  # 找到 part 文件
+        # 重命名并移动到目标位置
+        shutil.move(os.path.join(generated_file_path, filename), 'data/lightcast_cleaned.csv')
+
+# 删除临时文件夹
+shutil.rmtree(generated_file_path)
+```
+
+
+
+
+
+
+
+
+
+
+```{python}
+spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
+
+df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
+
+df_cleaned.show(5)
+```
+
+
+
+
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
