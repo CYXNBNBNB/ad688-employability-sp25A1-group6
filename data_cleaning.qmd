@@ -202,7 +202,7 @@ df_cleaned.show()
 ```{python}
 import pandas as pd
 import plotly.express as px
-# 使用 .collect() 收集数据
+# Collecting data with .collect()
 data = df_cleaned.select("REMOTE_TYPE_NAME", "SALARY").collect()
 
 # 将数据转换为适合绘图的格式（如列表）
@@ -233,7 +233,7 @@ This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the sala
 #STATE_NAME改为简写
 import us
 
-# 使用 .collect() 收集数据
+# Collecting data with .collect()
 data = df_cleaned.select("STATE_NAME", "SALARY").collect()
 
 # 将数据转换为适合绘图的格式（如列表）
@@ -274,7 +274,7 @@ The map titled "Average Salary by State" shows clear differences in average sala
 
 ## 3. The highest paying job
 ```{python}
-# 使用 .collect() 收集数据
+# Collecting data with .collect()
 data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 
 # 将数据转换为适合绘图的格式（如列表）
@@ -312,7 +312,7 @@ ai_keywords = [
     "Big Data", "Cloud Computing", "Quantum Computing", "Robotics"
 ]
 
-# 使用 .collect() 收集数据
+# Collecting data with .collect()
 data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 
 # 将数据转换为适合绘图的格式（如列表）
