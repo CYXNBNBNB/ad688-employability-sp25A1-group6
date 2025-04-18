@@ -61,7 +61,7 @@ top_skills = skill_counts.most_common(30)
 
 # 4. Change to dataframe and show
 df_skill_counts = pd.DataFrame(top_skills, columns=["Skill", "Frequency"])
-print(df_skill_counts)
+#print(df_skill_counts)
 ```
 
 We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person's strengths and weaknesses, making it easy to compare skill levels across the team. 
@@ -148,25 +148,8 @@ job_expectation = job_expectation.withColumn(
     .when(col("EDU_LEVEL") == 99, lit(0)) # No Education Listed
 )
 
-job_expectation.show(truncate=False)
+# job_expectation.show(truncate=False)
 
-```
-
-```{python}
-from pyspark.sql.functions import split, explode, trim
-
-# 2. 拆分技能字符串为数组（按逗号）
-df_split = df_cleaned.withColumn("Skill", split("SOFTWARE_SKILLS_NAME", ","))
-
-# 3. 展平数组为多行 + 去掉每个技能前后的空格
-df_exploded = df_split.select(explode("Skill").alias("Skill")).withColumn("Skill", trim("Skill"))
-
-# 4. 去重并排序
-unique_skills = df_exploded.dropDuplicates().orderBy("Skill")
-
-# 5. 显示前几行结果
-unique_skills.show(truncate=False)
-# unique_skills.show(n=3000,truncate=False)  仅检查用
 ```
 
 ```{python}
@@ -192,9 +175,41 @@ from pyspark.sql.functions import sum as _sum
 skill_score_summary = df_exploded.groupBy("Skill").agg(_sum("SCORE").alias("Total_Score")).orderBy(col("Total_Score").desc())
 
 # 查看前几行结果
-skill_score_summary.show(truncate=False)
+# skill_score_summary.show(truncate=False)
 ```
 
 ```{python}
+from pyspark.sql.window import Window
+from pyspark.sql.functions import ntile
+
+# 定义窗口：按照 Total_Score 降序排列
+windowSpec = Window.orderBy(col("Total_Score").desc())
+
+# 使用 ntile(5) 划分成五个等级，从1到5，再转换成 5 到 1
+skill_score_with_level = skill_score_summary.withColumn("Score_Level", 6 - ntile(5).over(windowSpec))
+
+# 查看结果
+# skill_score_with_level.show(truncate=False)
+```
+
+```{python}
+# 先定义目标技能列表
+target_skills = [
+    "SQL(ProgrammingLanguage)", "MicrosoftExcel", "Python(ProgrammingLanguage)", "SAPApplications",
+    "Dashboard", "Tableau(BusinessIntelligenceSoftware)", "PowerBI", "MicrosoftPowerPoint",
+    "R(ProgrammingLanguage)", "MicrosoftAzure", "AmazonWebServices"
+]
+
+# 筛选技能行
+selected_skill_levels = skill_score_with_level.filter(col("Skill").isin(target_skills))
+
+# 显示结果
+selected_skill_levels.select("Skill", "Score_Level").show(truncate=False)
+
+```
+
+```{python}
+
+selected_skill_levels.show(truncate=False)
 
 ```
