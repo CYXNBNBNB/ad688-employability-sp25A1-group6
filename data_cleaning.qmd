@@ -270,6 +270,11 @@ fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
 fig.show()
 ```
 
+![Salary of top 10 industries](/images/LIGHTCAST_SECTORS_NAME%26SALARY.png)
+
+##  Analysis
+
+This bar chart titled "Top 10 Industries with Highest Salaries" highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as "GreenJobs:Enabled, Cybersecurity" or "Cybersecurity, DataPrivacy/Protection". These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives.
 
 
 ## 4. Salary comparison between AI and non-AI positions
