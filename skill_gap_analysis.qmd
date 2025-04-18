@@ -184,22 +184,34 @@ from pyspark.sql.functions import col, count, lit, greatest, when
 skill_score_pivot = skill_score_counts.groupBy("Skill") \
     .pivot("SCORE", [5, 4, 3, 2, 1, 0]) \
     .agg(count("count")) \
-    .na.fill(0)  # 把 null 填成 0，表示没有出现过
+    .na.fill(0)  
 
 # Step 2: 添加 Most_Common_SCORE 列，找出最大频次对应的 SCORE
-skill_score_labeled = skill_score_pivot.withColumn(
-    "Most_Common_SCORE",
-    when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("5"), lit(5))
-    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("4"), lit(4))
-    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("3"), lit(3))
-    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("2"), lit(2))
-    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("1"), lit(1))
-    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("0"), lit(0))
+from pyspark.sql.functions import array, struct, sort_array, expr, size, element_at
+
+# Step 2: 用数组和过滤方式处理并列最大值，找中间那个分数
+score_structs = array(
+    struct(lit(5).alias("score"), col("5").alias("cnt")),
+    struct(lit(4).alias("score"), col("4").alias("cnt")),
+    struct(lit(3).alias("score"), col("3").alias("cnt")),
+    struct(lit(2).alias("score"), col("2").alias("cnt")),
+    struct(lit(1).alias("score"), col("1").alias("cnt")),
+    struct(lit(0).alias("score"), col("0").alias("cnt"))
 )
 
-# Step 3: 显示最终结果
-skill_score_labeled.orderBy("Most_Common_SCORE", ascending=False).show(truncate=False)
+from pyspark.sql.functions import expr
 
+skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs) \
+    .withColumn("max_count", greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0"))) \
+    .withColumn("filtered", expr("filter(score_array, x -> x.cnt = max_count)")) \
+    .withColumn("Proficiency_Levels", expr("aggregate(filtered, -1, (acc, x) -> IF(acc = -1 OR x.score < acc, x.score, acc))"))
+
+
+
+# Step 3: 显示最终结果
+skill_score_labeled.select(
+    "Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels"
+).orderBy("Proficiency_Levels", ascending=False).show(truncate=False)
 
 ```
 
