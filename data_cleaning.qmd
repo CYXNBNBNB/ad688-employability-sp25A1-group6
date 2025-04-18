@@ -30,6 +30,7 @@ from pyspark.sql.functions import split, explode, col, regexp_replace, transform
 
 spark = SparkSession.builder.appName("LightcastData").getOrCreate()
 
+# Load Data
 df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("./data/lightcast_job_postings.csv")
 
 df.show(5)
@@ -42,9 +43,11 @@ spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
 
 from pyspark.sql.functions import datediff, when, to_date, col
 
+# 将日期列转换为日期格式
 df = df.withColumn("POSTED", to_date("POSTED", "MM/dd/yyyy")) \
        .withColumn("EXPIRED", to_date("EXPIRED", "MM/dd/yyyy"))
 
+# 直接用日期差填充 DURATION
 df = df.withColumn(
     "DURATION",
     when(col("DURATION").isNull(), datediff("EXPIRED", "POSTED"))
@@ -55,16 +58,21 @@ df = df.withColumn(
 ```{python}
 # 2.SOURCE_TYPES, SOURCES, URL等列只保留双引号内容
 
-from pyspark.sql.functions import regexp_extract, col
-from functools import reduce
+from pyspark.sql.functions import regexp_replace, col
 
-columns_to_clean = ["SOURCE_TYPES", "SOURCES", "URL", "EDUCATION_LEVELS_NAME", "SKILLS", "SKILLS_NAME", "SPECIALIZED_SKILLS", 
-                    "SPECIALIZED_SKILLS_NAME", "CERTIFICATIONS", "CERTIFICATIONS_NAME", "COMMON_SKILLS", "COMMON_SKILLS_NAME", 
-                    "SOFTWARE_SKILLS", "SOFTWARE_SKILLS_NAME", "CIP6", "CIP6_NAME", "CIP4", "CIP4_NAME", "CIP2", "CIP2_NAME", 
-                    "LIGHTCAST_SECTORS", "LIGHTCAST_SECTORS_NAME"]
+# 假设你已经有了DataFrame df，并且列名已经在 columns_to_clean 列表中
+columns_to_clean = ["SOURCE_TYPES", "SOURCES", "URL", "EDUCATION_LEVELS_NAME", "SKILLS", 
+                    "SKILLS_NAME", "SPECIALIZED_SKILLS", "SPECIALIZED_SKILLS_NAME", "CERTIFICATIONS", 
+                    "CERTIFICATIONS_NAME", "COMMON_SKILLS", "COMMON_SKILLS_NAME", "SOFTWARE_SKILLS", 
+                    "SOFTWARE_SKILLS_NAME", "CIP6", "CIP6_NAME", "CIP4", "CIP4_NAME", "CIP2", 
+                    "CIP2_NAME", "LIGHTCAST_SECTORS", "LIGHTCAST_SECTORS_NAME"]  
 
+# 批量处理每一列
 for col_name in columns_to_clean:
-    df = df.withColumn(col_name, regexp_extract(col(col_name), r'"(.*?)"', 1))
+    # 去除方括号、换行符、空格，并替换逗号之间的格式为", "，然后去掉双引号
+    df = df.withColumn(col_name, 
+                       regexp_replace(regexp_replace(regexp_replace(col(col_name), r'[\[\]\n\s]+', ''), r'","', '", '), r'"', ''))
+
 ```
 
 ```{python}
@@ -72,6 +80,7 @@ for col_name in columns_to_clean:
 
 from pyspark.sql.functions import regexp_extract
 
+# 对 'EDUCATION_LEVELS' 列进行清理，只保留数字
 df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
 ```
 
@@ -80,8 +89,10 @@ df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+
 
 from pyspark.sql.functions import col, regexp_replace
 
+# 去除大括号，并处理换行符和空格
 df = df.withColumn("LOCATION", 
                            regexp_replace(regexp_replace(col("LOCATION"), r"\s*\n\s*", " "), r"[{}]", ""))
+
 ```
 
 ```{python}
@@ -91,8 +102,10 @@ spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
 
 from pyspark.sql.functions import datediff, when, to_date, col
 
+# 将日期列转换为日期格式
 df = df.withColumn("MODELED_EXPIRED", to_date("MODELED_EXPIRED", "MM/dd/yyyy"))
 
+# 直接用日期差填充 DURATION
 df = df.withColumn(
     "MODELED_DURATION",
     when(col("MODELED_DURATION").isNull(), datediff("MODELED_EXPIRED", "POSTED"))
@@ -112,6 +125,7 @@ df = df.withColumn(
     .when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
     .otherwise(col("REMOTE_TYPE_NAME"))  # 保持其他不变
 )
+
 ```
 
 ```{python}
@@ -148,28 +162,150 @@ shutil.rmtree(generated_file_path)
 ```{python}
 spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 
+# 重新加载处理后的数据
 df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
 
-df_cleaned.show(5)
+# 查看数据样本
+df_cleaned.show()
 ```
 
 
 
 
+# Exploratory Data Analysis (EDA)
 
 
+## 1. Comparison of salary between remote and on-site work (box chart)
 ```{python}
+import pandas as pd
+import plotly.express as px
+# 使用 .collect() 收集数据
+data = df_cleaned.select("REMOTE_TYPE_NAME", "SALARY").collect()
 
+# 将数据转换为适合绘图的格式（如列表）
+data_list = [(row["REMOTE_TYPE_NAME"], row["SALARY"]) for row in data]
+
+# 创建一个 Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["REMOTE_TYPE_NAME", "SALARY"])
+
+fig = px.box(df_pandas, x="REMOTE_TYPE_NAME", y="SALARY",
+             title="Salary Comparison: Remote vs. On-Site Jobs",
+             category_orders={"REMOTE_TYPE_NAME": ["On-Site", "Hybrid", "Remote"]},
+             labels={"REMOTE_TYPE_NAME": "Job Type", "SALARY": "Salary ($)"})
+
+fig.write_image("./images/REMOTE_TYPE_NAME&SALARY.png")  ##save the pic
+
+fig.show()
 ```
 
+插入图片
+
+
+## 2. Salary by region (map)
 ```{python}
+#STATE_NAME改为简写
+import us
 
+# 使用 .collect() 收集数据
+data = df_cleaned.select("STATE_NAME", "SALARY").collect()
+
+# 将数据转换为适合绘图的格式（如列表）
+data_list = [(row["STATE_NAME"], row["SALARY"]) for row in data]
+
+# 创建一个 Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["STATE_NAME", "SALARY"])
+
+df_pandas["STATE_NAME"] = df_pandas["STATE_NAME"].apply(
+    lambda x: us.states.lookup(x).abbr if pd.notna(x) and us.states.lookup(x) else x
+)
+
+#Verify conversion
+
+import plotly.express as px
+
+fig = px.choropleth(df_pandas, 
+                    locations="STATE_NAME", 
+                    locationmode="USA-states",
+                    color="SALARY", 
+                    hover_name="STATE_NAME",
+                    scope="usa", 
+                    title="Average Salary by State",
+                    color_continuous_scale="Viridis",
+                    labels={"SALARY": "Average Salary ($)"})
+
+fig.write_image("./images/STATE_NAME&SALARY.png")  ##save the pic
+
+fig.show()
 ```
 
+插入图片
+
+
+## 3. The highest paying job
 ```{python}
+# 使用 .collect() 收集数据
+data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
 
+# 将数据转换为适合绘图的格式（如列表）
+data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
+
+# 创建一个 Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
+
+fig = px.bar(df_pandas.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_values(ascending=False).head(10),
+             title="Top 10 Industries with Highest Salaries",
+             labels={"LIGHTCAST_SECTORS_NAME": "Industry", "SALARY": "Salary ($)"})
+
+fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
+
+fig.show()
 ```
 
+插入图片
+
+
+## 4. Salary comparison between AI and non-AI positions
 ```{python}
+import plotly.express as px
 
+#Define AI-related keywords based on LIGHTCAST_SECTORS_NAME
+ai_keywords = [
+    "Artificial Intelligence", "Machine Learning", "Data Science",
+    "Cybersecurity", "Computational Science", "Deep Learning",
+    "Data Privacy", "Computer Vision", "Natural Language Processing",
+    "Big Data", "Cloud Computing", "Quantum Computing", "Robotics"
+]
+
+# 使用 .collect() 收集数据
+data = df_cleaned.select("LIGHTCAST_SECTORS_NAME", "SALARY").collect()
+
+# 将数据转换为适合绘图的格式（如列表）
+data_list = [(row["LIGHTCAST_SECTORS_NAME"], row["SALARY"]) for row in data]
+
+# 创建一个 Pandas DataFrame
+import pandas as pd
+df_pandas = pd.DataFrame(data_list, columns=["LIGHTCAST_SECTORS_NAME", "SALARY"])
+
+#Classify AI-related vs. Non-AI industries
+df_pandas["AI_RELATED"] = df_pandas["LIGHTCAST_SECTORS_NAME"].apply(
+    lambda x: "AI-related" if any(keyword in str(x) for keyword in ai_keywords) else "Non-AI"
+)
+
+# Show counts of AI vs. Non-AI jobs
+print(df_pandas["AI_RELATED"].value_counts())
+
+
+fig = px.box(df_pandas, x="AI_RELATED", y="SALARY",
+             title="AI-related vs. Non-AI Industries Salary Comparison",
+             labels={"AI_RELATED": "Industry Type", "SALARY": "Salary ($)"},
+             color="AI_RELATED")
+
+fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
+
+fig.show()
 ```
+
+插入图片
