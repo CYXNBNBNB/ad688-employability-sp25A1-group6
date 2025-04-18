@@ -130,8 +130,7 @@ print(f"Not Match：{unmatched_count}")
 
 对每个工作的包含的每个software skills name打分
 ```{python}
-from pyspark.sql.functions import when, lit, col
-
+from pyspark.sql.functions import when, lit, col, trim
 #打分表
 job_expectation = df_cleaned.select(
     col("MIN_EDULEVELS").alias("EDU_LEVEL"),
@@ -148,34 +147,60 @@ job_expectation = job_expectation.withColumn(
     .when(col("EDU_LEVEL") == 99, lit(0)) # No Education Listed
 )
 
-# job_expectation.show(truncate=False)
+job_expectation.show(truncate=False)
 
 ```
 
 ```{python}
-from pyspark.sql.functions import split, explode, trim, col
+from pyspark.sql.functions import count, row_number
+from pyspark.sql.window import Window
 
-# Step 1: 加分字段与原始数据 join
+# Step 1: 原始操作（你已完成）
 df_with_score = df_cleaned.join(
     job_expectation.select("EDU_LEVEL", "SCORE"),
     df_cleaned["MIN_EDULEVELS"] == job_expectation["EDU_LEVEL"],
     how="left"
 )
-
-# Step 2: 拆分技能字符串为数组
 df_with_skills = df_with_score.withColumn("Skill", split(col("SOFTWARE_SKILLS_NAME"), ","))
-
-# Step 3: 展平为多行，并去除空格
 df_exploded = df_with_skills.select(explode("Skill").alias("Skill"), col("SCORE"))
 df_exploded = df_exploded.withColumn("Skill", trim(col("Skill")))
 
-# Step 4: 聚合技能得分
-from pyspark.sql.functions import sum as _sum
+# Step 2: 按 Skill 和 SCORE 统计频次
+skill_score_counts = df_exploded.groupBy("Skill", "SCORE").agg(count("*").alias("count"))
 
-skill_score_summary = df_exploded.groupBy("Skill").agg(_sum("SCORE").alias("Total_Score")).orderBy(col("Total_Score").desc())
+# Step 3: 使用窗口函数找出每个技能最常见的得分等级
+window_spec = Window.partitionBy("Skill").orderBy(col("count").desc())
 
-# 查看前几行结果
-# skill_score_summary.show(truncate=False)
+skill_most_common_score = skill_score_counts.withColumn("rank", row_number().over(window_spec)) \
+                                            .filter(col("rank") == 1) \
+                                            .select("Skill", "SCORE", "count") \
+                                            .orderBy(col("SCORE").desc())
+
+from pyspark.sql.functions import col, count, lit, greatest, when
+
+# 假设你已经得到了 skill_score_counts 表（Skill + SCORE + count）
+
+# Step 1: pivot 展开为列
+skill_score_pivot = skill_score_counts.groupBy("Skill") \
+    .pivot("SCORE", [5, 4, 3, 2, 1, 0]) \
+    .agg(count("count")) \
+    .na.fill(0)  # 把 null 填成 0，表示没有出现过
+
+# Step 2: 添加 Most_Common_SCORE 列，找出最大频次对应的 SCORE
+skill_score_labeled = skill_score_pivot.withColumn(
+    "Most_Common_SCORE",
+    when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("5"), lit(5))
+    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("4"), lit(4))
+    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("3"), lit(3))
+    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("2"), lit(2))
+    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("1"), lit(1))
+    .when(greatest(col("5"), col("4"), col("3"), col("2"), col("1"), col("0")) == col("0"), lit(0))
+)
+
+# Step 3: 显示最终结果
+skill_score_labeled.orderBy("Most_Common_SCORE", ascending=False).show(truncate=False)
+
+
 ```
 
 ```{python}
