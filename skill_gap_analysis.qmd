@@ -41,13 +41,7 @@ from pyspark.sql.functions import col
 import pandas as pd
 
 # Step 1: 提取技能字段（ SOFTWARE_SKILLS_NAME），转换为 Pandas 列表
-
-skills_series = (
-    df_cleaned
-    .filter(col("SOFTWARE_SKILLS_NAME").isNotNull()) 
-    .select("SOFTWARE_SKILLS_NAME")
-    .toPandas()["SOFTWARE_SKILLS_NAME"]
-)
+skills_series = df_cleaned.select("SOFTWARE_SKILLS_NAME").dropna().toPandas()["SOFTWARE_SKILLS_NAME"]
 
 # Step 2: 拆分每行字符串为技能列表，并展开统计
 all_skills = []
