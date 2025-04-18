@@ -20,6 +20,8 @@ execute:
 
 ---
 
+# Load the dataset
+
 ```{python}
 import pandas as pd
 import plotly.express as px
@@ -36,6 +38,10 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 df.show(5)
 ```
 
+## 1. Update Duration
+
+Calculates the duration of each job posting by finding the difference between its expiration and posted dates. Converts the POSTED and EXPIRED columns from string to date format. Update DURATION if it is null with the number of days between EXPIRED and POSTED, otherwise, the existing value is kept.
+
 ```{python}
 # 1.DURATION = EXPIRED - POSTED
 
@@ -43,11 +49,9 @@ spark.conf.set("spark.sql.legacy.timeParserPolicy", "LEGACY")
 
 from pyspark.sql.functions import datediff, when, to_date, col
 
-# 将日期列转换为日期格式
 df = df.withColumn("POSTED", to_date("POSTED", "MM/dd/yyyy")) \
        .withColumn("EXPIRED", to_date("EXPIRED", "MM/dd/yyyy"))
 
-# 直接用日期差填充 DURATION
 df = df.withColumn(
     "DURATION",
     when(col("DURATION").isNull(), datediff("EXPIRED", "POSTED"))
