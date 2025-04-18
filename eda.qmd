@@ -21,6 +21,13 @@ execute:
 
 
 ```{python}
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+pio.renderers.default = "vscode"
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import split, explode, col, regexp_replace, transform, isnan
+
 spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 
 # reload cleaned data

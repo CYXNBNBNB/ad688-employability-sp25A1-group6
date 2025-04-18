@@ -18,3 +18,84 @@ execute:
   echo: true  #显示代码
 
 ---
+```{python}
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+pio.renderers.default = "vscode"
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import split, explode, col, regexp_replace, transform, isnan
+
+spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
+
+# reload cleaned data
+df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
+
+# show dataset
+df_cleaned.show()
+```
+
+```{python}
+from collections import Counter
+from pyspark.sql.functions import col
+import pandas as pd
+
+# Step 1: 提取技能字段（ SOFTWARE_SKILLS_NAME），转换为 Pandas 列表
+skills_series = df_cleaned.select("SOFTWARE_SKILLS_NAME").dropna().toPandas()["SOFTWARE_SKILLS_NAME"]
+
+# Step 2: 拆分每行字符串为技能列表，并展开统计
+all_skills = []
+for skills in skills_series:
+    skill_list = [s.strip() for s in skills.split(",")]
+    all_skills.extend(skill_list)
+
+# Step 3: 统计词频
+skill_counts = Counter(all_skills)
+top_skills = skill_counts.most_common(30)  # 可以改为 10 或全部统计
+
+# Step 4: 转为 DataFrame 以方便展示和画图
+df_skill_counts = pd.DataFrame(top_skills, columns=["Skill", "Frequency"])
+print(df_skill_counts)
+```
+
+```{python}
+# Step 1: 导入必要库
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Step 2: 构建团队技能等级数据
+skills_data = {
+    "Name": ["Yuxuan Chen", "Shangxuan Zhong", "Qimin Shen", "Altyn Baigaliyeva"],
+    "SQL": [5, 3, 4, 2],
+    "Excel": [4, 2, 5, 3],
+    "Python": [3, 1, 4, 2],
+    "SAP Applications": [2, 2, 3, 1],
+    "Dashboard": [2, 2, 3, 1],
+    "Tableau": [2, 2, 3, 1],
+    "PowerBI": [2, 2, 3, 1],
+    "PowerPoint": [2, 2, 3, 1],
+    "R": [2, 2, 3, 1],
+    "Azure": [2, 2, 3, 1],
+    "Amazon Web Services": [2, 2, 3, 1]
+}
+
+# Step 3: 创建 DataFrame 并设置 Name 为索引
+df_skills = pd.DataFrame(skills_data)
+df_skills.set_index("Name", inplace=True)
+
+# Step 4: 展示技能等级表
+print("🔍 团队技能等级表：")
+display(df_skills)  # 如果在Jupyter中使用，display效果更好；否则使用 print(df_skills)
+
+# Step 5: 可视化技能差距 - 热图
+plt.figure(figsize=(8, 6))
+sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5, cbar_kws={'label': 'Skill Level'})
+plt.title("Team Skill Levels Heatmap")
+plt.xticks(rotation=45)  
+plt.yticks(rotation=0)
+plt.tight_layout()
+plt.show()
+```
+
+
