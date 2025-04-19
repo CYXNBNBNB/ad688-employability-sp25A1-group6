@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#creating-a-team-based-skills-data-framework" id="toc-creating-a-team-based-skills-data-framework" class="nav-link active" data-scroll-target="#creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</a></li>
-  <li><a href="#将团队技能与行业要求进行比较" id="toc-将团队技能与行业要求进行比较" class="nav-link" data-scroll-target="#将团队技能与行业要求进行比较"><span class="header-section-number">2</span> 将团队技能与行业要求进行比较</a></li>
+  <li><a href="#compare-team-skills-to-industry-requirements" id="toc-compare-team-skills-to-industry-requirements" class="nav-link" data-scroll-target="#compare-team-skills-to-industry-requirements"><span class="header-section-number">2</span> Compare team skills to industry requirements</a></li>
   </ul>
 </nav>
     </div>
@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="2b2751f4" class="cell" data-execution_count="1">
+<div id="78bf432d" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="db93c52d" class="cell" data-execution_count="2">
+<div id="ab5ab9a5" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="4ca1ea48" class="cell" data-execution_count="3">
+<div id="3b0a0c7e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -300,16 +300,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="./images/Skill_Level.png" class="img-fluid" alt="Team strengths and gaps"> 缺少解释</p>
+<p><img src="./images/Skill_Level.png" class="img-fluid" alt="Team strengths and gaps"> 缺少解释 这个我就先不解释了，等大家数据更新完重新画了再解释，我把我数据改了</p>
 </section>
-<section id="将团队技能与行业要求进行比较" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="将团队技能与行业要求进行比较"><span class="header-section-number">2</span> 将团队技能与行业要求进行比较</h2>
-<div id="69727636" class="cell" data-execution_count="4">
+<section id="compare-team-skills-to-industry-requirements" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="compare-team-skills-to-industry-requirements"><span class="header-section-number">2</span> Compare team skills to industry requirements</h2>
+<p>We add a new column EDU_MATCH to the dataset to check if each person’s actual education level matches the minimum education requirement. If they match, it labels the row as “Match”; otherwise, it marks it as “Mismatch.” This makes it easy to see who meets the education criteria and who doesn’t.</p>
+<div id="f943be43" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建新列 EDU_MATCH，标记是否匹配</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column EDU_MATCH, mark it as a match or not</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_compare <span class="op">=</span> df_cleaned.withColumn(</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EDU_MATCH"</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    when(col(<span class="st">"MIN_EDULEVELS"</span>) <span class="op">==</span> col(<span class="st">"EDUCATION_LEVELS"</span>), <span class="st">"Match"</span>).otherwise(<span class="st">"Mismatch"</span>)</span>
@@ -325,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>对每个工作的包含的每个software skills name打分</p>
-<div id="b5b81a6b" class="cell" data-execution_count="5">
+<div id="9d198607" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col, trim</span>
@@ -354,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Job Expectation</figcaption>
 </figure>
 </div>
-<div id="34f4a444" class="cell" data-execution_count="6">
+<div id="41a342fe" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when</span>
@@ -399,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#skill_score_labeled.select("Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels").orderBy("Proficiency_Levels", ascending=False).show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="fb0090c1" class="cell" data-execution_count="7">
+<div id="97e6d9be" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> lit</span>
@@ -427,7 +428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Filtered Skills</figcaption>
 </figure>
 </div>
-<div id="fd5aee99" class="cell" data-execution_count="8">
+<div id="0b6d79d2" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
