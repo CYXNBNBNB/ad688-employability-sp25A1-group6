@@ -78,7 +78,7 @@ skills_data = {
     "Python": [3, 4, 4, 2],
     "SAP Applications": [2, 2, 2, 1],
     "Dashboard": [2, 2, 2, 1],
-    "Tableau": [2, 2, 2, 1],
+    "Tableau": [2, 2, 1, 1],
     "PowerBI": [2, 2, 2, 1],
     "PowerPoint": [2, 4, 3, 1],
     "R": [2, 4, 4, 1],
