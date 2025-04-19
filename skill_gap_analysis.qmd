@@ -92,8 +92,8 @@ df_skills = pd.DataFrame(skills_data)
 df_skills.set_index("Name", inplace=True)
 
 # 3. Demonstrate the skill level chart
-print("Team Skill Rating Scale:")
-display(df_skills) 
+#print("Team Skill Rating Scale:")
+#display(df_skills) 
 
 # 4. Visualize the skills gap by heat map
 plt.figure(figsize=(8, 6))
@@ -147,7 +147,7 @@ job_expectation = job_expectation.withColumn(
     .when(col("EDU_LEVEL") == 99, lit(0)) # No Education Listed
 )
 
-job_expectation.show(truncate=False)
+#job_expectation.show(truncate=False)
 
 ```
 
@@ -191,9 +191,7 @@ skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs)
     .withColumn("Proficiency_Levels", expr("aggregate(filtered, -1, (acc, x) -> IF(acc = -1 OR x.score < acc, x.score, acc))"))
 
 # Step 5: 显示最终结果
-skill_score_labeled.select(
-    "Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels"
-).orderBy("Proficiency_Levels", ascending=False).show(n = 3000,truncate=False)
+#skill_score_labeled.select("Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels").orderBy("Proficiency_Levels", ascending=False).show(truncate=False)
 ```
 
 ```{python}
@@ -216,11 +214,6 @@ filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
 filtered_skills.show(truncate=False)
 
 ```
-
-```{python}
-skills data   Proficiency_Levels
-```
-
 
 ```{python}
 import pandas as pd
