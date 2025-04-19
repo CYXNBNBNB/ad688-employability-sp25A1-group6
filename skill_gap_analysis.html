@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="6c872bd0" class="cell" data-execution_count="1">
+<div id="366e101d" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="e64e0895" class="cell" data-execution_count="2">
+<div id="ca46c122" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="6d8a99d5" class="cell" data-execution_count="3">
+<div id="31d8893a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="compare-team-skills-to-industry-requirements" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="compare-team-skills-to-industry-requirements"><span class="header-section-number">2</span> Compare team skills to industry requirements</h2>
 <p>We add a new column EDU_MATCH to the dataset to check if each person’s actual education level matches the minimum education requirement. If they match, it labels the row as “Match”; otherwise, it marks it as “Mismatch.” This makes it easy to see who meets the education criteria and who doesn’t.</p>
-<div id="f6a3752c" class="cell" data-execution_count="4">
+<div id="7ba69cbe" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
@@ -326,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Then we create a reference table that links each unique minimum education level required for a job to a corresponding score. It assigns higher scores to higher education levels, for example, a Ph.D.&nbsp;gets a 5, a Master’s a 4, and so on, down to 0 for jobs that list no education requirement. And we think this scoring helps quantify and compare job expectations based on the level of education required.</p>
-<div id="72601032" class="cell" data-execution_count="5">
+<div id="e28bc207" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col, trim</span>
@@ -356,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>We analyze how often each software skill appears in job listings, categorized by the required education level (which we previously converted into scores). First, we join the education score to each job, split the combined skill strings into individual skills, and count how frequently each skill appears at each education score level. Second, we reshape the data so that each skill shows the number of times it appears across all score levels. Finally, we identify the most common score for each skill. If multiple scores tie for the highest count, we will select the lowest one among them—resulting in a “Proficiency_Levels” value that reflects the typical education requirement associated with that skill in the job market.</p>
-<div id="c93629e8" class="cell" data-execution_count="6">
+<div id="766d3655" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when</span>
@@ -402,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Here we focus on a specific set of software skills that are relevant to our analysis. First, we define a list of target skills we’re interested in, such as SQL, Excel, Python, Tableau, and others. Then, we filter our previously processed skill data to only include these selected skills, keeping just the skill names and their associated “Proficiency_Levels”. Finally, we sort the result alphabetically by skill name to make it easier to review and compare.</p>
-<div id="eafce71b" class="cell" data-execution_count="7">
+<div id="0ff6d760" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> lit</span>
@@ -430,17 +430,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Filtered Skills</figcaption>
 </figure>
 </div>
-<div id="015f38d0" class="cell" data-execution_count="8">
+<p>Now we are able to evaluate how well our team’s skill levels match up with job market expectations. First, we collect the proficiency scores for a set of target skills from our previous results. Then, we rename the skill labels into a more readable and consistent format for easier comparison. Next, we calculate the skill gap for each team member by subtracting the job-required score from their actual skill level. Here, positive values mean the team exceeds the requirement, while negative values show areas for improvement. Finally, we visualize these gaps using a heatmap, making it easy to spot which skills are strong and which need development across the team.</p>
+<div id="fb1d220d" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># === 1. 从 PySpark 的 filtered_skills 用 collect 构建 required_levels 字典 ===</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Build a dictionary of required_levels from filtered_skills with collect</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> filtered_skills.collect()</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># === 2. 映射技能名称为团队使用的一致形式 ===</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Mapping skill names to a consistent form used by the team</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>skill_name_map <span class="op">=</span> {</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SQL(ProgrammingLanguage)"</span>: <span class="st">"SQL"</span>,</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MicrosoftExcel"</span>: <span class="st">"Excel"</span>,</span>
@@ -455,34 +456,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AmazonWebServices"</span>: <span class="st">"Amazon Web Services"</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># === 3. 构建 required_levels（岗位要求技能分数字典） ===</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Construction of required_levels</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>required_levels <span class="op">=</span> {</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    skill_name_map.get(row[<span class="st">"Skill"</span>], row[<span class="st">"Skill"</span>]): row[<span class="st">"Proficiency_Levels"</span>]</span>
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> rows</span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># === 4. 计算差距（团队技能 - 职位要求） ===</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Calculation of gaps (team skills - job requirements)</span></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>df_gap <span class="op">=</span> df_skills.copy()</span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skill <span class="kw">in</span> df_gap.columns:</span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    required <span class="op">=</span> required_levels.get(skill, <span class="dv">0</span>)</span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    df_gap[skill] <span class="op">=</span> df_gap[skill] <span class="op">-</span> required</span>
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co"># === 5. 绘制热力图 ===</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Show result with heat map</span></span>
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
 <span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    df_gap,</span>
 <span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span>sns.diverging_palette(<span class="dv">10</span>, <span class="dv">130</span>, s<span class="op">=</span><span class="dv">90</span>, l<span class="op">=</span><span class="dv">50</span>, as_cmap<span class="op">=</span><span class="va">True</span>),  <span class="co"># 红=不足，绿=超出</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    center<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    cbar_kws<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'Skill Surplus (Team - Required)'</span>}</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Team vs Job Skill Requirements (Heatmap)"</span>)</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>plt.yticks(rotation<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"images/Gaps_Between.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span>sns.diverging_palette(<span class="dv">10</span>, <span class="dv">130</span>, s<span class="op">=</span><span class="dv">90</span>, l<span class="op">=</span><span class="dv">50</span>, as_cmap<span class="op">=</span><span class="va">True</span>),  </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># red = insufficient, green = exceeding</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    center<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    cbar_kws<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'Skill Surplus (Team - Required)'</span>}</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Team vs Job Skill Requirements (Heatmap)"</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>plt.yticks(rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"images/Gaps_Between.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><img src="./images/Gaps_Between.png" class="img-fluid" alt="Gaps between team skill levels and job expectations"> 缺少解释</p>
