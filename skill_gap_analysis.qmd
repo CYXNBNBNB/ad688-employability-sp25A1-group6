@@ -133,11 +133,11 @@ df_compare = df_cleaned.withColumn(
 
 ```
 
+Then we create a reference table that links each unique minimum education level required for a job to a corresponding score. It assigns higher scores to higher education levels, for example, a Ph.D. gets a 5, a Master's a 4, and so on, down to 0 for jobs that list no education requirement. And we think this scoring helps quantify and compare job expectations based on the level of education required.
 
-对每个工作的包含的每个software skills name打分
 ```{python}
 from pyspark.sql.functions import when, lit, col, trim
-#打分表
+# Score table
 job_expectation = df_cleaned.select(
     col("MIN_EDULEVELS").alias("EDU_LEVEL"),
     col("MIN_EDULEVELS_NAME").alias("EDU_LEVELS_NAME")
