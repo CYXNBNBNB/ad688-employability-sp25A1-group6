@@ -107,13 +107,17 @@ plt.show()
 
 ![Team strengths and gaps](/images/Skill_Level.png)
 缺少解释
+这个我就先不解释了，等大家数据更新完重新画了再解释，我把我数据改了
 
 
-## 将团队技能与行业要求进行比较
+## Compare team skills to industry requirements
+
+We add a new column EDU_MATCH to the dataset to check if each person's actual education level matches the minimum education requirement. If they match, it labels the row as "Match"; otherwise, it marks it as "Mismatch." This makes it easy to see who meets the education criteria and who doesn't.
+
 ```{python}
 from pyspark.sql.functions import col, when
 
-# 创建新列 EDU_MATCH，标记是否匹配
+# Create a new column EDU_MATCH, mark it as a match or not
 df_compare = df_cleaned.withColumn(
     "EDU_MATCH",
     when(col("MIN_EDULEVELS") == col("EDUCATION_LEVELS"), "Match").otherwise("Mismatch")
