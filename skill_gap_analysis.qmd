@@ -102,6 +102,7 @@ plt.title("Team Skill Levels Heatmap")
 plt.xticks(rotation=45)  
 plt.yticks(rotation=0)
 plt.tight_layout()
+#plt.savefig("images/Skill_Level.png", dpi=300)
 plt.show()
 ```
 
@@ -256,6 +257,7 @@ plt.title("Team vs Job Skill Requirements (Heatmap)")
 plt.xticks(rotation=45)
 plt.yticks(rotation=0)
 plt.tight_layout()
+#plt.savefig("images/gaps_between.png", dpi=300)
 plt.show()
 
 ```
