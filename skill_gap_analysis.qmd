@@ -221,7 +221,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# === 1. 从 PySpark 的 filtered_skills 转换为 Pandas ===
+# === 1. 从 PySpark 的 filtered_skills 用 collect 构建 required_levels 字典 ===
 rows = filtered_skills.collect()
 
 # === 2. 映射技能名称为团队使用的一致形式 ===
@@ -238,13 +238,12 @@ skill_name_map = {
     "MicrosoftAzure": "Azure",
     "AmazonWebServices": "Amazon Web Services"
 }
+
+# === 3. 构建 required_levels（岗位要求技能分数字典） ===
 required_levels = {
     skill_name_map.get(row["Skill"], row["Skill"]): row["Proficiency_Levels"]
     for row in rows
 }
-
-# === 3. 构建职位要求字典 ===
-required_levels = dict(zip(df_required["Skill"], df_required["Proficiency_Levels"]))
 
 # === 4. 计算差距（团队技能 - 职位要求） ===
 df_gap = df_skills.copy()
@@ -252,7 +251,7 @@ for skill in df_gap.columns:
     required = required_levels.get(skill, 0)
     df_gap[skill] = df_gap[skill] - required
 
-# === 5. 绘图 ===
+# === 5. 绘制热力图 ===
 plt.figure(figsize=(10, 6))
 sns.heatmap(
     df_gap,
