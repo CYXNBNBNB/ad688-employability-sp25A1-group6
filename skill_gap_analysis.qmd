@@ -203,10 +203,12 @@ skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs)
 #skill_score_labeled.select("Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels").orderBy("Proficiency_Levels", ascending=False).show(truncate=False)
 ```
 
+Here we focus on a specific set of software skills that are relevant to our analysis. First, we define a list of target skills we're interested in, such as SQL, Excel, Python, Tableau, and others. Then, we filter our previously processed skill data to only include these selected skills, keeping just the skill names and their associated "Proficiency_Levels". Finally, we sort the result alphabetically by skill name to make it easier to review and compare.
+
 ```{python}
 from pyspark.sql.functions import lit
 
-# 定义目标技能列表
+# 1. Define a list of target skills
 target_skills = [
     "SQL(ProgrammingLanguage)", "MicrosoftExcel", "Python(ProgrammingLanguage)",
     "SAPApplications", "Dashboard", "Tableau(BusinessIntelligenceSoftware)",
@@ -214,12 +216,12 @@ target_skills = [
     "MicrosoftAzure", "AmazonWebServices"
 ]
 
-# 从 skill_score_labeled 中筛选目标技能
+# 2. Filter target skills from skill_score_labeled
 filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
     .select("Skill", "Proficiency_Levels") \
     .orderBy("Skill")
 
-# 展示结果
+# 3. Show results
 filtered_skills.show(truncate=False)
 ```
 
