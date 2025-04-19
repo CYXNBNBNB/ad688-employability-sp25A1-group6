@@ -152,7 +152,7 @@ job_expectation = job_expectation.withColumn(
 job_expectation.show(truncate=False)
 ```
 
-![Job Expectation](/images/job_expectation.png)
+![Job Expectation](/images/job_expectation.png){width=50%}
 
 ```{python}
 from pyspark.sql.functions import count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
@@ -217,7 +217,7 @@ filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
 filtered_skills.show(truncate=False)
 ```
 
-![Filtered Skills](/images/filtered_skills.png)
+![Filtered Skills](/images/filtered_skills.png){width=60%}
 
 ```{python}
 import pandas as pd
