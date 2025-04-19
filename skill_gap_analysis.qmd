@@ -35,7 +35,6 @@ df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").o
 df_cleaned.show()
 ```
 
-
 ## Creating a team-based skills data framework
 
 We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills,  and puts them into a tidy table using pandas to make it easier to view.
@@ -102,10 +101,12 @@ plt.title("Team Skill Levels Heatmap")
 plt.xticks(rotation=45)  
 plt.yticks(rotation=0)
 plt.tight_layout()
-#plt.savefig("images/Skill_Level.png", dpi=300)
+plt.savefig("images/Skill_Level.png", dpi=300)
 plt.show()
 ```
 
+![Team strengths and gaps](/images/Skill_Level.png)
+缺少解释
 
 
 ## 将团队技能与行业要求进行比较
@@ -118,13 +119,13 @@ df_compare = df_cleaned.withColumn(
     when(col("MIN_EDULEVELS") == col("EDUCATION_LEVELS"), "Match").otherwise("Mismatch")
 )
 
-df_compare.select("MIN_EDULEVELS", "EDUCATION_LEVELS", "EDU_MATCH").show(truncate=False)
+#df_compare.select("MIN_EDULEVELS", "EDUCATION_LEVELS", "EDU_MATCH").show(truncate=False)
 
 # 统计不匹配的行数
-unmatched_count = df_cleaned.filter(col("MIN_EDULEVELS") != col("EDUCATION_LEVELS")).count()
-print(f"Not Match：{unmatched_count}")
+#unmatched_count = df_cleaned.filter(col("MIN_EDULEVELS") != col("EDUCATION_LEVELS")).count()
+#print(f"Not Match：{unmatched_count}")
 
-# 说明EDUCATION_LEVELS和MIN_EDULEVELS一样
+# 说明EDUCATION_LEVELS和MIN_EDULEVELS一样，但是这个检验的代码还是留着吧
 
 ```
 
@@ -148,9 +149,10 @@ job_expectation = job_expectation.withColumn(
     .when(col("EDU_LEVEL") == 99, lit(0)) # No Education Listed
 )
 
-#job_expectation.show(truncate=False)
-
+job_expectation.show(truncate=False)
 ```
+
+![Job Expectation](/images/job_expectation.png)
 
 ```{python}
 from pyspark.sql.functions import count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
@@ -213,8 +215,9 @@ filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
 
 # 展示结果
 filtered_skills.show(truncate=False)
-
 ```
+
+![Filtered Skills](/images/filtered_skills.png)
 
 ```{python}
 import pandas as pd
@@ -265,26 +268,13 @@ plt.title("Team vs Job Skill Requirements (Heatmap)")
 plt.xticks(rotation=45)
 plt.yticks(rotation=0)
 plt.tight_layout()
-# plt.savefig("images/gaps_between.png", dpi=300)
+plt.savefig("images/Gaps_Between.png", dpi=300)
 plt.show()
 
 ```
 
-
-```{python}
-
-```
-
-
-```{python}
-
-```
-
-
-```{python}
-
-```
-
+![Gaps between team skill levels and job expectations](/images/Gaps_Between.png)
+缺少解释
 
 ```{python}
 
