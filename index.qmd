@@ -30,8 +30,17 @@ format:
 ## Research Introduction: Salary & Compensation Trends 
 
 
-## Data Analysis
+## Data Cleaning & Exploration
 
 
-## Career Strategy
+## Exploratory Data Analysis
+
+
+## Skill Gap Analysis
+
+
+## ML Methods
+
+
+## NLP Methods
 
