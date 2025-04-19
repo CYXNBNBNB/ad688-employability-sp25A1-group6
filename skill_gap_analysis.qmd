@@ -221,49 +221,53 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ---- 1. 职位要求技能：从 filtered_skills 转换而来 ----
-# 你已经有了 PySpark 表 filtered_skills，可以直接转成 Pandas 这里模拟：
+# === 1. 从 PySpark 的 filtered_skills 转换为 Pandas ===
+rows = filtered_skills.collect()
+
+# === 2. 映射技能名称为团队使用的一致形式 ===
+skill_name_map = {
+    "SQL(ProgrammingLanguage)": "SQL",
+    "MicrosoftExcel": "Excel",
+    "Python(ProgrammingLanguage)": "Python",
+    "SAPApplications": "SAP Applications",
+    "Dashboard": "Dashboard",
+    "Tableau(BusinessIntelligenceSoftware)": "Tableau",
+    "PowerBI": "PowerBI",
+    "MicrosoftPowerPoint": "PowerPoint",
+    "R(ProgrammingLanguage)": "R",
+    "MicrosoftAzure": "Azure",
+    "AmazonWebServices": "Amazon Web Services"
+}
 required_levels = {
-    "SQL": 3,
-    "Excel": 3,
-    "Python": 3,
-    "SAP Applications": 2,
-    "Dashboard": 2,
-    "Tableau": 3,
-    "PowerBI": 3,
-    "PowerPoint": 2,
-    "R": 2,
-    "Azure": 2,
-    "Amazon Web Services": 2
+    skill_name_map.get(row["Skill"], row["Skill"]): row["Proficiency_Levels"]
+    for row in rows
 }
 
-# 3. 计算技能差距（gap = 实际 - 要求） ----
+# === 3. 构建职位要求字典 ===
+required_levels = dict(zip(df_required["Skill"], df_required["Proficiency_Levels"]))
+
+# === 4. 计算差距（团队技能 - 职位要求） ===
 df_gap = df_skills.copy()
 for skill in df_gap.columns:
     required = required_levels.get(skill, 0)
     df_gap[skill] = df_gap[skill] - required
 
-# ---- 4. 自定义调色热力图（红=需提升，绿=满足）----
+# === 5. 绘图 ===
 plt.figure(figsize=(10, 6))
 sns.heatmap(
     df_gap,
     annot=True,
-    cmap=sns.diverging_palette(10, 130, s=90, l=50, as_cmap=True),  # 红绿渐变
-    center=0,  # 以0为中心（gap=0为白）
+    cmap=sns.diverging_palette(10, 130, s=90, l=50, as_cmap=True),  # 红=不足，绿=超出
+    center=0,
     linewidths=0.5,
-    cbar_kws={'label': 'Skill Gap (Required - Team)'}
+    cbar_kws={'label': 'Skill Surplus (Team - Required)'}
 )
 plt.title("Team vs Job Skill Requirements (Heatmap)")
 plt.xticks(rotation=45)
 plt.yticks(rotation=0)
 plt.tight_layout()
-#plt.savefig("images/gaps_between.png", dpi=300)
+# plt.savefig("images/gaps_between.png", dpi=300)
 plt.show()
-
-```
-
-
-```{python}
 
 ```
 
