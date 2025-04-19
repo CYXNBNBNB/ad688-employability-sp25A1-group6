@@ -354,188 +354,170 @@ only showing top 20 rows
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div id="8e7f09af" class="cell" data-execution_count="45">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 导入库 =====</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<div id="8e7f09af" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== KMeans 聚类（使用 TITLE_RAW 作为标签）=====</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score, adjusted_rand_score</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer, OneHotEncoder, VectorAssembler</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score, adjusted_rand_score</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>kmeans_df <span class="op">=</span> df_cleaned.select(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"SALARY"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE_NAME"</span>, <span class="st">"TITLE_RAW"</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 创建 Spark 会话 =====</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">"KMeans_Title_Clustering"</span>).getOrCreate()</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 加载数据 =====</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.read.option(<span class="st">"header"</span>, <span class="st">"true"</span>).option(<span class="st">"inferSchema"</span>, <span class="st">"true"</span>).csv(<span class="st">"data/lightcast_cleaned.csv"</span>)</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 选择字段并清洗 =====</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>df_kmeans <span class="op">=</span> df.select(</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"SALARY"</span>,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE_NAME"</span>, <span class="st">"TITLE_RAW"</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    kmeans_df <span class="op">=</span> kmeans_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 编码与向量化</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>indexers <span class="op">=</span> [</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE_IDX"</span>),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"REMOTE_TYPE_IDX"</span>),</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"STATE_NAME"</span>, outputCol<span class="op">=</span><span class="st">"STATE_IDX"</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 数据类型转换 =====</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>df_kmeans <span class="op">=</span> df_kmeans <span class="op">\</span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"DURATION"</span>, col(<span class="st">"DURATION"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"EDUCATION_LEVELS"</span>, col(<span class="st">"EDUCATION_LEVELS"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY_FROM"</span>, col(<span class="st">"SALARY_FROM"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY_TO"</span>, col(<span class="st">"SALARY_TO"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY"</span>, col(<span class="st">"SALARY"</span>).cast(DoubleType()))</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>df_kmeans <span class="op">=</span> df_kmeans.na.drop(subset<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>])</span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 编码与向量化 =====</span></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>indexers <span class="op">=</span> [</span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE_IDX"</span>),</span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"REMOTE_TYPE_IDX"</span>),</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"STATE_NAME"</span>, outputCol<span class="op">=</span><span class="st">"STATE_IDX"</span>)</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>encoder <span class="op">=</span> OneHotEncoder(</span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_TYPE_IDX"</span>, <span class="st">"REMOTE_TYPE_IDX"</span>, <span class="st">"STATE_IDX"</span>],</span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>    outputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>]</span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>,</span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>               <span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>],</span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"features"</span></span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 构建 KMeans 模型 =====</span></span>
-<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>, predictionCol<span class="op">=</span><span class="st">"cluster"</span>)</span>
-<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> [encoder, assembler, kmeans])</span>
-<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(df_kmeans)</span>
-<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 聚类预测结果 =====</span></span>
-<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>clustered <span class="op">=</span> model.transform(df_kmeans)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>encoder <span class="op">=</span> OneHotEncoder(</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_TYPE_IDX"</span>, <span class="st">"REMOTE_TYPE_IDX"</span>, <span class="st">"STATE_IDX"</span>],</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    outputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>]</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>,</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>               <span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>],</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"features"</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">42</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>, predictionCol<span class="op">=</span><span class="st">"cluster"</span>)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> [encoder, assembler, kmeans])</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 清洗后训练</span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>kmeans_df <span class="op">=</span> kmeans_df.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(kmeans_df)</span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>clustered <span class="op">=</span> model.transform(kmeans_df)</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 收集结果用于评估</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> clustered.select(<span class="st">"TITLE_RAW"</span>, <span class="st">"cluster"</span>).collect()</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>df_clustered <span class="op">=</span> pd.DataFrame([row.asDict() <span class="cf">for</span> row <span class="kw">in</span> rows])</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="co"># sklearn 评估</span></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(df_clustered[<span class="st">"TITLE_RAW"</span>])</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>pred_labels <span class="op">=</span> df_clustered[<span class="st">"cluster"</span>]</span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, pred_labels)</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, pred_labels)</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ KMeans 聚类评估:"</span>)</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 导出结果用于 sklearn 聚类评估 =====</span></span>
-<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> clustered.select(<span class="st">"TITLE_RAW"</span>, <span class="st">"cluster"</span>).dropna().collect()</span>
-<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>df_clustered <span class="op">=</span> pd.DataFrame([row.asDict() <span class="cf">for</span> row <span class="kw">in</span> rows])</span>
-<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== sklearn 聚类评估 =====</span></span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(df_clustered[<span class="st">"TITLE_RAW"</span>])</span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>pred_labels <span class="op">=</span> df_clustered[<span class="st">"cluster"</span>]</span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, pred_labels)</span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, pred_labels)</span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">✅ KMeans 聚类评估："</span>)</span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 每个聚类簇的代表 TITLE_RAW =====</span></span>
-<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>dominant_titles <span class="op">=</span> df_clustered.groupby(<span class="st">"cluster"</span>)[<span class="st">"TITLE_RAW"</span>].agg(<span class="kw">lambda</span> x: x.value_counts().index[<span class="dv">0</span>])</span>
-<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">每个聚类簇的代表 TITLE_RAW："</span>)</span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dominant_titles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>25/04/20 06:33:27 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
-[Stage 867:======&gt;                                                (2 + 14) / 16]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-✅ KMeans 聚类评估：
-NMI: 0.2851
-ARI: 0.0140
-
-每个聚类簇的代表 TITLE_RAW：
-cluster
-0                                         Data Analyst
-1                                         Data Analyst
-2                                         Data Analyst
-3    Oracle HCM Cloud Implementation Lead - Core HR...
-4                             SAP PP Specialist Leader
-Name: TITLE_RAW, dtype: object</code></pre>
-</div>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">每个聚类簇的代表 TITLE_RAW:"</span>)</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_clustered.groupby(<span class="st">"cluster"</span>)[<span class="st">"TITLE_RAW"</span>].agg(<span class="kw">lambda</span> x: x.value_counts().index[<span class="dv">0</span>]))</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">每簇职位数量:"</span>)</span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_clustered[<span class="st">"cluster"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+✅ KMeans 聚类评估:
+NMI: 0.2674
+ARI: 0.0078
+
+每个聚类簇的代表 TITLE_RAW:
+cluster
+0        Enterprise Architect
+1                Data Analyst
+2                Data Analyst
+3    Oracle HCM Cloud Manager
+4                Data Analyst
+Name: TITLE_RAW, dtype: object
+
+每簇职位数量:
+cluster
+0    5756
+1    7535
+2    5180
+3    1560
+4    7292
+Name: count, dtype: int64</code></pre>
 </div>
-<div id="b13e35b7" class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 1: Import Libraries ======</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer, OneHotEncoder, VectorAssembler</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 4: Select Fields &amp; Drop Nulls ======</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>df_lr <span class="op">=</span> df.select(</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"SALARY"</span>,</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"REMOTE_TYPE"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"STATE_NAME"</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 5: Type Conversion for Numeric Columns ======</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>df_lr <span class="op">=</span> df_lr <span class="op">\</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"DURATION"</span>, col(<span class="st">"DURATION"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"EDUCATION_LEVELS"</span>, col(<span class="st">"EDUCATION_LEVELS"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY"</span>, col(<span class="st">"SALARY"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY_FROM"</span>, col(<span class="st">"SALARY_FROM"</span>).cast(DoubleType())) <span class="op">\</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"SALARY_TO"</span>, col(<span class="st">"SALARY_TO"</span>).cast(DoubleType()))</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 6: Encode Categorical Features ======</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>indexers <span class="op">=</span> [</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE_IDX"</span>),</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"REMOTE_TYPE_IDX"</span>),</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"STATE_NAME"</span>, outputCol<span class="op">=</span><span class="st">"STATE_IDX"</span>)</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>encoder <span class="op">=</span> OneHotEncoder(</span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_TYPE_IDX"</span>, <span class="st">"REMOTE_TYPE_IDX"</span>, <span class="st">"STATE_IDX"</span>],</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    outputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>]</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 7: Assemble Feature Vector ======</span></span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>,</span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>               <span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>],</span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"features"</span></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 8: Build Linear Regression Model ======</span></span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 9: Pipeline &amp; Train/Test Split ======</span></span>
-<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.tuning <span class="im">import</span> TrainValidationSplit, ParamGridBuilder</span>
-<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>(train_data, test_data) <span class="op">=</span> df_lr.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>required_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
-<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 分别清洗训练集和测试集，防止 null 报错</span></span>
-<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>required_cols)</span>
-<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>required_cols)</span>
-<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> [encoder, assembler, lr])</span>
-<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
-<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a><span class="co"># ====== Step 10: Evaluate Model ======</span></span>
-<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
-<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
-<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
-<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
-<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
-<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ Linear Regression Evaluation:"</span>)</span>
-<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R² Score: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1daf1c40" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer, OneHotEncoder, VectorAssembler</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 使用现有 df_cleaned，选择字段 =====</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>df_lr <span class="op">=</span> df_cleaned.select(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"SALARY"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE_NAME"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 类型转换 =====</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    df_lr <span class="op">=</span> df_lr.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 类别变量编码 =====</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>indexers <span class="op">=</span> [</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"EMPLOYMENT_TYPE_IDX"</span>),</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>, outputCol<span class="op">=</span><span class="st">"REMOTE_TYPE_IDX"</span>),</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    StringIndexer(inputCol<span class="op">=</span><span class="st">"STATE_NAME"</span>, outputCol<span class="op">=</span><span class="st">"STATE_IDX"</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>encoder <span class="op">=</span> OneHotEncoder(</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_TYPE_IDX"</span>, <span class="st">"REMOTE_TYPE_IDX"</span>, <span class="st">"STATE_IDX"</span>],</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    outputCols<span class="op">=</span>[<span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>]</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 特征拼接 =====</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>,</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>               <span class="st">"EMPLOYMENT_VEC"</span>, <span class="st">"REMOTE_VEC"</span>, <span class="st">"STATE_VEC"</span>],</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"features"</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 建模并切分训练/测试数据 =====</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>(train_data, test_data) <span class="op">=</span> df_lr.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 清理掉 null 的记录</span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> [encoder, assembler, lr])</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 模型预测与评估 =====</span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">✅ 多元线性回归结果:"</span>)</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>25/04/20 06:34:43 WARN Instrumentation: [b170b9b3] regParam is zero, which might cause numerical instability and overfitting.
-                                                                                </code></pre>
+<pre><code>25/04/20 06:48:09 WARN Instrumentation: [99cac200] regParam is zero, which might cause numerical instability and overfitting.
+[Stage 996:&gt;                                                        (0 + 1) / 1]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-✅ Linear Regression Evaluation:
-R² Score: 0.9992
-RMSE: 1290.65</code></pre>
+✅ 多元线性回归结果:
+R²: 0.9991
+RMSE: 1379.09</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>                                                                                </code></pre>
 </div>
 </div>
 
