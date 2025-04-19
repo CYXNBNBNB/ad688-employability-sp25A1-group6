@@ -152,8 +152,7 @@ job_expectation.show(truncate=False)
 ```
 
 ```{python}
-from pyspark.sql.functions import count, row_number, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
-from pyspark.sql.window import Window
+from pyspark.sql.functions import count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
 
 # Step 1: 原始操作（你已完成）
 df_with_score = df_cleaned.join(
@@ -168,23 +167,15 @@ df_exploded = df_exploded.withColumn("Skill", trim(col("Skill")))
 # Step 2: 按 Skill 和 SCORE 统计频次
 skill_score_counts = df_exploded.groupBy("Skill", "SCORE").agg(count("*").alias("count"))
 
-# Step 3: 使用窗口函数找出每个技能最常见的得分等级
-window_spec = Window.partitionBy("Skill").orderBy(col("count").desc())
+# Step 3: pivot 展开为列
+from pyspark.sql.functions import sum as _sum
 
-skill_most_common_score = skill_score_counts.withColumn("rank", row_number().over(window_spec)) \
-                                            .filter(col("rank") == 1) \
-                                            .select("Skill", "SCORE", "count") \
-                                            .orderBy(col("SCORE").desc())
-
-# 假设你已经得到了 skill_score_counts 表（Skill + SCORE + count）
-
-# Step 1: pivot 展开为列
 skill_score_pivot = skill_score_counts.groupBy("Skill") \
     .pivot("SCORE", [5, 4, 3, 2, 1, 0]) \
-    .agg(count("count")) \
-    .na.fill(0)  
+    .agg(_sum("count")) \
+    .na.fill(0) 
 
-# Step 2: 用数组和过滤方式处理并列最大值，找中间那个分数
+# Step 4: 用数组和过滤方式处理并列最大值，找中间那个分数
 score_structs = array(
     struct(lit(5).alias("score"), col("5").alias("cnt")),
     struct(lit(4).alias("score"), col("4").alias("cnt")),
@@ -199,11 +190,10 @@ skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs)
     .withColumn("filtered", expr("filter(score_array, x -> x.cnt = max_count)")) \
     .withColumn("Proficiency_Levels", expr("aggregate(filtered, -1, (acc, x) -> IF(acc = -1 OR x.score < acc, x.score, acc))"))
 
-# Step 3: 显示最终结果
+# Step 5: 显示最终结果
 skill_score_labeled.select(
     "Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels"
 ).orderBy("Proficiency_Levels", ascending=False).show(n = 3000,truncate=False)
-
 ```
 
 ```{python}
