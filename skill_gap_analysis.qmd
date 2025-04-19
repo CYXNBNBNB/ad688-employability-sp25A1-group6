@@ -158,10 +158,12 @@ job_expectation.show(truncate=False)
 
 ![Job Expectation](/images/job_expectation.png){width=50%}
 
+We analyze how often each software skill appears in job listings, categorized by the required education level (which we previously converted into scores). First, we join the education score to each job, split the combined skill strings into individual skills, and count how frequently each skill appears at each education score level. Second, we reshape the data so that each skill shows the number of times it appears across all score levels. Finally, we identify the most common score for each skill. If multiple scores tie for the highest count, we will select the lowest one among them—resulting in a "Proficiency_Levels" value that reflects the typical education requirement associated with that skill in the job market.
+
 ```{python}
 from pyspark.sql.functions import count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when
 
-# Step 1: 原始操作（你已完成）
+# 1. Export the data 
 df_with_score = df_cleaned.join(
     job_expectation.select("EDU_LEVEL", "SCORE"),
     df_cleaned["MIN_EDULEVELS"] == job_expectation["EDU_LEVEL"],
@@ -171,10 +173,10 @@ df_with_skills = df_with_score.withColumn("Skill", split(col("SOFTWARE_SKILLS_NA
 df_exploded = df_with_skills.select(explode("Skill").alias("Skill"), col("SCORE"))
 df_exploded = df_exploded.withColumn("Skill", trim(col("Skill")))
 
-# Step 2: 按 Skill 和 SCORE 统计频次
+# 2. Frequency Statistics by Skill and SCORE
 skill_score_counts = df_exploded.groupBy("Skill", "SCORE").agg(count("*").alias("count"))
 
-# Step 3: pivot 展开为列
+# 3 Expand pivot to column
 from pyspark.sql.functions import sum as _sum
 
 skill_score_pivot = skill_score_counts.groupBy("Skill") \
@@ -182,7 +184,7 @@ skill_score_pivot = skill_score_counts.groupBy("Skill") \
     .agg(_sum("count")) \
     .na.fill(0) 
 
-# Step 4: 用数组和过滤方式处理并列最大值，找中间那个分数
+# 4. Arrays and filters are used to process tied maxima and find the middle score
 score_structs = array(
     struct(lit(5).alias("score"), col("5").alias("cnt")),
     struct(lit(4).alias("score"), col("4").alias("cnt")),
