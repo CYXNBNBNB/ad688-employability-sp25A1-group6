@@ -227,15 +227,17 @@ filtered_skills.show(truncate=False)
 
 ![Filtered Skills](/images/filtered_skills.png){width=60%}
 
+Now we are able to evaluate how well our team’s skill levels match up with job market expectations. First, we collect the proficiency scores for a set of target skills from our previous results. Then, we rename the skill labels into a more readable and consistent format for easier comparison. Next, we calculate the skill gap for each team member by subtracting the job-required score from their actual skill level. Here, positive values mean the team exceeds the requirement, while negative values show areas for improvement. Finally, we visualize these gaps using a heatmap, making it easy to spot which skills are strong and which need development across the team.
+
 ```{python}
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# === 1. 从 PySpark 的 filtered_skills 用 collect 构建 required_levels 字典 ===
+# 1. Build a dictionary of required_levels from filtered_skills with collect
 rows = filtered_skills.collect()
 
-# === 2. 映射技能名称为团队使用的一致形式 ===
+# 2. Mapping skill names to a consistent form used by the team
 skill_name_map = {
     "SQL(ProgrammingLanguage)": "SQL",
     "MicrosoftExcel": "Excel",
@@ -250,24 +252,25 @@ skill_name_map = {
     "AmazonWebServices": "Amazon Web Services"
 }
 
-# === 3. 构建 required_levels（岗位要求技能分数字典） ===
+# 3. Construction of required_levels
 required_levels = {
     skill_name_map.get(row["Skill"], row["Skill"]): row["Proficiency_Levels"]
     for row in rows
 }
 
-# === 4. 计算差距（团队技能 - 职位要求） ===
+# 4. Calculation of gaps (team skills - job requirements)
 df_gap = df_skills.copy()
 for skill in df_gap.columns:
     required = required_levels.get(skill, 0)
     df_gap[skill] = df_gap[skill] - required
 
-# === 5. 绘制热力图 ===
+# 5. Show result with heat map
 plt.figure(figsize=(10, 6))
 sns.heatmap(
     df_gap,
     annot=True,
-    cmap=sns.diverging_palette(10, 130, s=90, l=50, as_cmap=True),  # 红=不足，绿=超出
+    cmap=sns.diverging_palette(10, 130, s=90, l=50, as_cmap=True),  
+    # red = insufficient, green = exceeding
     center=0,
     linewidths=0.5,
     cbar_kws={'label': 'Skill Surplus (Team - Required)'}
