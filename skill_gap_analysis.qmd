@@ -286,6 +286,7 @@ plt.show()
 
 ![Gaps between team skill levels and job expectations](/images/Gaps_Between.png)
 缺少解释
+也一样，更新完数值再解释
 
 ```{python}
 
