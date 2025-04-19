@@ -74,7 +74,7 @@ import matplotlib.pyplot as plt
 skills_data = {
     "Name": ["Yuxuan Chen", "Shangxuan Zhong", "Qimin Shen", "Altyn Baigaliyeva"],
     "SQL": [5, 4, 4, 2],
-    "Excel": [4, 4, 5, 3],
+    "Excel": [4, 4, 4, 3],
     "Python": [3, 4, 4, 2],
     "SAP Applications": [2, 2, 2, 1],
     "Dashboard": [2, 2, 3, 1],
