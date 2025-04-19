@@ -56,18 +56,39 @@
     "text": "4. Salary comparison between AI and non-AI positions\n\n\nCode\nimport plotly.express as px\n\n# Define AI-related keywords based on LIGHTCAST_SECTORS_NAME\nai_keywords = [\n    \"Artificial Intelligence\", \"Machine Learning\", \"Data Science\",\n    \"Cybersecurity\", \"Computational Science\", \"Deep Learning\",\n    \"Data Privacy\", \"Computer Vision\", \"Natural Language Processing\",\n    \"Big Data\", \"Cloud Computing\", \"Quantum Computing\", \"Robotics\"\n]\n\n# Collecting data with .collect()\ndata = df_cleaned.select(\"LIGHTCAST_SECTORS_NAME\", \"SALARY\").collect()\n\n# Converting data into a format suitable for plotting (e.g., a list)\ndata_list = [(row[\"LIGHTCAST_SECTORS_NAME\"], row[\"SALARY\"]) for row in data]\n\n# Create Pandas DataFrame\nimport pandas as pd\ndf_pandas = pd.DataFrame(data_list, columns=[\"LIGHTCAST_SECTORS_NAME\", \"SALARY\"])\n\n#Classify AI-related vs. Non-AI industries\ndf_pandas[\"AI_RELATED\"] = df_pandas[\"LIGHTCAST_SECTORS_NAME\"].apply(\n    lambda x: \"AI-related\" if any(keyword in str(x) for keyword in ai_keywords) else \"Non-AI\"\n)\n\n# Show counts of AI vs. Non-AI jobs\nprint(df_pandas[\"AI_RELATED\"].value_counts())\n\n\nfig = px.box(df_pandas, x=\"AI_RELATED\", y=\"SALARY\",\n             title=\"AI-related vs. Non-AI Industries Salary Comparison\",\n             labels={\"AI_RELATED\": \"Industry Type\", \"SALARY\": \"Salary ($)\"},\n             color=\"AI_RELATED\")\n\nfig.write_image(\"./images/AI_RELATED&SALARY.png\")  ##save the pic\n\nfig.show()\n\n\n\n\n\nSalary of AI related\n\n\n\nAnalysis\nThis boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories."
   },
   {
-    "objectID": "index.html#data-analysis",
-    "href": "index.html#data-analysis",
+    "objectID": "index.html#data-cleaning-exploration",
+    "href": "index.html#data-cleaning-exploration",
     "title": "Group 6    Job Market Analysis – 2024",
-    "section": "Data Analysis",
-    "text": "Data Analysis"
+    "section": "Data Cleaning & Exploration",
+    "text": "Data Cleaning & Exploration"
   },
   {
-    "objectID": "index.html#career-strategy",
-    "href": "index.html#career-strategy",
+    "objectID": "index.html#exploratory-data-analysis",
+    "href": "index.html#exploratory-data-analysis",
     "title": "Group 6    Job Market Analysis – 2024",
-    "section": "Career Strategy",
-    "text": "Career Strategy"
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis"
+  },
+  {
+    "objectID": "index.html#skill-gap-analysis",
+    "href": "index.html#skill-gap-analysis",
+    "title": "Group 6    Job Market Analysis – 2024",
+    "section": "Skill Gap Analysis",
+    "text": "Skill Gap Analysis"
+  },
+  {
+    "objectID": "index.html#ml-methods",
+    "href": "index.html#ml-methods",
+    "title": "Group 6    Job Market Analysis – 2024",
+    "section": "ML Methods",
+    "text": "ML Methods"
+  },
+  {
+    "objectID": "index.html#nlp-methods",
+    "href": "index.html#nlp-methods",
+    "title": "Group 6    Job Market Analysis – 2024",
+    "section": "NLP Methods",
+    "text": "NLP Methods"
   },
   {
     "objectID": "research_introduction.html",
