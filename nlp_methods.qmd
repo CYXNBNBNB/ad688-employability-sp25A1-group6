@@ -18,3 +18,23 @@ execute:
   echo: true  #显示代码
 
 ---
+```{python}
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+pio.renderers.default = "vscode"
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import split, explode, col, regexp_replace, transform, isnan
+
+spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
+
+# 重新加载处理后的数据
+df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
+
+# 查看数据结构和样本
+df_cleaned.show(5)
+```
+
+```{python}
+
+```
