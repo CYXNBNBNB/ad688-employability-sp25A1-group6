@@ -272,6 +272,17 @@ These three scatterplots show the scatterplot of job duration versus salary for 
 For job seekers, these results suggest that maximizing pay may actually require changing positions strategically every 3-5 years rather than holding a position for a long period of time. The data suggests that very long tenures of more than 80 months provide diminishing pay returns. Candidates may want to focus on industries or positions in higher-paying clusters, especially those with higher pay in the early and mid-term tenure ranges. Additionally, five years appears to be a critical point in career evaluation to either negotiate a significant salary increase or consider job hopping to maintain salary momentum.
 
 ![K-means MIN_EDULEVELS_NAME](images/kmeans/kmeans_highlight_1_MIN_EDULEVELS_NAME.png)
+
+These are scatter plots comparing education levels and salary across the three clusters, and we can see distinct patterns in how education relates to compensation within each group.
+
+In Cluster 0 (top plot), there's a wide distribution of salaries across all education levels. Master's degree holders show the highest salary ceiling, with some earning up to $500,000, though most fall between $50,000-$250,000. Associate degree holders surprisingly show strong earnings, often comparable to those with Master's degrees. Bachelor's degree holders and high school graduates show somewhat lower median salaries, which challenges traditional assumptions about education returns.
+
+Cluster 1 (middle plot) shows a different pattern, with Bachelor's degree holders and those without formal education labels being particularly prevalent. The salary range is more compressed, typically between $50,000-$200,000, with fewer high outliers. This cluster might represent industries or roles where specific skills matter more than degree level.
+
+Cluster 2 (bottom plot) shows a striking concentration of Associate degree holders with competitive salaries between $50,000-$250,000, with some reaching close to $300,000. This suggests this cluster represents a segment of the job market where specialized two-year programs are highly valued, possibly in technical or healthcare fields.
+
+For job seekers, these findings suggest that the value of different education levels varies significantly depending on which job segment you're targeting. Associate degrees appear particularly valuable in Cluster 2, while advanced degrees show the highest potential in Cluster 0. Rather than pursuing higher education indiscriminately, job seekers might benefit from identifying which cluster aligns with their career goals and then obtaining the education level that shows the strongest returns within that specific segment of the job market.
+
 ![K-means EMPLOYMENT_TYPE_NAME](images/kmeans/kmeans_highlight_2_EMPLOYMENT_TYPE_NAME.png)
 ![K-means REMOTE_TYPE_NAME](images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png)
 ![K-means STATE_NAME](images/kmeans/kmeans_highlight_4_STATE_NAME.png)
