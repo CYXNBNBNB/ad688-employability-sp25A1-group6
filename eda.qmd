@@ -69,7 +69,7 @@ fig.show()
 
 <iframe src="images/REMOTE_TYPE_NAME&SALARY.html" width="100%" height="600"></iframe>
 
-###  Analysis
+
 
 This box plot titled "Salary Comparison: Remote vs. On-Site Jobs" shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.
 
@@ -114,7 +114,7 @@ fig.show()
 
 <iframe src="images/STATE_NAME_SALARY.html" width="100%" height="600"></iframe>
 
-###  Analysis
+
 
 The map titled "Average Salary by State" shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country.
 
@@ -141,7 +141,7 @@ fig.show()
 
 <iframe src="images/LIGHTCAST_SECTORS_NAME&SALARY.html" width="100%" height="600"></iframe>
 
-###  Analysis
+
 
 This bar chart titled "Top 10 Industries with Highest Salaries" highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as "GreenJobs:Enabled, Cybersecurity" or "Cybersecurity, DataPrivacy/Protection". These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives.
 
@@ -189,6 +189,6 @@ fig.show()
 
 <iframe src="images/AI_RELATED&SALARY.html" width="100%" height="600"></iframe>
 
-###  Analysis
+
 
 This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.
