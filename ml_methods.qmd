@@ -35,8 +35,9 @@ df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").o
 df_cleaned.show(5)
 ```
 
-# K-means
+# K-Means
 
+## Build model and compute SSE
 Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.
 
 ```{python}
@@ -103,11 +104,17 @@ plt.show()
 
 ![Elbow Chart](images/elbow.png)
 
+Looking at this elbow chart, we went with k = 3 instead of k = 9, even though the chart shows k = 9 has a lower error rate. K = 9 would give us too many clusters to make sense of practically. It's mathematically better with lower error, but having 9 different groups would overcomplicate our analysis and might not add meaningful insights. With k = 3, we get a simpler model that's easier to interpret and explain to stakeholders. 
+
+## Cluster validation
+
+We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.
+
 ```{python}
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import normalized_mutual_info_score, adjusted_rand_score
 
-k = 3 # 你可以根据 Elbow 图选择最优 k
+k = 3 
 kmeans = KMeans(k=k, seed=688, featuresCol="features")
 pipeline = Pipeline(stages=indexers + encoders + [assembler, scaler, kmeans])
 model_kmeans = pipeline.fit(df_kmeans)
