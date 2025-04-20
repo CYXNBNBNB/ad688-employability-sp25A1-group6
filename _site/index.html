@@ -37,7 +37,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -72,10 +71,10 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles_home.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -141,33 +140,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#research-introduction-salary-compensation-trends" id="toc-research-introduction-salary-compensation-trends" class="nav-link active" data-scroll-target="#research-introduction-salary-compensation-trends">Research Introduction: Salary &amp; Compensation Trends</a></li>
-  <li><a href="#data-cleaning-exploration" id="toc-data-cleaning-exploration" class="nav-link" data-scroll-target="#data-cleaning-exploration">Data Cleaning &amp; Exploration</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
-  <li><a href="#skill-gap-analysis" id="toc-skill-gap-analysis" class="nav-link" data-scroll-target="#skill-gap-analysis">Skill Gap Analysis</a></li>
-  <li><a href="#ml-methods" id="toc-ml-methods" class="nav-link" data-scroll-target="#ml-methods">ML Methods</a></li>
-  <li><a href="#nlp-methods" id="toc-nlp-methods" class="nav-link" data-scroll-target="#nlp-methods">NLP Methods</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-about-jolla">
+  <img src="images/background.jpg" class="about-image
+  round " style="height: 16em; width: 16em;">
+ <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Group 6 &nbsp;&nbsp; Job Market Analysis – 2024</h1>
 </div>
-
-
 <div class="quarto-title-meta-author">
   <div class="quarto-title-meta-heading">Authors</div>
   <div class="quarto-title-meta-heading">Affiliation</div>
-  
     <div class="quarto-title-meta-contents">
     <p class="author">Yuxuan Chen </p>
   </div>
@@ -201,47 +185,14 @@ ul.task-list li input[type="checkbox"] {
           </p>
       </div>
   </div>
-
 <div class="quarto-title-meta">
-
-      
-  
-    <div>
-    <div class="quarto-title-meta-heading">Modified</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 20, 2025</p>
-    </div>
   </div>
-    
-  </div>
-  
+</header><main class="content" id="quarto-document-content">
 
 
-</header>
-
-
-<section id="research-introduction-salary-compensation-trends" class="level2">
-<h2 class="anchored" data-anchor-id="research-introduction-salary-compensation-trends">Research Introduction: Salary &amp; Compensation Trends</h2>
-</section>
-<section id="data-cleaning-exploration" class="level2">
-<h2 class="anchored" data-anchor-id="data-cleaning-exploration">Data Cleaning &amp; Exploration</h2>
-</section>
-<section id="exploratory-data-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h2>
-</section>
-<section id="skill-gap-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="skill-gap-analysis">Skill Gap Analysis</h2>
-</section>
-<section id="ml-methods" class="level2">
-<h2 class="anchored" data-anchor-id="ml-methods">ML Methods</h2>
-</section>
-<section id="nlp-methods" class="level2">
-<h2 class="anchored" data-anchor-id="nlp-methods">NLP Methods</h2>
-
-
-</section>
-
-</main> <!-- /main -->
+</main>  
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -262,13 +213,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

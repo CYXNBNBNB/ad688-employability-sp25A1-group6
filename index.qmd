@@ -1,5 +1,10 @@
 ---
 title: "Group 6 &nbsp;&nbsp; Job Market Analysis -- 2024"
+about:
+  template: jolla
+  image: "images/background.jpg"
+  image-width: 16em
+  image-shape: round
 author:
   - name: Yuxuan Chen
     affiliations:
@@ -16,31 +21,10 @@ author:
   - name: Altyn Baigaliyeva
     affiliations:
       - ref: bu
-date-modified: today
-date-format: long
 format:
   html:
-    #bibliography: references_home.bib
-    csl: csl/econometrica.csl
     theme: cosmo
     toc: true
-    css: styles.css
+    # toc-depth: 2
+    css: styles_home.css 
 --- 
-
-## Research Introduction: Salary & Compensation Trends 
-
-
-## Data Cleaning & Exploration
-
-
-## Exploratory Data Analysis
-
-
-## Skill Gap Analysis
-
-
-## ML Methods
-
-
-## NLP Methods
-
