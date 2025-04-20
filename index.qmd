@@ -1,26 +1,26 @@
 ---
-title: "Group 6 &nbsp;&nbsp; Job Market Analysis -- 2024"
+title: "Job Market Analysis -- 2024"
+subtitle: "Group 6"
 about:
   template: jolla
-  image: "images/background.jpg"
+  image: "images/home.jpg"
   image-width: 16em
   image-shape: round
-author:
-  - name: Yuxuan Chen
-    affiliations:
-      - id: bu
-        name: Boston University
-        city: Boston
-        state: MA
-  - name: Shangxuan Zhong
-    affiliations:
-      - ref: bu
-  - name: Qimin Shen
-    affiliations:
-      - ref: bu
-  - name: Altyn Baigaliyeva
-    affiliations:
-      - ref: bu
+  links:
+    - icon: github
+      text: Yuxuan Chen
+      href: https://github.com/CYXNBNBNB
+    - icon: github
+      text: Shangxuan Zhong
+      href: https://github.com/zhongshangxuan
+    - icon: github
+      text: Qimin Shen
+      href: https://github.com/Qimin-Shen
+    - icon: github
+      text: Altyn
+      href: https://github.com/
+
+
 format:
   html:
     theme: cosmo
@@ -28,3 +28,10 @@ format:
     # toc-depth: 2
     css: styles_home.css 
 --- 
+
+| 👥 Authors               | Affiliation                       |
+|--------------------|------------------------------------|
+| **Yuxuan Chen**     | Boston University |
+| **Shangxuan Zhong** | Boston University |
+| **Qimin Shen**      | Boston University |
+| **Altyn Baigaliyeva** | Boston University |
