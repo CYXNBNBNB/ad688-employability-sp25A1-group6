@@ -266,6 +266,11 @@ for row_idx, var in enumerate(vars_to_plot):
 ```
 
 ![K-means DURATION](images/kmeans/kmeans_highlight_0_DURATION.png)
+
+These three scatterplots show the scatterplot of job duration versus salary for each of the three clusters. It seems to be a general trend that as job duration exceeds the 60-80 month mark, the salary distribution becomes more diverse and possibly lower. This suggests that longer positions do not necessarily guarantee higher salaries. A notable feature is the vertical concentration of data points around certain duration values, particularly at the 60-month mark, which may represent common contract durations or career milestone points where people change roles. The highest salaries (up to $500,000) are mostly found in roles with durations of less than 60 months, suggesting that some short- to medium-term roles may be particularly lucrative.
+
+For job seekers, these results suggest that maximizing pay may actually require changing positions strategically every 3-5 years rather than holding a position for a long period of time. The data suggests that very long tenures of more than 80 months provide diminishing pay returns. Candidates may want to focus on industries or positions in higher-paying clusters, especially those with higher pay in the early and mid-term tenure ranges. Additionally, five years appears to be a critical point in career evaluation to either negotiate a significant salary increase or consider job hopping to maintain salary momentum.
+
 ![K-means MIN_EDULEVELS_NAME](images/kmeans/kmeans_highlight_1_MIN_EDULEVELS_NAME.png)
 ![K-means EMPLOYMENT_TYPE_NAME](images/kmeans/kmeans_highlight_2_EMPLOYMENT_TYPE_NAME.png)
 ![K-means REMOTE_TYPE_NAME](images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png)
