@@ -183,7 +183,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#generate-word-clouds-for-each-cluster" id="toc-generate-word-clouds-for-each-cluster" class="nav-link" data-scroll-target="#generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</a></li>
   </ul></li>
   <li><a href="#distribution-of-the-number-of-jobs-in-each-category" id="toc-distribution-of-the-number-of-jobs-in-each-category" class="nav-link" data-scroll-target="#distribution-of-the-number-of-jobs-in-each-category"><span class="header-section-number">3</span> Distribution of the number of jobs in each category</a></li>
-  <li><a href="#training-a-svm-naive-bayes-models-using-tf-idf-features" id="toc-training-a-svm-naive-bayes-models-using-tf-idf-features" class="nav-link" data-scroll-target="#training-a-svm-naive-bayes-models-using-tf-idf-features"><span class="header-section-number">4</span> Training a SVM &amp; Naive Bayes models using TF-IDF features</a></li>
+  <li><a href="#training-a-svm-naive-bayes-models-using-tf-idf-features" id="toc-training-a-svm-naive-bayes-models-using-tf-idf-features" class="nav-link" data-scroll-target="#training-a-svm-naive-bayes-models-using-tf-idf-features"><span class="header-section-number">4</span> Training a SVM &amp; Naive Bayes models using TF-IDF features</a>
+  <ul class="collapse">
+  <li><a href="#training-two-classifiers" id="toc-training-two-classifiers" class="nav-link" data-scroll-target="#training-two-classifiers"><span class="header-section-number">4.1</span> Training two classifiers</a></li>
+  </ul></li>
+  <li><a href="#keyword-heat-visualization-according-to-the-term-frequency" id="toc-keyword-heat-visualization-according-to-the-term-frequency" class="nav-link" data-scroll-target="#keyword-heat-visualization-according-to-the-term-frequency"><span class="header-section-number">5</span> Keyword heat visualization (according to the term frequency)</a></li>
   </ul>
 </nav>
     </div>
@@ -215,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="a305ff8d" class="cell" data-execution_count="1">
+<div id="11399f5f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -237,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="df081e47" class="cell" data-execution_count="2">
+<div id="8f725569" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -260,7 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
 <section id="clustering-tf-idf-features-with-k-means" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means"><span class="header-section-number">2.1</span> Clustering TF-IDF features with K-Means</h2>
-<div id="cb5678e9" class="cell" data-execution_count="3">
+<div id="71500ff2" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -276,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="generate-word-clouds-for-each-cluster" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</h2>
-<div id="763cd1f3" class="cell" data-execution_count="4">
+<div id="f1df271b" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -324,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="distribution-of-the-number-of-jobs-in-each-category" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Distribution of the number of jobs in each category</h1>
-<div id="19fa28ab" class="cell" data-execution_count="5">
+<div id="417b547d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -340,7 +344,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="training-a-svm-naive-bayes-models-using-tf-idf-features" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Training a SVM &amp; Naive Bayes models using TF-IDF features</h1>
 <p>We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models’ accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.</p>
-<div id="bbc5b52c" class="cell" data-execution_count="6">
+<section id="training-two-classifiers" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="training-two-classifiers"><span class="header-section-number">4.1</span> Training two classifiers</h2>
+<div id="4ecb6db8" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -349,31 +355,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, confusion_matrix</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 cluster 作为分类目标</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Using clusters as classification targets</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> body_df[<span class="st">"cluster"</span>]</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 拆分训练集和测试集</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the training and test sets</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X_tfidf, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 1️⃣ 训练 Naive Bayes 分类器</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Training the Naive Bayes Classifier</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>nb_model <span class="op">=</span> MultinomialNB()</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>nb_model.fit(X_train, y_train)</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>y_pred_nb <span class="op">=</span> nb_model.predict(X_test)</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2️⃣ 训练 SVM 分类器</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Training SVM Classifiers</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> LinearSVC()</span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X_train, y_train)</span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>y_pred_svm <span class="op">=</span> svm_model.predict(X_test)</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估：Naive Bayes</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate Naive Bayes</span></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">🔍 Naive Bayes :"</span>)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_nb))</span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估：SVM</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate SVM</span></span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">🔍 SVM :"</span>)</span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_svm))</span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 混淆矩阵（SVM）</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix of SVM</span></span>
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_test, y_pred_svm)</span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>, xticklabels<span class="op">=</span><span class="bu">range</span>(k), yticklabels<span class="op">=</span><span class="bu">range</span>(k))</span>
@@ -384,24 +390,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>你将看到两个模型的分类性能指标（precision, recall, f1-score） 混淆矩阵可以看出哪些聚类易混淆 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了</p>
-<p>关键词热度可视化（最常见词条分析） 根据 词频（term frequency） 排名前 N 的词</p>
-<div id="40c80ec5" class="cell" data-execution_count="7">
+</section>
+</section>
+<section id="keyword-heat-visualization-according-to-the-term-frequency" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Keyword heat visualization (according to the term frequency)</h1>
+<div id="eb93b46d" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取 TF-IDF 的词汇和矩阵</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the vocabulary and matrix of the TF-IDF</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> X_tfidf.toarray()</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 🔹 方式一：按词频排序</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by word frequency</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>term_frequencies <span class="op">=</span> tfidf_matrix.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>freq_df <span class="op">=</span> pd.DataFrame({<span class="st">'term'</span>: terms, <span class="st">'frequency'</span>: term_frequencies})</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>freq_df <span class="op">=</span> freq_df.sort_values(by<span class="op">=</span><span class="st">'frequency'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">30</span>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 可视化：词频</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize word frequency</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(freq_df, x<span class="op">=</span><span class="st">'term'</span>, y<span class="op">=</span><span class="st">'frequency'</span>, title<span class="op">=</span><span class="st">"📈 Top 30 high-frequency words (by word frequency)"</span>, text_auto<span class="op">=</span><span class="st">'.2s'</span>)</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>fig.update_layout(xaxis_tickangle<span class="op">=-</span><span class="dv">45</span>)</span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/Top30_high_frequency.html"</span>)</span>
