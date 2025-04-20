@@ -216,6 +216,10 @@ plt.show()
 
 ![K-means](images/kmeans.png)
 
+## Separate image display
+
+We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.
+
 ```{python}
 import os
 
