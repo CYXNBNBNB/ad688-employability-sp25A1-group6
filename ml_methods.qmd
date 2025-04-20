@@ -296,6 +296,17 @@ Cluster 2 (bottom plot) again shows a strong concentration of full-time workers,
 For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.
 
 ![K-means REMOTE_TYPE_NAME](images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png)
+
+Here are the relationship between remote work arrangements and salary across three distinct job market clusters.
+
+In Cluster 0 (top plot), on-site positions show the highest salary potential, with several roles reaching $400,000-$500,000 that aren't matched in other work arrangements. On-site roles also display the widest salary distribution, ranging from about $30,000 to $500,000. Remote positions show a similar distribution pattern but with a slightly lower ceiling, typically topping out around $300,000. Hybrid positions have the most compressed salary range and the lowest median, suggesting hybrid arrangements might be more common in moderate-paying industries or roles.
+
+Cluster 1 (middle plot) shows a strong concentration of on-site and remote positions with fewer hybrid roles. The salary distributions are more compressed compared to Cluster 0, with most positions across all work arrangements falling between $50,000 and $200,000. Notably, remote positions in this cluster show fairly competitive compensation compared to on-site roles, suggesting this cluster might represent industries where remote work is well-established and valued.
+
+Cluster 2 (bottom plot) also shows a predominance of on-site positions, with salary ranges typically between $50,000 and $200,000 and some reaching close to $300,000. Remote positions appear to have a slightly lower salary ceiling in this cluster, and hybrid roles are relatively uncommon, likely representing industries where physical presence is more highly valued.
+
+For job seekers, these findings suggest that on-site positions still offer the highest salary potential overall, especially in industries represented by Cluster 0. However, remote work doesn't necessarily mean sacrificing compensation significantly, particularly in Cluster 1 where remote salaries are quite competitive. Job seekers prioritizing work-life balance through remote arrangements might focus on sectors represented in Cluster 1, while those seeking maximum earning potential might target on-site roles in Cluster 0. Hybrid arrangements, though offering flexibility, generally show lower compensation across all clusters and might be more strategic as a negotiation point after securing a higher-paying on-site role.
+
 ![K-means STATE_NAME](images/kmeans/kmeans_highlight_4_STATE_NAME.png)
 
 
