@@ -22,3 +22,19 @@
   animation: fadeIn 1s ease-in-out forwards;
   text-align: center;
 }
+
+  
+  /* 设置网页背景 */
+  body {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.80)), /* 貌似是渐变？ */
+      url("images/background.jpg"); /* 背景图片 */
+    height: 100vh; /* 使 body 占满整个视口高度 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    background-size: cover; /* 背景图覆盖整个区域 */
+    background-position: center; /* 背景图居中 */
+    background-repeat: no-repeat; /* 防止重复 */
+    background-attachment: fixed; /* 背景固定，不随页面滚动 */
+  }
