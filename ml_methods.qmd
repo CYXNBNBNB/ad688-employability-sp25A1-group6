@@ -322,7 +322,7 @@ For job seekers, these findings suggest that geographical flexibility can signif
 We're building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can't handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we're capturing—and how far off we might be on average.
 
 ```{python}
-# ===== 多元线性回归（标准化版本）=====
+# Multiple Linear Regression
 from pyspark.ml.feature import VectorAssembler, StandardScaler, StringIndexer, OneHotEncoder
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
@@ -330,40 +330,40 @@ from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.sql.types import DoubleType
 from pyspark.sql.functions import col
 
-# 选择字段
+# Select field
 lr_df = df_cleaned.select("DURATION", "MIN_EDULEVELS_NAME", "EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME", "STATE_NAME", "SALARY").dropna()
 
-# 数值列类型转换
+# Numeric column type conversion
 lr_df = lr_df.withColumn("DURATION", col("DURATION").cast(DoubleType()))
 
-# 类别字段编码
+# Category field codes
 categorical_cols = ["MIN_EDULEVELS_NAME", "EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME", "STATE_NAME"]
 indexers = [StringIndexer(inputCol=col_name, outputCol=col_name + "_IDX", handleInvalid="keep") for col_name in categorical_cols]
 encoders = [OneHotEncoder(inputCol=col_name + "_IDX", outputCol=col_name + "_OHE") for col_name in categorical_cols]
 
-# 特征拼接
+# Feature splicing
 assembler = VectorAssembler(
     inputCols=["DURATION"] + [col + "_OHE" for col in categorical_cols],
     outputCol="assembled_features"
 )
 
-# 标准化
+# Standardization
 scaler = StandardScaler(inputCol="assembled_features", outputCol="features")
 
-# 模型
+# Build model
 lr = LinearRegression(featuresCol="features", labelCol="SALARY")
 
-# 划分训练测试集
+# Divide the training test set
 train_data, test_data = lr_df.randomSplit([0.8, 0.2], seed=688)
 train_data = train_data.na.drop()
 test_data = test_data.na.drop()
 
-# 构建管道
+# Build the pipeline
 pipeline = Pipeline(stages=indexers + encoders + [assembler, scaler, lr])
 model = pipeline.fit(train_data)
 predictions = model.transform(test_data)
 
-# 评估
+# Evaluate result
 evaluator_r2 = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction", metricName="r2")
 evaluator_rmse = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction", metricName="rmse")
 ```
