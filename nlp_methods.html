@@ -176,10 +176,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#extracting-key-terms-from-job-descriptions-using-tf-idf" id="toc-extracting-key-terms-from-job-descriptions-using-tf-idf" class="nav-link active" data-scroll-target="#extracting-key-terms-from-job-descriptions-using-tf-idf"><span class="header-section-number">1</span> Extracting Key Terms from Job Descriptions Using TF-IDF</a>
+  <li><a href="#extracting-key-terms-from-job-descriptions-using-tf-idf" id="toc-extracting-key-terms-from-job-descriptions-using-tf-idf" class="nav-link active" data-scroll-target="#extracting-key-terms-from-job-descriptions-using-tf-idf"><span class="header-section-number">1</span> Extracting Key Terms from Job Descriptions Using TF-IDF</a></li>
+  <li><a href="#visualizing-job-clusters-with-word-clouds" id="toc-visualizing-job-clusters-with-word-clouds" class="nav-link" data-scroll-target="#visualizing-job-clusters-with-word-clouds"><span class="header-section-number">2</span> Visualizing Job Clusters with Word Clouds</a>
   <ul class="collapse">
-  <li><a href="#clustering-tf-idf-features-with-k-means" id="toc-clustering-tf-idf-features-with-k-means" class="nav-link" data-scroll-target="#clustering-tf-idf-features-with-k-means"><span class="header-section-number">1.1</span> Clustering TF-IDF features with K-Means</a></li>
-  <li><a href="#generate-word-clouds-for-each-cluster" id="toc-generate-word-clouds-for-each-cluster" class="nav-link" data-scroll-target="#generate-word-clouds-for-each-cluster"><span class="header-section-number">1.2</span> Generate word clouds for each cluster</a></li>
+  <li><a href="#clustering-tf-idf-features-with-k-means" id="toc-clustering-tf-idf-features-with-k-means" class="nav-link" data-scroll-target="#clustering-tf-idf-features-with-k-means"><span class="header-section-number">2.1</span> Clustering TF-IDF features with K-Means</a></li>
+  <li><a href="#generate-word-clouds-for-each-cluster" id="toc-generate-word-clouds-for-each-cluster" class="nav-link" data-scroll-target="#generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -212,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="11d4db6d" class="cell" data-execution_count="1">
+<div id="cced8f0f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -234,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="7fd10640" class="cell" data-execution_count="2">
+<div id="8f1e7b72" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -251,9 +252,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>X_tfidf <span class="op">=</span> tfidf_vectorizer.fit_transform(body_df[<span class="st">"BODY"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="clustering-tf-idf-features-with-k-means" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means"><span class="header-section-number">1.1</span> Clustering TF-IDF features with K-Means</h2>
-<div id="36dff3e6" class="cell" data-execution_count="3">
+</section>
+<section id="visualizing-job-clusters-with-word-clouds" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Visualizing Job Clusters with Word Clouds</h1>
+<p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
+<section id="clustering-tf-idf-features-with-k-means" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means"><span class="header-section-number">2.1</span> Clustering TF-IDF features with K-Means</h2>
+<div id="dd6bea7d" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -267,9 +272,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="generate-word-clouds-for-each-cluster" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster"><span class="header-section-number">1.2</span> Generate word clouds for each cluster</h2>
-<div id="32632cc7" class="cell" data-execution_count="4">
+<section id="generate-word-clouds-for-each-cluster" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</h2>
+<div id="23d217f2" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -314,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="images/wordcloud/cluster_0_wordcloud.png" class="img-fluid" alt="Cluster 0 Wordcloud"> <img src="images/wordcloud/cluster_1_wordcloud.png" class="img-fluid" alt="Cluster 1 Wordcloud"> <img src="images/wordcloud/cluster_2_wordcloud.png" class="img-fluid" alt="Cluster 2 Wordcloud"> <img src="images/wordcloud/cluster_3_wordcloud.png" class="img-fluid" alt="Cluster 3 Wordcloud"></p>
 <p>第三步（可选）：查看每一类的职位数量分布</p>
-<div id="0df99aba" class="cell" data-execution_count="5">
+<div id="2b35756d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -327,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <iframe src="images/jobs_by_theme.html" width="100%" height="600">
 </iframe>
 <p>使用 TF-IDF 特征训练分类模型（SVM &amp; Naive Bayes）</p>
-<div id="dea80c78" class="cell" data-execution_count="6">
+<div id="597fc914" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -372,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>你将看到两个模型的分类性能指标（precision, recall, f1-score） 混淆矩阵可以看出哪些聚类易混淆 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了</p>
 <p>关键词热度可视化（最常见词条分析） 根据 词频（term frequency） 排名前 N 的词</p>
-<div id="ebece621" class="cell" data-execution_count="7">
+<div id="7de5b99d" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
