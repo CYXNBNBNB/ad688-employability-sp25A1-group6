@@ -140,6 +140,8 @@ fig.show()
 
 We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models' accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.
 
+## Training two classifiers
+
 ```{python}
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
@@ -147,31 +149,31 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import classification_report, confusion_matrix
 import seaborn as sns
 
-# 使用 cluster 作为分类目标
+# Using clusters as classification targets
 y = body_df["cluster"]
 
-# 拆分训练集和测试集
+# Splitting the training and test sets
 X_train, X_test, y_train, y_test = train_test_split(X_tfidf, y, test_size=0.2, random_state=42)
 
-# 1️⃣ 训练 Naive Bayes 分类器
+# Training the Naive Bayes Classifier
 nb_model = MultinomialNB()
 nb_model.fit(X_train, y_train)
 y_pred_nb = nb_model.predict(X_test)
 
-# 2️⃣ 训练 SVM 分类器
+# Training SVM Classifiers
 svm_model = LinearSVC()
 svm_model.fit(X_train, y_train)
 y_pred_svm = svm_model.predict(X_test)
 
-# 评估：Naive Bayes
+# Evaluate Naive Bayes
 print("\n🔍 Naive Bayes :")
 print(classification_report(y_test, y_pred_nb))
 
-# 评估：SVM
+# Evaluate SVM
 print("\n🔍 SVM :")
 print(classification_report(y_test, y_pred_svm))
 
-# 混淆矩阵（SVM）
+# Confusion Matrix of SVM
 cm = confusion_matrix(y_test, y_pred_svm)
 plt.figure(figsize=(6, 5))
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=range(k), yticklabels=range(k))
@@ -185,25 +187,23 @@ plt.show()
 混淆矩阵可以看出哪些聚类易混淆
 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了
 
+# Keyword heat visualization (according to the term frequency)
 
-
-
-关键词热度可视化（最常见词条分析） 根据 词频（term frequency） 排名前 N 的词
 ```{python}
 import numpy as np
 import pandas as pd
 import plotly.express as px
 
-# 提取 TF-IDF 的词汇和矩阵
+# Extract the vocabulary and matrix of the TF-IDF
 terms = tfidf_vectorizer.get_feature_names_out()
 tfidf_matrix = X_tfidf.toarray()
 
-# 🔹 方式一：按词频排序
+# Sort by word frequency
 term_frequencies = tfidf_matrix.sum(axis=0)
 freq_df = pd.DataFrame({'term': terms, 'frequency': term_frequencies})
 freq_df = freq_df.sort_values(by='frequency', ascending=False).head(30)
 
-# 可视化：词频
+# Visualize word frequency
 fig = px.bar(freq_df, x='term', y='frequency', title="📈 Top 30 high-frequency words (by word frequency)", text_auto='.2s')
 fig.update_layout(xaxis_tickangle=-45)
 fig.write_html("./images/Top30_high_frequency.html")
