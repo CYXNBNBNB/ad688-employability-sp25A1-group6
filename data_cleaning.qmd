@@ -134,7 +134,7 @@ from pyspark.sql.functions import when, col
 
 df = df.withColumn(
     "REMOTE_TYPE_NAME",
-    when(col("REMOTE_TYPE_NAME") == "[None]", "On-Site")
+    when(col("REMOTE_TYPE_NAME").isin("[None]", "Not Remote") | col("REMOTE_TYPE_NAME").isNull(), "On-Site")
     .when(col("REMOTE_TYPE_NAME") == "Not Remote", "On-Site")
     .when(col("REMOTE_TYPE_NAME") == "Hybrid Remote", "Hybrid")
     .when(col("REMOTE_TYPE_NAME") == "Remote", "Remote")
