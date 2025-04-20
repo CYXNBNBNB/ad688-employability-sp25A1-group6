@@ -28,14 +28,17 @@ from pyspark.sql.functions import split, explode, col, regexp_replace, transform
 
 spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 
-# 重新加载处理后的数据
+# Reload processed data
 df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
 
-# 查看数据结构和样本
+# View data structures and samples
 df_cleaned.show(5)
 ```
 
 # K-means
+
+Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.
+
 ```{python}
 from pyspark.ml.clustering import KMeans
 from pyspark.ml.feature import VectorAssembler, StandardScaler, StringIndexer, OneHotEncoder
@@ -45,47 +48,47 @@ from pyspark.sql.functions import col
 from pyspark.sql.types import DoubleType
 import matplotlib.pyplot as plt
 
-# === 选择用于聚类的字段 ===
+# Select fields for clustering
 numeric_cols = ["DURATION", "SALARY"]
 categorical_cols = ["MIN_EDULEVELS_NAME", "EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME", "STATE_NAME"]
 
 df_kmeans = df_cleaned.select(numeric_cols + categorical_cols).dropna()
 
-# === 类型转换 ===
+# Data type conversion
 for col_name in numeric_cols:
     df_kmeans = df_kmeans.withColumn(col_name, col(col_name).cast(DoubleType()))
 
-# === 处理分类变量 ===
+# Handling categorical variables
 indexers = [StringIndexer(inputCol=c, outputCol=f"{c}_idx", handleInvalid='skip') for c in categorical_cols]
 encoders = [OneHotEncoder(inputCol=f"{c}_idx", outputCol=f"{c}_vec") for c in categorical_cols]
 encoded_categorical = [f"{c}_vec" for c in categorical_cols]
 
-# === 特征组合 ===
+# Characteristic binding
 assembler = VectorAssembler(
     inputCols=numeric_cols + encoded_categorical,
     outputCol="raw_features"
 )
 
-# === 标准化 ===
+# Standardization
 scaler = StandardScaler(inputCol="raw_features", outputCol="features", withStd=True, withMean=True)
 
-# === 遍历不同 k 值，计算 SSE ===
-cost = []  # 用于存储 k 和对应的 SSE 值
-for k in range(2, 11):  # k 从 2 到 10
+# Iterate over different values of k and compute SSE
+cost = []  
+for k in range(2, 11):  
     kmeans = KMeans(k=k, seed=688, featuresCol="features")
     pipeline = Pipeline(stages=indexers + encoders + [assembler, scaler, kmeans])
     
-    # 拟合模型
+    # fit model
     model_kmeans = pipeline.fit(df_kmeans)
     
-    # 获取 KMeans 聚类模型阶段（Pipeline 的最后一个 stage）
+    # Get K-Means clustering model stage
     kmeans_data = model_kmeans.stages[-1]
-    sse = kmeans_data.summary.trainingCost  # 获取 SSE 值
-    cost.append((k, sse))  # 存储 k 和 SSE
+    sse = kmeans_data.summary.trainingCost  
+    cost.append((k, sse))  
     print(f"k = {k}, SSE = {sse:.2f}")
 
-# === 绘制 Elbow 图 ===
-k_vals, sse_vals = zip(*cost)  # 解包 k 和 SSE
+# Plotting the Elbow Chart
+k_vals, sse_vals = zip(*cost)  
 plt.figure(figsize=(8, 5))
 plt.plot(k_vals, sse_vals, marker='o')
 plt.xlabel("Number of Clusters (k)")
