@@ -368,6 +368,8 @@ evaluator_r2 = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction"
 evaluator_rmse = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction", metricName="rmse")
 ```
 
+With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.
+
 ```{python}
 pdf = predictions.select("SALARY", "prediction").toPandas()
 
