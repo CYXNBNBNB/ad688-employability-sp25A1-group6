@@ -28,28 +28,30 @@ from pyspark.sql.functions import split, explode, col, regexp_replace, transform
 
 spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 
-# 重新加载处理后的数据
+# Reload processed data
 df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
 
-# 查看数据结构和样本
+# View data structures and samples
 df_cleaned.show(5)
 ```
 
+# Extracting Key Terms from Job Descriptions Using TF-IDF
 
-用 Pandas + scikit-learn 处理, 得到了 TF-IDF 特征矩阵 X_tfidf 和对应文本在 body_df["BODY"] 中
+We start by extracting the job description text from the "BODY" column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.
+
 ```{python}
-# 转换为 Pandas DataFrame，只取 BODY 列
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Convert to Pandas DataFrame, taking only BODY columns
 body_df = df_cleaned.select("BODY").dropna().toPandas()
 
-# 清理文本（可选）
+# Clear text
 body_df["BODY"] = body_df["BODY"].str.replace(r'\n|\r', ' ', regex=True)
 
-# TF-IDF 提取
-from sklearn.feature_extraction.text import TfidfVectorizer
+# TF-IDF extract
 
 tfidf_vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
 X_tfidf = tfidf_vectorizer.fit_transform(body_df["BODY"])
-
 ```
 
 
