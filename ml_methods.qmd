@@ -284,6 +284,17 @@ Cluster 2 (bottom plot) shows a striking concentration of Associate degree holde
 For job seekers, these findings suggest that the value of different education levels varies significantly depending on which job segment you're targeting. Associate degrees appear particularly valuable in Cluster 2, while advanced degrees show the highest potential in Cluster 0. Rather than pursuing higher education indiscriminately, job seekers might benefit from identifying which cluster aligns with their career goals and then obtaining the education level that shows the strongest returns within that specific segment of the job market.
 
 ![K-means EMPLOYMENT_TYPE_NAME](images/kmeans/kmeans_highlight_2_EMPLOYMENT_TYPE_NAME.png)
+
+These scatter plots show how salary relates to employment type across three different clusters.
+
+In Cluster 0 (top plot), full-time positions clearly dominate with the highest salary potential, including outliers reaching $500,000. Full-time roles show a wide salary range from around $50,000 to $300,000, with much higher median and maximum values than other employment types. Part-time positions (< 32 hours) and part-time/full-time flexible roles show similar salary distributions but with notably lower ceilings, mostly staying below $200,000, though a few outliers exist.
+
+Cluster 1 (middle plot) is predominantly composed of full-time positions, with fewer data points in the part-time categories. The full-time positions in this cluster show a more compressed salary range, typically between $50,000 and $200,000. There are significantly fewer part-time workers represented in this cluster, suggesting it might represent industries or roles where full-time employment is standard.
+
+Cluster 2 (bottom plot) again shows a strong concentration of full-time workers, but with a distinctive salary pattern. The full-time positions here show a particularly dense concentration between $50,000 and $200,000, with some reaching near $300,000. There are very few part-time workers in this cluster, and those present show lower salaries than their full-time counterparts.
+
+For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.
+
 ![K-means REMOTE_TYPE_NAME](images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png)
 ![K-means STATE_NAME](images/kmeans/kmeans_highlight_4_STATE_NAME.png)
 
