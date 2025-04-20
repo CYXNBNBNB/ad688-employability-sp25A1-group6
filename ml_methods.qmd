@@ -381,7 +381,7 @@ import seaborn as sns
 
 plt.figure(figsize=(9, 6))
 sns.scatterplot(x="SALARY", y="prediction", data=pdf, alpha=0.6)
-plt.plot([pdf.SALARY.min(), pdf.SALARY.max()], [pdf.SALARY.min(), pdf.SALARY.max()], 'r--', linewidth=2, label='Ideal Fit')  # 对角线
+plt.plot([pdf.SALARY.min(), pdf.SALARY.max()], [pdf.SALARY.min(), pdf.SALARY.max()], 'r--', linewidth=2, label='Ideal Fit')  
 plt.xlabel("Actual Salary(USD)")
 plt.ylabel("Predicted Salary(USD)")
 plt.title(f"Actual vs Predicted Salary (Linear Regression)\nRMSE = {rmse:.2f} | R² = {r2:.4f}")
@@ -393,3 +393,5 @@ plt.show()
 ```
 
 ![Predicted VS Actual](images/predicted_vs_actual.png)
+
+This scatter plot compares actual vs. predicted salaries using a linear regression model. The blue dots represent the predictions, while the red dashed line indicates the ideal scenario where predicted salary perfectly matches the actual salary. From the plot, we observe that most predictions are clustered in a narrow range, underestimating high salaries and overestimating lower ones. The model's R² value of 0.0757 indicates it explains only about 7.6% of the variance in salaries, suggesting limited predictive power. The RMSE of 43053.61 further highlights the large average error in predictions. These insights imply that the model struggles to capture the complexity of salary determination and may benefit from including more relevant features, nonlinear modeling, or feature engineering.
