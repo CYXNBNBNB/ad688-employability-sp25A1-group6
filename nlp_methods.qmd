@@ -54,52 +54,39 @@ tfidf_vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
 X_tfidf = tfidf_vectorizer.fit_transform(body_df["BODY"])
 ```
 
+## Clustering TF-IDF features with K-Means
 
-
-
-第一步：用 KMeans 聚类 TF-IDF 特征
 ```{python}
 from sklearn.cluster import KMeans
 
-# 聚成 k 类（你可以调整 n_clusters）
 k = 4
 kmeans = KMeans(n_clusters=k, random_state=42)
 clusters = kmeans.fit_predict(X_tfidf)
 
-# 把聚类结果加到原 DataFrame 中
+# Add the clustering results to the original DataFrame
 body_df["cluster"] = clusters
 ```
 
- 第二步：生成每个聚类的词云
+##  Generate word clouds for each cluster
+
 ```{python}
-from sklearn.cluster import KMeans
-
-# 聚成 k 类（你可以调整 n_clusters）
-k = 4
-kmeans = KMeans(n_clusters=k, random_state=42)
-clusters = kmeans.fit_predict(X_tfidf)
-
-# 把聚类结果加到原 DataFrame 中
-body_df["cluster"] = clusters
-
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import numpy as np
-
-# 获取词汇表
-terms = tfidf_vectorizer.get_feature_names_out()
-
-# 获取每个聚类中心的前关键词
-order_centroids = kmeans.cluster_centers_.argsort()[:, ::-1]
-
 import os
 
-# 创建目录（如果不存在）
+# Get a glossary
+terms = tfidf_vectorizer.get_feature_names_out()
+
+# Get the top keywords for each clustering center
+order_centroids = kmeans.cluster_centers_.argsort()[:, ::-1]
+
+# Create directory
 output_dir = "images/wordcloud"
 os.makedirs(output_dir, exist_ok=True)
 
 for i in range(k):
-    print(f"生成第 {i} 类的词云...")
+    print(f"Generate a word cloud of class {i}...")
 
     top_terms = [terms[ind] for ind in order_centroids[i, :40]]
     weights = {term: kmeans.cluster_centers_[i][terms.tolist().index(term)] for term in top_terms}
@@ -117,7 +104,7 @@ for i in range(k):
     plt.axis("off")
     plt.title(f"Cluster {i} Top Terms", fontsize=20)
 
-    # 保存图像到指定目录
+    # Save the image to the specified directory
     output_path = os.path.join(output_dir, f"cluster_{i}_wordcloud.png")
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.show()
