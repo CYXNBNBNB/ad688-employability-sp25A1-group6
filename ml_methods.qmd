@@ -220,6 +220,8 @@ plt.show()
 
 We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.
 
+### K-Means of Duration
+
 ```{python}
 import os
 
@@ -271,6 +273,8 @@ These three scatterplots show the scatterplot of job duration versus salary for 
 
 For job seekers, these results suggest that maximizing pay may actually require changing positions strategically every 3-5 years rather than holding a position for a long period of time. The data suggests that very long tenures of more than 80 months provide diminishing pay returns. Candidates may want to focus on industries or positions in higher-paying clusters, especially those with higher pay in the early and mid-term tenure ranges. Additionally, five years appears to be a critical point in career evaluation to either negotiate a significant salary increase or consider job hopping to maintain salary momentum.
 
+### K-Means of Education Levels
+
 ![K-means MIN_EDULEVELS_NAME](images/kmeans/kmeans_highlight_1_MIN_EDULEVELS_NAME.png)
 
 These are scatter plots comparing education levels and salary across the three clusters, and we can see distinct patterns in how education relates to compensation within each group.
@@ -282,6 +286,8 @@ Cluster 1 (middle plot) shows a different pattern, with Bachelor's degree holder
 Cluster 2 (bottom plot) shows a striking concentration of Associate degree holders with competitive salaries between $50,000-$250,000, with some reaching close to $300,000. This suggests this cluster represents a segment of the job market where specialized two-year programs are highly valued, possibly in technical or healthcare fields.
 
 For job seekers, these findings suggest that the value of different education levels varies significantly depending on which job segment you're targeting. Associate degrees appear particularly valuable in Cluster 2, while advanced degrees show the highest potential in Cluster 0. Rather than pursuing higher education indiscriminately, job seekers might benefit from identifying which cluster aligns with their career goals and then obtaining the education level that shows the strongest returns within that specific segment of the job market.
+
+### K-Means of Employment types
 
 ![K-means EMPLOYMENT_TYPE_NAME](images/kmeans/kmeans_highlight_2_EMPLOYMENT_TYPE_NAME.png)
 
@@ -295,6 +301,8 @@ Cluster 2 (bottom plot) again shows a strong concentration of full-time workers,
 
 For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.
 
+### K-Means of Remote types
+
 ![K-means REMOTE_TYPE_NAME](images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png)
 
 Here are the relationship between remote work arrangements and salary across three distinct job market clusters.
@@ -307,6 +315,8 @@ Cluster 2 (bottom plot) also shows a predominance of on-site positions, with sal
 
 For job seekers, these findings suggest that on-site positions still offer the highest salary potential overall, especially in industries represented by Cluster 0. However, remote work doesn't necessarily mean sacrificing compensation significantly, particularly in Cluster 1 where remote salaries are quite competitive. Job seekers prioritizing work-life balance through remote arrangements might focus on sectors represented in Cluster 1, while those seeking maximum earning potential might target on-site roles in Cluster 0. Hybrid arrangements, though offering flexibility, generally show lower compensation across all clusters and might be more strategic as a negotiation point after securing a higher-paying on-site role.
 
+### K-Means of different states
+
 ![K-means STATE_NAME](images/kmeans/kmeans_highlight_4_STATE_NAME.png)
 
 These scatter plots reveal fascinating geographical salary patterns across all U.S. states for three distinct job market clusters, showing how location influences compensation within different employment segments.
@@ -318,6 +328,8 @@ Cluster 1 (middle plot) shows an interesting concentration of data points in Ala
 For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.
 
 # Multiple linear regression
+
+## Build model
 
 We're building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can't handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we're capturing—and how far off we might be on average.
 
@@ -367,6 +379,8 @@ predictions = model.transform(test_data)
 evaluator_r2 = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction", metricName="r2")
 evaluator_rmse = RegressionEvaluator(labelCol="SALARY", predictionCol="prediction", metricName="rmse")
 ```
+
+## Results and analysis
 
 With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.
 
