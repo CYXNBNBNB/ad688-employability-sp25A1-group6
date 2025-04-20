@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="c6d026fc" class="cell" data-execution_count="1">
+<div id="12837ccc" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>用 Pandas + scikit-learn 处理, 得到了 TF-IDF 特征矩阵 X_tfidf 和对应文本在 body_df[“BODY”] 中</p>
-<div id="fdaf67d7" class="cell" data-execution_count="2">
+<div id="ed35cf58" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换为 Pandas DataFrame，只取 BODY 列</span></span>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>第一步：用 KMeans 聚类 TF-IDF 特征</p>
-<div id="d7693cd2" class="cell" data-execution_count="3">
+<div id="cb2e11ad" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -254,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>第二步：生成每个聚类的词云</p>
-<div id="957aa40a" class="cell" data-execution_count="4">
+<div id="cf0838d2" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -310,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="images/wordcloud/cluster_0_wordcloud.png" class="img-fluid" alt="Cluster 0 Wordcloud"> <img src="images/wordcloud/cluster_1_wordcloud.png" class="img-fluid" alt="Cluster 1 Wordcloud"> <img src="images/wordcloud/cluster_2_wordcloud.png" class="img-fluid" alt="Cluster 2 Wordcloud"> <img src="images/wordcloud/cluster_3_wordcloud.png" class="img-fluid" alt="Cluster 3 Wordcloud"></p>
 <p>第三步（可选）：查看每一类的职位数量分布</p>
-<div id="2debad9d" class="cell" data-execution_count="5">
+<div id="f86b69ac" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <iframe src="images/jobs_by_theme.html" width="100%" height="600">
 </iframe>
 <p>使用 TF-IDF 特征训练分类模型（SVM &amp; Naive Bayes）</p>
-<div id="2f293d64" class="cell" data-execution_count="6">
+<div id="090ef979" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -368,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>你将看到两个模型的分类性能指标（precision, recall, f1-score） 混淆矩阵可以看出哪些聚类易混淆 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了</p>
 <p>关键词热度可视化（最常见词条分析） 根据 词频（term frequency） 排名前 N 的词</p>
-<div id="36fc55d7" class="cell" data-execution_count="7">
+<div id="05dab986" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -385,11 +385,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>freq_df <span class="op">=</span> freq_df.sort_values(by<span class="op">=</span><span class="st">'frequency'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">30</span>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 可视化：词频</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fig1 <span class="op">=</span> px.bar(freq_df, x<span class="op">=</span><span class="st">'term'</span>, y<span class="op">=</span><span class="st">'frequency'</span>, title<span class="op">=</span><span class="st">"📈 前 30 高频词（按词频）"</span>, text_auto<span class="op">=</span><span class="st">'.2s'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fig1 <span class="op">=</span> px.bar(freq_df, x<span class="op">=</span><span class="st">'term'</span>, y<span class="op">=</span><span class="st">'frequency'</span>, title<span class="op">=</span><span class="st">"📈 Top 30 high-frequency words (by word frequency)"</span>, text_auto<span class="op">=</span><span class="st">'.2s'</span>)</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>fig1.update_layout(xaxis_tickangle<span class="op">=-</span><span class="dv">45</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>fig1.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/Top30_high_frequency.html"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>fig1.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<iframe src="images/Top30_high_frequency.html" width="100%" height="600">
+</iframe>
 
 
 
