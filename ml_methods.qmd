@@ -119,22 +119,22 @@ kmeans = KMeans(k=k, seed=688, featuresCol="features")
 pipeline = Pipeline(stages=indexers + encoders + [assembler, scaler, kmeans])
 model_kmeans = pipeline.fit(df_kmeans)
 
-# 获取聚类结果并保留 EMPLOYMENT_TYPE_NAME 和 prediction（聚类标签）
+# Getting clustering results, keeping clustering labels
 clustered_df = model_kmeans.transform(df_kmeans).select("EMPLOYMENT_TYPE_NAME", "prediction")
 
-# === 转换为 Pandas，用于 sklearn 评估 ===
+# Convert to Pandas for sklearn evaluation
 pandas_df = clustered_df.toPandas()
 
-# 标签编码
+# Label encoding
 le = LabelEncoder()
 true_labels = le.fit_transform(pandas_df["EMPLOYMENT_TYPE_NAME"])
 predicted_labels = pandas_df["prediction"]
 
-# 把cluster重新插入回df_kmeans
+# Re-insert cluster back into k-means model
 df_kmeans = model_kmeans.transform(df_kmeans) \
                    .withColumnRenamed("prediction", "cluster")
 
-# 计算评估指标
+# Calculation of evaluation indicators
 nmi = normalized_mutual_info_score(true_labels, predicted_labels)
 ari = adjusted_rand_score(true_labels, predicted_labels)
 
@@ -142,6 +142,10 @@ ari = adjusted_rand_score(true_labels, predicted_labels)
 print(f"NMI: {nmi:.4f}")
 print(f"ARI: {ari:.4f}")
 ```
+
+## Comparing and show results
+
+After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs. 
 
 ```{python}
 import matplotlib.pyplot as plt
