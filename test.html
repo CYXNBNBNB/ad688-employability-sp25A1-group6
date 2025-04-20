@@ -467,17 +467,17 @@ only showing top 20 rows
 </div>
 </div>
 </div>
-<div id="56af32ce" class="cell" data-execution_count="19">
+<div id="56af32ce" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score, adjusted_rand_score</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span> <span class="co"># 你可以根据 Elbow 图选择最优 k</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span>k, seed<span class="op">=</span><span class="dv">688</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>)</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> encoders <span class="op">+</span> [assembler, scaler, kmeans])</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(df_kmeans)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>model_kmeans <span class="op">=</span> pipeline.fit(df_kmeans)</span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取聚类结果并保留 EMPLOYMENT_TYPE 和 prediction（聚类标签）</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>clustered_df <span class="op">=</span> model.transform(df_kmeans).select(<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"prediction"</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>clustered_df <span class="op">=</span> model_kmeans.transform(df_kmeans).select(<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"prediction"</span>)</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># === 转换为 Pandas，用于 sklearn 评估 ===</span></span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>pandas_df <span class="op">=</span> clustered_df.toPandas()</span>
@@ -487,16 +487,20 @@ only showing top 20 rows
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(pandas_df[<span class="st">"EMPLOYMENT_TYPE"</span>])</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>predicted_labels <span class="op">=</span> pandas_df[<span class="st">"prediction"</span>]</span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算评估指标</span></span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, predicted_labels)</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, predicted_labels)</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 把cluster重新插入回df_kmeans</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>df_kmeans <span class="op">=</span> model_kmeans.transform(df_kmeans) <span class="op">\</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>                   .withColumnRenamed(<span class="st">"prediction"</span>, <span class="st">"cluster"</span>)</span>
 <span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算评估指标</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, predicted_labels)</span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, predicted_labels)</span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>[Stage 1098:&gt;                                                       (0 + 1) / 1]</code></pre>
+<pre><code>[Stage 1147:&gt;                                                       (0 + 1) / 1]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NMI: 0.0113
@@ -506,7 +510,7 @@ ARI: 0.0332</code></pre>
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div id="bfc1933e" class="cell" data-execution_count="20">
+<div id="bfc1933e" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -568,7 +572,7 @@ ARI: 0.0332</code></pre>
 <span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>        ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(le.classes_)))</span>
 <span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>        ax.set_xticklabels(le.classes_, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
 <span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>        ax.legend(title<span class="op">=</span>feature, loc<span class="op">=</span><span class="st">'best'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
