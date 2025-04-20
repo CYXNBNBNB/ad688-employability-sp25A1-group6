@@ -9,13 +9,13 @@ about:
   links:
     - icon: github
       text: Yuxuan Chen
-      href: https://github.com/CYXNBNBNB
+      href: https://cyxnbnbnb.github.io/
     - icon: github
       text: Shangxuan Zhong
-      href: https://github.com/zhongshangxuan
+      href: https://zhongshangxuan.github.io/
     - icon: github
       text: Qimin Shen
-      href: https://github.com/Qimin-Shen
+      href: https://qimin-shen.github.io/my-website/
     - icon: github
       text: Altyn
       href: https://altynliv.github.io/
