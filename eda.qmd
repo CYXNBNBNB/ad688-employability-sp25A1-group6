@@ -62,12 +62,12 @@ fig = px.box(df_pandas, x="REMOTE_TYPE_NAME", y="SALARY",
              category_orders={"REMOTE_TYPE_NAME": ["On-Site", "Hybrid", "Remote"]},
              labels={"REMOTE_TYPE_NAME": "Job Type", "SALARY": "Salary ($)"})
 
-fig.write_image("./images/REMOTE_TYPE_NAME&SALARY.png")  ##save the pic
+fig.write_html("./images/REMOTE_TYPE_NAME&SALARY.html")
 
 fig.show()
 ```
 
-![Salary of different remote type](/images/REMOTE_TYPE_NAME&SALARY.png)
+<iframe src="images/REMOTE_TYPE_NAME&SALARY.html" width="100%" height="600"></iframe>
 
 ###  Analysis
 
@@ -106,12 +106,13 @@ fig = px.choropleth(df_pandas,
                     color_continuous_scale="Viridis",
                     labels={"SALARY": "Average Salary ($)"})
 
-fig.write_image("./images/STATE_NAME&SALARY.png")  ##save the pic
+
+fig.write_html("./images/STATE_NAME_SALARY.html")
 
 fig.show()
 ```
 
-![Salary of different states](/images/STATE_NAME&SALARY.png)
+<iframe src="images/STATE_NAME_SALARY.html" width="100%" height="600"></iframe>
 
 ###  Analysis
 
@@ -133,12 +134,12 @@ fig = px.bar(df_pandas.groupby("LIGHTCAST_SECTORS_NAME")["SALARY"].mean().sort_v
              title="Top 10 Industries with Highest Salaries",
              labels={"LIGHTCAST_SECTORS_NAME": "Industry", "SALARY": "Salary ($)"})
 
-fig.write_image("./images/LIGHTCAST_SECTORS_NAME&SALARY.png")  ##save the pic
+fig.write_html("./images/LIGHTCAST_SECTORS_NAME&SALARY.html")
 
 fig.show()
 ```
 
-![Salary of top 10 industries](/images/LIGHTCAST_SECTORS_NAME&SALARY.png)
+<iframe src="images/LIGHTCAST_SECTORS_NAME&SALARY.html" width="100%" height="600"></iframe>
 
 ###  Analysis
 
@@ -181,12 +182,12 @@ fig = px.box(df_pandas, x="AI_RELATED", y="SALARY",
              labels={"AI_RELATED": "Industry Type", "SALARY": "Salary ($)"},
              color="AI_RELATED")
 
-fig.write_image("./images/AI_RELATED&SALARY.png")  ##save the pic
+fig.write_html("./images/AI_RELATED&SALARY.html")
 
 fig.show()
 ```
 
-![Salary of AI related](/images/AI_RELATED&SALARY.png)
+<iframe src="images/AI_RELATED&SALARY.html" width="100%" height="600"></iframe>
 
 ###  Analysis
 
