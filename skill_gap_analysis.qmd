@@ -12,6 +12,10 @@ format:
     number-sections: true
     df-print: paged
     code-fold: true
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
 
 execute:
   eval: false #false 不运行  true 运行
