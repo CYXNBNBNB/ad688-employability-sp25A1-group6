@@ -344,7 +344,7 @@ only showing top 20 rows
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div id="b78da314" class="cell" data-execution_count="6">
+<div id="b78da314" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler, StringIndexer, OneHotEncoder</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
@@ -384,11 +384,11 @@ only showing top 20 rows
 <span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> encoders <span class="op">+</span> [assembler, scaler, kmeans])</span>
 <span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 拟合模型</span></span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> pipeline.fit(df_kmeans)</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    model_kmeans <span class="op">=</span> pipeline.fit(df_kmeans)</span>
 <span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 获取 KMeans 聚类模型阶段（Pipeline 的最后一个 stage）</span></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    kmeans_model <span class="op">=</span> model.stages[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> kmeans_model.summary.trainingCost  <span class="co"># 获取 SSE 值</span></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    kmeans_data <span class="op">=</span> model_kmeans.stages[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> kmeans_data.summary.trainingCost  <span class="co"># 获取 SSE 值</span></span>
 <span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>    cost.append((k, sse))  <span class="co"># 存储 k 和 SSE</span></span>
 <span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">, SSE = </span><span class="sc">{</span>sse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
@@ -467,138 +467,108 @@ only showing top 20 rows
 </div>
 </div>
 </div>
-<div id="56af32ce" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KMeans 模型</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span><span class="dv">5</span>, seed<span class="op">=</span><span class="dv">688</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>, predictionCol<span class="op">=</span><span class="st">"cluster"</span>)</span>
+<div id="56af32ce" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score, adjusted_rand_score</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 管道构建</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, kmeans])</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(df_kmeans)</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>clustered <span class="op">=</span> model.transform(df_kmeans)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span> <span class="co"># 你可以根据 Elbow 图选择最优 k</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span>k, seed<span class="op">=</span><span class="dv">688</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> encoders <span class="op">+</span> [assembler, scaler, kmeans])</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(df_kmeans)</span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 收集结果评估</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> clustered.select(<span class="st">"TITLE_RAW"</span>, <span class="st">"cluster"</span>).collect()</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>df_clustered <span class="op">=</span> pd.DataFrame([row.asDict() <span class="cf">for</span> row <span class="kw">in</span> rows])</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># sklearn 评估</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(df_clustered[<span class="st">"TITLE_RAW"</span>])</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>pred_labels <span class="op">=</span> df_clustered[<span class="st">"cluster"</span>]</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, pred_labels)</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, pred_labels)</span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取聚类结果并保留 EMPLOYMENT_TYPE 和 prediction（聚类标签）</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>clustered_df <span class="op">=</span> model.transform(df_kmeans).select(<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"prediction"</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># === 转换为 Pandas，用于 sklearn 评估 ===</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>pandas_df <span class="op">=</span> clustered_df.toPandas()</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 标签编码</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(pandas_df[<span class="st">"EMPLOYMENT_TYPE"</span>])</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>predicted_labels <span class="op">=</span> pandas_df[<span class="st">"prediction"</span>]</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算评估指标</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(true_labels, predicted_labels)</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(true_labels, predicted_labels)</span>
 <span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"TITLE_RAW:"</span>)</span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_clustered.groupby(<span class="st">"cluster"</span>)[<span class="st">"TITLE_RAW"</span>].agg(<span class="kw">lambda</span> x: x.value_counts().index[<span class="dv">0</span>]))</span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"cluster:"</span>)</span>
-<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_clustered[<span class="st">"cluster"</span>].value_counts().sort_index())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">IllegalArgumentException</span>                  Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[4]</span><span class="ansi-green-fg">, line 6</span>
-<span class="ansi-green-fg">      4</span> <span style="font-style:italic;color:rgb(95,135,135)"># 管道构建</span>
-<span class="ansi-green-fg">      5</span> pipeline = Pipeline(stages=[assembler, scaler, kmeans])
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">6</span> model = <span class="ansi-yellow-bg">pipeline</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">df_kmeans</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">      7</span> clustered = model.transform(df_kmeans)
-<span class="ansi-green-fg">      9</span> <span style="font-style:italic;color:rgb(95,135,135)"># 收集结果评估</span>
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/pyspark/ml/base.py:205</span>, in <span class="ansi-cyan-fg">Estimator.fit</span><span class="ansi-blue-fg">(self, dataset, params)</span>
-<span class="ansi-green-fg">    203</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)">self</span>.copy(params)._fit(dataset)
-<span class="ansi-green-fg">    204</span>     <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">205</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dataset</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    206</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">    207</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">TypeError</span>(
-<span class="ansi-green-fg">    208</span>         <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">Params must be either a param map or a list/tuple of param maps, </span><span class="ansi-yellow-fg">"</span>
-<span class="ansi-green-fg">    209</span>         <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">but got </span><span style="font-weight:bold;color:rgb(175,95,135)">%s</span><span class="ansi-yellow-fg">.</span><span class="ansi-yellow-fg">"</span> % <span style="color:rgb(0,135,0)">type</span>(params)
-<span class="ansi-green-fg">    210</span>     )
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/pyspark/ml/pipeline.py:132</span>, in <span class="ansi-cyan-fg">Pipeline._fit</span><span class="ansi-blue-fg">(self, dataset)</span>
-<span class="ansi-green-fg">    130</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">isinstance</span>(stage, Transformer):
-<span class="ansi-green-fg">    131</span>     transformers.append(stage)
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">132</span>     dataset = <span class="ansi-yellow-bg">stage</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">transform</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dataset</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    133</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:  <span style="font-style:italic;color:rgb(95,135,135)"># must be an Estimator</span>
-<span class="ansi-green-fg">    134</span>     model = stage.fit(dataset)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/pyspark/ml/base.py:262</span>, in <span class="ansi-cyan-fg">Transformer.transform</span><span class="ansi-blue-fg">(self, dataset, params)</span>
-<span class="ansi-green-fg">    260</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)">self</span>.copy(params)._transform(dataset)
-<span class="ansi-green-fg">    261</span>     <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">262</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_transform</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dataset</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    263</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">    264</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">TypeError</span>(<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">Params must be a param map but got </span><span style="font-weight:bold;color:rgb(175,95,135)">%s</span><span class="ansi-yellow-fg">.</span><span class="ansi-yellow-fg">"</span> % <span style="color:rgb(0,135,0)">type</span>(params))
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/pyspark/ml/wrapper.py:398</span>, in <span class="ansi-cyan-fg">JavaTransformer._transform</span><span class="ansi-blue-fg">(self, dataset)</span>
-<span class="ansi-green-fg">    395</span> <span style="font-weight:bold;color:rgb(0,135,0)">assert</span> <span style="color:rgb(0,135,0)">self</span>._java_obj <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
-<span class="ansi-green-fg">    397</span> <span style="color:rgb(0,135,0)">self</span>._transfer_params_to_java()
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">398</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> DataFrame(<span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_java_obj</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">transform</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dataset</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_jdf</span><span class="ansi-yellow-bg">)</span>, dataset.sparkSession)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/py4j/java_gateway.py:1322</span>, in <span class="ansi-cyan-fg">JavaMember.__call__</span><span class="ansi-blue-fg">(self, *args)</span>
-<span class="ansi-green-fg">   1316</span> command = proto.CALL_COMMAND_NAME +\
-<span class="ansi-green-fg">   1317</span>     <span style="color:rgb(0,135,0)">self</span>.command_header +\
-<span class="ansi-green-fg">   1318</span>     args_command +\
-<span class="ansi-green-fg">   1319</span>     proto.END_COMMAND_PART
-<span class="ansi-green-fg">   1321</span> answer = <span style="color:rgb(0,135,0)">self</span>.gateway_client.send_command(command)
-<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1322</span> return_value = <span class="ansi-yellow-bg">get_return_value</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg">   1323</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">answer</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">gateway_client</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">target_id</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">   1325</span> <span style="font-weight:bold;color:rgb(0,135,0)">for</span> temp_arg <span style="font-weight:bold;color:rgb(175,0,255)">in</span> temp_args:
-<span class="ansi-green-fg">   1326</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">hasattr</span>(temp_arg, <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">_detach</span><span class="ansi-yellow-fg">"</span>):
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/ad688-employability-sp25A1-group6/.venv/lib/python3.12/site-packages/pyspark/errors/exceptions/captured.py:185</span>, in <span class="ansi-cyan-fg">capture_sql_exception.&lt;locals&gt;.deco</span><span class="ansi-blue-fg">(*a, **kw)</span>
-<span class="ansi-green-fg">    181</span> converted = convert_exception(e.java_exception)
-<span class="ansi-green-fg">    182</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="color:rgb(0,135,0)">isinstance</span>(converted, UnknownException):
-<span class="ansi-green-fg">    183</span>     <span style="font-style:italic;color:rgb(95,135,135)"># Hide where the exception came from that shows a non-Pythonic</span>
-<span class="ansi-green-fg">    184</span>     <span style="font-style:italic;color:rgb(95,135,135)"># JVM exception message.</span>
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">185</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> converted <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">None</span>
-<span class="ansi-green-fg">    186</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">    187</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span>
-
-<span class="ansi-red-fg">IllegalArgumentException</span>: EDUCATION_LEVELS_vec does not exist. Available: DURATION, SALARY, EDUCATION_LEVELS, EMPLOYMENT_TYPE, REMOTE_TYPE, STATE</pre>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NMI: </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 1098:&gt;                                                       (0 + 1) / 1]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NMI: 0.0113
+ARI: 0.0332</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>                                                                                </code></pre>
 </div>
 </div>
-</div>
-<div id="bfc1933e" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.functions <span class="im">import</span> vector_to_array</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D  <span class="co"># 3D 绘图支持</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: 将 Spark 向量拆成 3 个列</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>df_plot <span class="op">=</span> clustered.select(vector_to_array(<span class="st">"features"</span>).alias(<span class="st">"features_array"</span>), <span class="st">"cluster"</span>)</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>df_plot_pd <span class="op">=</span> df_plot.toPandas()</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 转为 Pandas 的 DataFrame（3列特征 + cluster）</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> pd.DataFrame(df_plot_pd[<span class="st">"features_array"</span>].tolist(), columns<span class="op">=</span>[<span class="st">"DURATION_std"</span>, <span class="st">"EDU_LEVEL_std"</span>, <span class="st">"SALARY_std"</span>])</span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"cluster"</span>] <span class="op">=</span> df_plot_pd[<span class="st">"cluster"</span>]</span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 画 3D 散点图</span></span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> ax.scatter(</span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>    features_df[<span class="st">"DURATION_std"</span>],</span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>    features_df[<span class="st">"EDU_LEVEL_std"</span>],</span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>    features_df[<span class="st">"SALARY_std"</span>],</span>
-<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span>features_df[<span class="st">"cluster"</span>],</span>
-<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"tab10"</span>,</span>
-<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="dv">30</span>,</span>
-<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>    edgecolors<span class="op">=</span><span class="st">'k'</span></span>
-<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Standardized DURATION"</span>)</span>
-<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Standardized EDUCATION_LEVELS"</span>)</span>
-<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">"Standardized SALARY"</span>)</span>
-<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"KMeans 3D Cluster Visualization (k=</span><span class="sc">{</span>best_k<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加图例（根据聚类簇编号）</span></span>
-<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>legend_labels <span class="op">=</span> [<span class="ss">f"Cluster </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(features_df[<span class="st">"cluster"</span>].unique())]</span>
-<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>scatter.legend_elements()[<span class="dv">0</span>], labels<span class="op">=</span>legend_labels, title<span class="op">=</span><span class="st">"Cluster"</span>)</span>
-<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bfc1933e" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: 从 Spark 转换为 pandas</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>selected_cols <span class="op">=</span> [<span class="st">"SALARY"</span>, <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE"</span>]</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>df_viz <span class="op">=</span> df_cleaned.select(selected_cols).dropna().toPandas()</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 限制 STATE 分类数量</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>top_states <span class="op">=</span> df_viz[<span class="st">"STATE"</span>].value_counts().nlargest(<span class="dv">10</span>).index</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>df_viz[<span class="st">"STATE"</span>] <span class="op">=</span> df_viz[<span class="st">"STATE"</span>].where(df_viz[<span class="st">"STATE"</span>].isin(top_states), other<span class="op">=</span><span class="st">"Other"</span>)</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 构建变量与 SALARY 的散点图数据列表</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>feature_plots <span class="op">=</span> [</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"DURATION"</span>, <span class="va">False</span>), <span class="co"># 数值型变量，不需要 LabelEncoder</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"EDUCATION_LEVELS"</span>, <span class="va">True</span>),</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="va">True</span>),</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"REMOTE_TYPE"</span>, <span class="va">True</span>),</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"STATE"</span>, <span class="va">True</span>)</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>plot_data_list <span class="op">=</span> []</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>label_encoders <span class="op">=</span> {}</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feature, is_categorical <span class="kw">in</span> feature_plots:</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    df_temp <span class="op">=</span> df_viz[[feature, <span class="st">"SALARY"</span>]].dropna().copy()</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"Feature"</span>] <span class="op">=</span> feature</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_categorical:</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>        le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"X_Value"</span>] <span class="op">=</span> le.fit_transform(df_temp[feature].astype(<span class="bu">str</span>))</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"Hue_Label"</span>] <span class="op">=</span> df_temp[feature]  <span class="co"># 保留原始标签用于 hue</span></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>        label_encoders[feature] <span class="op">=</span> le</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"X_Value"</span>] <span class="op">=</span> df_temp[feature]</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"Hue_Label"</span>] <span class="op">=</span> <span class="va">None</span>  <span class="co"># 没有分类标签</span></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    plot_data_list.append(df_temp[[<span class="st">"Feature"</span>, <span class="st">"X_Value"</span>, <span class="st">"SALARY"</span>, <span class="st">"Hue_Label"</span>]])</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有数据</span></span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>df_long <span class="op">=</span> pd.concat(plot_data_list, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: 使用 matplotlib 手动分面 + 每图独立 hue + legend</span></span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>, font_scale<span class="op">=</span><span class="fl">1.1</span>)</span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a><span class="co"># 分面图设置</span></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>n_cols <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span>n_cols, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">12</span>))</span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 每个图一个子集</span></span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (feature, is_cat) <span class="kw">in</span> <span class="bu">enumerate</span>(feature_plots):</span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[i]</span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_long[df_long[<span class="st">"Feature"</span>] <span class="op">==</span> feature]</span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_cat:</span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>        sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"X_Value"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>, hue<span class="op">=</span><span class="st">"Hue_Label"</span>, ax<span class="op">=</span>ax, s<span class="op">=</span><span class="dv">15</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, palette<span class="op">=</span><span class="st">"Set2"</span>)</span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>        le <span class="op">=</span> label_encoders[feature]</span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>        ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(le.classes_)))</span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>        ax.set_xticklabels(le.classes_, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>        ax.legend(title<span class="op">=</span>feature, loc<span class="op">=</span><span class="st">'best'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
@@ -611,54 +581,54 @@ only showing top 20 rows
 </div>
 </div>
 <div id="1daf1c40" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
-<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
-<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ 多元线性回归结果:"</span>)</span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ 多元线性回归结果:"</span>)</span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>25/04/19 20:42:57 WARN Instrumentation: [c0826b6d] regParam is zero, which might cause numerical instability and overfitting.
 [Stage 67:&gt;                                                         (0 + 1) / 1]</code></pre>
