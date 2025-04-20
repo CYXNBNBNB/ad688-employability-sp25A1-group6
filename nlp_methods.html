@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="9256c37c" class="cell" data-execution_count="1">
+<div id="331097bd" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>用 Pandas + scikit-learn 处理, 得到了 TF-IDF 特征矩阵 X_tfidf 和对应文本在 body_df[“BODY”] 中</p>
-<div id="7429a727" class="cell" data-execution_count="2">
+<div id="31586926" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换为 Pandas DataFrame，只取 BODY 列</span></span>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>第一步：用 KMeans 聚类 TF-IDF 特征</p>
-<div id="8b5f0eac" class="cell" data-execution_count="3">
+<div id="42f0fd8b" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -254,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>第二步：生成每个聚类的词云</p>
-<div id="cc2a6d53" class="cell" data-execution_count="4">
+<div id="8bf01312" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -310,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="images/wordcloud/cluster_0_wordcloud.png" class="img-fluid" alt="Cluster 0 Wordcloud"> <img src="images/wordcloud/cluster_1_wordcloud.png" class="img-fluid" alt="Cluster 1 Wordcloud"> <img src="images/wordcloud/cluster_2_wordcloud.png" class="img-fluid" alt="Cluster 2 Wordcloud"> <img src="images/wordcloud/cluster_3_wordcloud.png" class="img-fluid" alt="Cluster 3 Wordcloud"></p>
 <p>第三步（可选）：查看每一类的职位数量分布</p>
-<div id="8d34d18d" class="cell" data-execution_count="5">
+<div id="00f5a1c7" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -323,7 +323,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <iframe src="images/jobs_by_theme.html" width="100%" height="600">
 </iframe>
 <p>使用 TF-IDF 特征训练分类模型（SVM &amp; Naive Bayes）</p>
-<div id="270f9424" class="cell" data-execution_count="6">
+<div id="41a641f0" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -368,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>你将看到两个模型的分类性能指标（precision, recall, f1-score） 混淆矩阵可以看出哪些聚类易混淆 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了</p>
 <p>关键词热度可视化（最常见词条分析） 根据 词频（term frequency） 排名前 N 的词</p>
-<div id="50efc334" class="cell" data-execution_count="7">
+<div id="ad6538a9" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
