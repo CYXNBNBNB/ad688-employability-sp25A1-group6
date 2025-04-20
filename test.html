@@ -344,7 +344,7 @@ only showing top 20 rows
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div id="b78da314" class="cell">
+<div id="b78da314" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler, StringIndexer, OneHotEncoder</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
@@ -355,7 +355,7 @@ only showing top 20 rows
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># === 选择用于聚类的字段 ===</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"SALARY"</span>]</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> [<span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE"</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> [<span class="st">"MIN_EDULEVELS_NAME"</span>, <span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"STATE_NAME"</span>]</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>df_kmeans <span class="op">=</span> df_cleaned.select(numeric_cols <span class="op">+</span> categorical_cols).dropna()</span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -406,55 +406,55 @@ only showing top 20 rows
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 2, SSE = 1666759.21</code></pre>
+<pre><code>k = 2, SSE = 1639431.82</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 3, SSE = 1635634.26</code></pre>
+<pre><code>k = 3, SSE = 1608367.32</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 4, SSE = 1610361.03</code></pre>
+<pre><code>k = 4, SSE = 1583154.79</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 5, SSE = 1565495.99</code></pre>
+<pre><code>k = 5, SSE = 1538237.71</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 6, SSE = 1539833.74</code></pre>
+<pre><code>k = 6, SSE = 1512579.31</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 7, SSE = 1526481.66</code></pre>
+<pre><code>k = 7, SSE = 1499198.45</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 8, SSE = 1488706.26</code></pre>
+<pre><code>k = 8, SSE = 1461431.65</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 9, SSE = 1460572.26</code></pre>
+<pre><code>k = 9, SSE = 1422329.48</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>[Stage 702:&gt;                                                        (0 + 1) / 1]</code></pre>
+<pre><code>[Stage 1905:&gt;                                                       (0 + 1) / 1]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>k = 10, SSE = 1433578.97</code></pre>
+<pre><code>k = 10, SSE = 1416654.36</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
@@ -467,24 +467,24 @@ only showing top 20 rows
 </div>
 </div>
 </div>
-<div id="56af32ce" class="cell" data-execution_count="21">
+<div id="56af32ce" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> normalized_mutual_info_score, adjusted_rand_score</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span> <span class="co"># 你可以根据 Elbow 图选择最优 k</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">3</span> <span class="co"># 你可以根据 Elbow 图选择最优 k</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(k<span class="op">=</span>k, seed<span class="op">=</span><span class="dv">688</span>, featuresCol<span class="op">=</span><span class="st">"features"</span>)</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> encoders <span class="op">+</span> [assembler, scaler, kmeans])</span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>model_kmeans <span class="op">=</span> pipeline.fit(df_kmeans)</span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取聚类结果并保留 EMPLOYMENT_TYPE 和 prediction（聚类标签）</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>clustered_df <span class="op">=</span> model_kmeans.transform(df_kmeans).select(<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"prediction"</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取聚类结果并保留 EMPLOYMENT_TYPE_NAME 和 prediction（聚类标签）</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>clustered_df <span class="op">=</span> model_kmeans.transform(df_kmeans).select(<span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"prediction"</span>)</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># === 转换为 Pandas，用于 sklearn 评估 ===</span></span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>pandas_df <span class="op">=</span> clustered_df.toPandas()</span>
 <span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 标签编码</span></span>
 <span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(pandas_df[<span class="st">"EMPLOYMENT_TYPE"</span>])</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>true_labels <span class="op">=</span> le.fit_transform(pandas_df[<span class="st">"EMPLOYMENT_TYPE_NAME"</span>])</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>predicted_labels <span class="op">=</span> pandas_df[<span class="st">"prediction"</span>]</span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 把cluster重新插入回df_kmeans</span></span>
@@ -500,139 +500,159 @@ only showing top 20 rows
 <span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ARI: </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>[Stage 1147:&gt;                                                       (0 + 1) / 1]</code></pre>
+<pre><code>[Stage 1982:&gt;                                                       (0 + 1) / 1]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>NMI: 0.0113
-ARI: 0.0332</code></pre>
+<pre><code>NMI: 0.0010
+ARI: -0.0170</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div id="bfc1933e" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: 从 Spark 转换为 pandas</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>selected_cols <span class="op">=</span> [<span class="st">"SALARY"</span>, <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"EMPLOYMENT_TYPE"</span>, <span class="st">"REMOTE_TYPE"</span>, <span class="st">"STATE"</span>]</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>df_viz <span class="op">=</span> df_cleaned.select(selected_cols).dropna().toPandas()</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: 限制 STATE 分类数量</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>top_states <span class="op">=</span> df_viz[<span class="st">"STATE"</span>].value_counts().nlargest(<span class="dv">10</span>).index</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>df_viz[<span class="st">"STATE"</span>] <span class="op">=</span> df_viz[<span class="st">"STATE"</span>].where(df_viz[<span class="st">"STATE"</span>].isin(top_states), other<span class="op">=</span><span class="st">"Other"</span>)</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: 构建变量与 SALARY 的散点图数据列表</span></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>feature_plots <span class="op">=</span> [</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"DURATION"</span>, <span class="va">False</span>), <span class="co"># 数值型变量，不需要 LabelEncoder</span></span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"EDUCATION_LEVELS"</span>, <span class="va">True</span>),</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"EMPLOYMENT_TYPE"</span>, <span class="va">True</span>),</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"REMOTE_TYPE"</span>, <span class="va">True</span>),</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"STATE"</span>, <span class="va">True</span>)</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>plot_data_list <span class="op">=</span> []</span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>label_encoders <span class="op">=</span> {}</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feature, is_categorical <span class="kw">in</span> feature_plots:</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    df_temp <span class="op">=</span> df_viz[[feature, <span class="st">"SALARY"</span>]].dropna().copy()</span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>    df_temp[<span class="st">"Feature"</span>] <span class="op">=</span> feature</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_categorical:</span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>        le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"X_Value"</span>] <span class="op">=</span> le.fit_transform(df_temp[feature].astype(<span class="bu">str</span>))</span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"Hue_Label"</span>] <span class="op">=</span> df_temp[feature]  <span class="co"># 保留原始标签用于 hue</span></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>        label_encoders[feature] <span class="op">=</span> le</span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"X_Value"</span>] <span class="op">=</span> df_temp[feature]</span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>        df_temp[<span class="st">"Hue_Label"</span>] <span class="op">=</span> <span class="va">None</span>  <span class="co"># 没有分类标签</span></span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    plot_data_list.append(df_temp[[<span class="st">"Feature"</span>, <span class="st">"X_Value"</span>, <span class="st">"SALARY"</span>, <span class="st">"Hue_Label"</span>]])</span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有数据</span></span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>df_long <span class="op">=</span> pd.concat(plot_data_list, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: 使用 matplotlib 手动分面 + 每图独立 hue + legend</span></span>
-<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>, font_scale<span class="op">=</span><span class="fl">1.1</span>)</span>
-<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a><span class="co"># 分面图设置</span></span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>n_cols <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span>n_cols, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">12</span>))</span>
-<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
-<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 每个图一个子集</span></span>
-<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (feature, is_cat) <span class="kw">in</span> <span class="bu">enumerate</span>(feature_plots):</span>
-<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[i]</span>
-<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_long[df_long[<span class="st">"Feature"</span>] <span class="op">==</span> feature]</span>
-<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_cat:</span>
-<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>        sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"X_Value"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>, hue<span class="op">=</span><span class="st">"Hue_Label"</span>, ax<span class="op">=</span>ax, s<span class="op">=</span><span class="dv">15</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, palette<span class="op">=</span><span class="st">"Set2"</span>)</span>
-<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>        le <span class="op">=</span> label_encoders[feature]</span>
-<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>        ax.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(le.classes_)))</span>
-<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>        ax.set_xticklabels(le.classes_, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>        ax.legend(title<span class="op">=</span>feature, loc<span class="op">=</span><span class="st">'best'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a70a510e" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df_kmeans.show(<span class="dv">10</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------+--------+-------------------+----------------------+----------------+-----------+----------------------+------------------------+--------------------+--------------+----------------------+------------------------+--------------------+---------------+----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+|DURATION|SALARY  |MIN_EDULEVELS_NAME |EMPLOYMENT_TYPE_NAME  |REMOTE_TYPE_NAME|STATE_NAME |MIN_EDULEVELS_NAME_idx|EMPLOYMENT_TYPE_NAME_idx|REMOTE_TYPE_NAME_idx|STATE_NAME_idx|MIN_EDULEVELS_NAME_vec|EMPLOYMENT_TYPE_NAME_vec|REMOTE_TYPE_NAME_vec|STATE_NAME_vec |raw_features                                        |features                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |cluster|
++--------+--------+-------------------+----------------------+----------------+-----------+----------------------+------------------------+--------------------+--------------+----------------------+------------------------+--------------------+---------------+----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+|15.0    |92500.0 |No Education Listed|Part-time / full-time |On-Site         |California |1.0                   |2.0                     |0.0                 |0.0           |(5,[1],[1.0])         |(2,[],[])               |(2,[0],[1.0])       |(50,[0],[1.0]) |(61,[0,1,3,9,11],[15.0,92500.0,1.0,1.0,1.0])        |[-0.9088148985450919,-0.5597016676292608,-1.2729022104537686,1.8377863087613526,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,-4.223759799976887,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,2.6161471598881696,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]|0      |
+|10.0    |110155.0|Bachelor's degree  |Full-time (&gt; 32 hours)|Remote          |Arkansas   |0.0                   |0.0                     |1.0                 |29.0          |(5,[0],[1.0])         |(2,[0],[1.0])           |(2,[1],[1.0])       |(50,[29],[1.0])|(61,[0,1,2,7,10,40],[10.0,110155.0,1.0,1.0,1.0,1.0])|[-1.1210576735995135,-0.16421219166862414,0.7855775664989155,-0.5441129994886762,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,-1.7142106247302573,1.894896492376312,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,10.126661789719408,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]|0      |
+|60.0    |92962.0 |Bachelor's degree  |Full-time (&gt; 32 hours)|On-Site         |New York   |0.0                   |0.0                     |0.0                 |2.0           |(5,[0],[1.0])         |(2,[0],[1.0])           |(2,[0],[1.0])       |(50,[2],[1.0]) |(61,[0,1,2,7,9,13],[60.0,92962.0,1.0,1.0,1.0,1.0])  |[1.0013700769447025,-0.549352410314403,0.7855775664989155,-0.5441129994886762,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,-0.3822275123552707,-0.3032230731661876,3.9266595469609102,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]  |0      |
+|117.0   |107645.0|High school or GED |Full-time (&gt; 32 hours)|On-Site         |California |2.0                   |0.0                     |0.0                 |0.0           |(5,[2],[1.0])         |(2,[0],[1.0])           |(2,[0],[1.0])       |(50,[0],[1.0]) |(61,[0,1,4,7,9,11],[117.0,107645.0,1.0,1.0,1.0,1.0])|[3.4209377125651086,-0.22043867621471294,-1.2729022104537686,-0.5441129994886762,3.8449348339135887,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,2.6161471598881696,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]|0      |
+|55.0    |192800.0|Bachelor's degree  |Full-time (&gt; 32 hours)|On-Site         |Michigan   |0.0                   |0.0                     |0.0                 |12.0          |(5,[0],[1.0])         |(2,[0],[1.0])           |(2,[0],[1.0])       |(50,[12],[1.0])|(61,[0,1,2,7,9,23],[55.0,192800.0,1.0,1.0,1.0,1.0]) |[0.7891273018902809,1.6871176152283915,0.7855775664989155,-0.5441129994886762,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,6.219033615001592,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]   |0      |
+|60.0    |81286.0 |No Education Listed|Full-time (&gt; 32 hours)|Remote          |Mississippi|1.0                   |0.0                     |1.0                 |37.0          |(5,[1],[1.0])         |(2,[0],[1.0])           |(2,[1],[1.0])       |(50,[37],[1.0])|(61,[0,1,3,7,10,48],[60.0,81286.0,1.0,1.0,1.0,1.0]) |[1.0013700769447025,-0.8109063679080815,-1.2729022104537686,1.8377863087613526,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,-1.7142106247302573,1.894896492376312,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,12.181237631715542,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463] |0      |
+|18.0    |125900.0|Associate degree   |Full-time (&gt; 32 hours)|On-Site         |Arizona    |3.0                   |0.0                     |0.0                 |14.0          |(5,[3],[1.0])         |(2,[0],[1.0])           |(2,[0],[1.0])       |(50,[14],[1.0])|(61,[0,1,5,7,9,25],[18.0,125900.0,1.0,1.0,1.0,1.0]) |[-0.7814692335124389,0.1884913936613234,-1.2729022104537686,-0.5441129994886762,-0.26007291776686464,3.910428996197908,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,6.443198823075183,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463]   |2      |
+|70.0    |170000.0|No Education Listed|Full-time (&gt; 32 hours)|On-Site         |California |1.0                   |0.0                     |0.0                 |0.0           |(5,[1],[1.0])         |(2,[0],[1.0])           |(2,[0],[1.0])       |(50,[0],[1.0]) |(61,[0,1,3,7,9,11],[70.0,170000.0,1.0,1.0,1.0,1.0]) |[1.4258556270535458,1.1763750464432023,-1.2729022104537686,1.8377863087613526,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,0.5833375470045947,-0.5277140070196389,2.6161471598881696,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463] |0      |
+|10.0    |110155.0|Bachelor's degree  |Full-time (&gt; 32 hours)|Remote          |Tennessee  |0.0                   |0.0                     |1.0                 |20.0          |(5,[0],[1.0])         |(2,[0],[1.0])           |(2,[1],[1.0])       |(50,[20],[1.0])|(61,[0,1,2,7,10,31],[10.0,110155.0,1.0,1.0,1.0,1.0])|[-1.1210576735995135,-0.16421219166862414,0.7855775664989155,-0.5441129994886762,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,-1.7142106247302573,1.894896492376312,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,7.845769602298246,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,-0.07044505950078737,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463] |0      |
+|46.0    |136950.0|Bachelor's degree  |Full-time (&gt; 32 hours)|Remote          |Hawaii     |0.0                   |0.0                     |1.0                 |43.0          |(5,[0],[1.0])         |(2,[0],[1.0])           |(2,[1],[1.0])       |(50,[43],[1.0])|(61,[0,1,2,7,10,54],[46.0,136950.0,1.0,1.0,1.0,1.0])|[0.40709030679232205,0.43602233160326814,0.7855775664989155,-0.5441129994886762,-0.26007291776686464,-0.2557170637420144,-0.1672579202756866,0.23674722717064423,-0.18619025619710544,-1.7142106247302573,1.894896492376312,-0.3822275123552707,-0.3032230731661876,-0.25466007656642836,-0.22942037112252978,-0.2106897849389148,-0.20024728336296913,-0.18311875162398047,-0.17880702838170157,-0.17858905595147131,-0.17617576203377366,-0.1657497150551002,-0.1657497150551002,-0.16079080493587367,-0.15752906567057487,-0.15519673509036683,-0.1533327534974326,-0.14902944959715453,-0.1411441493579688,-0.13607266955970398,-0.13453084565968762,-0.12745255998677868,-0.12107866645823354,-0.11583973773413384,-0.11469939222480618,-0.1135481954115341,-0.1035436516002457,-0.1026376667100323,-0.1024555488072652,-0.10172395246194506,-0.09874561248747593,-0.09817751559702599,-0.09817751559702599,-0.09798744616104718,-0.09231182113714433,-0.09190794362563556,-0.09048065407686878,-0.0867062153729889,-0.0820904616683463,-0.08026426152963308,-0.07980135281199846,-0.0779229228800593,-0.07044505950078737,-0.07044505950078737,14.194940397036437,-0.06938848035611273,-0.06583987535502925,-0.06059048781568902,-0.05967142384166836,-0.05314550375570444,-0.04570874969192463] |0      |
++--------+--------+-------------------+----------------------+----------------+-----------+----------------------+------------------------+--------------------+--------------+----------------------+------------------------+--------------------+---------------+----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+only showing top 10 rows
+</code></pre>
+</div>
+</div>
+<div id="ec5565f7" class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 准备数据</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>pandas_df <span class="op">=</span> df_kmeans.select(</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"SALARY"</span>, <span class="st">"MIN_EDULEVELS_NAME"</span>, </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"STATE_NAME"</span>, <span class="st">"cluster"</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>).toPandas()</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置变量和 cluster ID</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>vars_to_plot <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"MIN_EDULEVELS_NAME"</span>, <span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"STATE_NAME"</span>]</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>highlight_clusters <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>]  <span class="co"># 每行展示这三个 cluster 的高亮效果</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>num_clusters <span class="op">=</span> pandas_df[<span class="st">"cluster"</span>].nunique()</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置对比色</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>palette <span class="op">=</span> sns.color_palette(<span class="st">"Set1"</span>, n_colors<span class="op">=</span>num_clusters)</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>color_map <span class="op">=</span> {cid: palette[cid] <span class="cf">for</span> cid <span class="kw">in</span> <span class="bu">range</span>(num_clusters)}</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co"># jitter 函数</span></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jitter(arr, strength<span class="op">=</span><span class="fl">0.2</span>):</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr <span class="op">+</span> np.random.uniform(<span class="op">-</span>strength, strength, size<span class="op">=</span>arr.shape)</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建图</span></span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="bu">len</span>(vars_to_plot), <span class="bu">len</span>(highlight_clusters), figsize<span class="op">=</span>(<span class="dv">38</span>, <span class="dv">38</span>)) <span class="co"># 加大图像大小防止重叠</span></span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.reshape(<span class="bu">len</span>(vars_to_plot), <span class="bu">len</span>(highlight_clusters))</span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row_idx, var <span class="kw">in</span> <span class="bu">enumerate</span>(vars_to_plot):</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>    is_numeric <span class="op">=</span> np.issubdtype(pandas_df[var].dtype, np.number)</span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 如果是类别变量，提前准备映射</span></span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> is_numeric:</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>        cat_series <span class="op">=</span> pandas_df[var].astype(<span class="st">"category"</span>)</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">enumerate</span>(cat_series.cat.categories))</span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col_idx, highlight_cid <span class="kw">in</span> <span class="bu">enumerate</span>(highlight_clusters):</span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[row_idx, col_idx]</span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cid <span class="kw">in</span> <span class="bu">range</span>(num_clusters):</span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>            subset <span class="op">=</span> pandas_df[pandas_df[<span class="st">"cluster"</span>] <span class="op">==</span> cid]</span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> subset[var] <span class="cf">if</span> is_numeric <span class="cf">else</span> jitter(subset[var].astype(<span class="st">"category"</span>).cat.codes) <span class="co"># 将类别变量（如 EMPLOYMENT_TYPE_NAME）转换为 category 类型。 然后通过 .cat.codes 将每个类别值映射为一个唯一的整数代码（例如，"Full-time" 可以被映射为 0，"Part-time" 映射为 1 等）。 这一步将类别变量从字符串转换为数值，方便在散点图中进行绘制。</span></span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> subset[<span class="st">"SALARY"</span>]</span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>            alpha <span class="op">=</span> <span class="fl">0.05</span> <span class="cf">if</span> cid <span class="op">!=</span> highlight_cid <span class="cf">else</span> <span class="fl">0.9</span></span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>            zorder <span class="op">=</span> <span class="dv">2</span> <span class="cf">if</span> cid <span class="op">==</span> highlight_cid <span class="cf">else</span> <span class="dv">1</span></span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>            ax.scatter(x, y, color<span class="op">=</span>color_map[cid], alpha<span class="op">=</span>alpha, edgecolor<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">40</span>, zorder<span class="op">=</span>zorder)</span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> vs SALARY</span><span class="ch">\n</span><span class="ss">Highlight: Cluster </span><span class="sc">{</span>highlight_cid<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(var)</span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col_idx <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>            ax.set_ylabel(<span class="st">"SALARY"</span>)</span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>            ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 设置 x 轴标签为类别名</span></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> is_numeric:</span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a>            ax.set_xticks(<span class="bu">list</span>(categories.keys()))</span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a>            ax.set_xticklabels(<span class="bu">list</span>(categories.values()), rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a><span class="co"># 整体布局</span></span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="test_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <div id="1daf1c40" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
-<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
-<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
-<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
-<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
-<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
-<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
-<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
-<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
-<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ 多元线性回归结果:"</span>)</span>
-<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>).dropna()</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✅ 多元线性回归结果:"</span>)</span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>25/04/19 20:42:57 WARN Instrumentation: [c0826b6d] regParam is zero, which might cause numerical instability and overfitting.
 [Stage 67:&gt;                                                         (0 + 1) / 1]</code></pre>
