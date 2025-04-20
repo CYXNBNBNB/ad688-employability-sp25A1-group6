@@ -109,13 +109,14 @@ plt.show()
 ```
 
 ![Team strengths and gaps](images/Skill_Level.png)
-缺少解释
-这个我就先不解释了，等大家数据更新完重新画了再解释，我把我数据改了
 
+Based on the heatmap, we can see that our team displays varied skill levels across multiple technical domains. The strongest skills across the team are SQL, Excel, Python, PowerBI, and R, where most members show advanced (level 4) proficiency. While SAP Applications and Azure are consistently lower across all team members, with most showing only basic knowledge (level 2). 
+
+Three team members (Yuxuan Chen, Shangxuan Zhong, and Qimin Shen) demonstrate particularly strong data-related skills, with advanced proficiency in multiple areas. Altyn Baigaliyeva has a different skill distribution, showing strength in PowerBI and PowerPoint while maintaining intermediate skills in most other areas.
 
 ## Compare team skills to industry requirements
 
-We add a new column EDU_MATCH to the dataset to check if each person's actual education level matches the minimum education requirement. If they match, it labels the row as "Match"; otherwise, it marks it as "Mismatch." This makes it easy to see who meets the education criteria and who doesn't.
+We add a new column EDU_MATCH to the dataset to check if each person's actual education level matches the minimum education requirement. If they match, it labels the row as "Match"; otherwise, it marks it as "Mismatch." We found that the two groups were identical, so we used the data from one of them.
 
 ```{python}
 from pyspark.sql.functions import col, when
@@ -128,11 +129,9 @@ df_compare = df_cleaned.withColumn(
 
 #df_compare.select("MIN_EDULEVELS", "EDUCATION_LEVELS", "EDU_MATCH").show(truncate=False)
 
-# 统计不匹配的行数
+# Counting mismatched rows
 #unmatched_count = df_cleaned.filter(col("MIN_EDULEVELS") != col("EDUCATION_LEVELS")).count()
 #print(f"Not Match：{unmatched_count}")
-
-# 说明EDUCATION_LEVELS和MIN_EDULEVELS一样，但是这个检验的代码还是留着吧
 
 ```
 
@@ -202,7 +201,7 @@ skill_score_labeled = skill_score_pivot.withColumn("score_array", score_structs)
     .withColumn("filtered", expr("filter(score_array, x -> x.cnt = max_count)")) \
     .withColumn("Proficiency_Levels", expr("aggregate(filtered, -1, (acc, x) -> IF(acc = -1 OR x.score < acc, x.score, acc))"))
 
-# Step 5: 显示最终结果
+# 5. Show final results
 #skill_score_labeled.select("Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels").orderBy("Proficiency_Levels", ascending=False).show(truncate=False)
 ```
 
