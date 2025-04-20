@@ -215,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="60515f46" class="cell" data-execution_count="1">
+<div id="1ac7c5f5" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="build-model-and-compute-sse" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="build-model-and-compute-sse"><span class="header-section-number">1.1</span> Build model and compute SSE</h2>
 <p>Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.</p>
-<div id="b6831795" class="cell" data-execution_count="2">
+<div id="c0d488ac" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cluster-validation" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="cluster-validation"><span class="header-section-number">1.2</span> Cluster validation</h2>
 <p>We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.</p>
-<div id="257c73a1" class="cell" data-execution_count="3">
+<div id="480577a8" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
@@ -352,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="comparing-and-show-results" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="comparing-and-show-results"><span class="header-section-number">1.3</span> Comparing and show results</h2>
 <p>After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs.</p>
-<div id="d0c064f6" class="cell" data-execution_count="4">
+<div id="18115dbe" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="separate-image-display" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="separate-image-display"><span class="header-section-number">1.4</span> Separate image display</h2>
 <p>We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.</p>
-<div id="3ae3100f" class="cell" data-execution_count="5">
+<div id="04adf951" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -532,10 +532,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="multiple-linear-regression" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Multiple linear regression</h1>
 <p>We’re building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can’t handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we’re capturing—and how far off we might be on average.</p>
-<div id="bf8dca5f" class="cell" data-execution_count="6">
+<div id="414defdb" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler, StringIndexer, OneHotEncoder</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
@@ -543,45 +543,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Select field</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(<span class="st">"DURATION"</span>, <span class="st">"MIN_EDULEVELS_NAME"</span>, <span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"STATE_NAME"</span>, <span class="st">"SALARY"</span>).dropna()</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 数值列类型转换</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Numeric column type conversion</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> lr_df.withColumn(<span class="st">"DURATION"</span>, col(<span class="st">"DURATION"</span>).cast(DoubleType()))</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 类别字段编码</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Category field codes</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> [<span class="st">"MIN_EDULEVELS_NAME"</span>, <span class="st">"EMPLOYMENT_TYPE_NAME"</span>, <span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"STATE_NAME"</span>]</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>indexers <span class="op">=</span> [StringIndexer(inputCol<span class="op">=</span>col_name, outputCol<span class="op">=</span>col_name <span class="op">+</span> <span class="st">"_IDX"</span>, handleInvalid<span class="op">=</span><span class="st">"keep"</span>) <span class="cf">for</span> col_name <span class="kw">in</span> categorical_cols]</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>encoders <span class="op">=</span> [OneHotEncoder(inputCol<span class="op">=</span>col_name <span class="op">+</span> <span class="st">"_IDX"</span>, outputCol<span class="op">=</span>col_name <span class="op">+</span> <span class="st">"_OHE"</span>) <span class="cf">for</span> col_name <span class="kw">in</span> categorical_cols]</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 特征拼接</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature splicing</span></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>] <span class="op">+</span> [col <span class="op">+</span> <span class="st">"_OHE"</span> <span class="cf">for</span> col <span class="kw">in</span> categorical_cols],</span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardization</span></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Build model</span></span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Divide the training test set</span></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">688</span>)</span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop()</span>
 <span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop()</span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建管道</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the pipeline</span></span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>indexers <span class="op">+</span> encoders <span class="op">+</span> [assembler, scaler, lr])</span>
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate result</span></span>
 <span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
 <span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="20f1c8e5" class="cell" data-execution_count="7">
+<div id="b1279610" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
