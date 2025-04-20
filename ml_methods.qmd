@@ -152,33 +152,34 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-# 准备数据
+# Preparing data
 pandas_df = df_kmeans.select(
     "DURATION", "SALARY", "MIN_EDULEVELS_NAME", 
     "EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME", "STATE_NAME", "cluster"
 ).toPandas()
 
-# 设置变量和 cluster ID
+# Setting variables and cluster IDs
 vars_to_plot = ["DURATION", "MIN_EDULEVELS_NAME", "EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME", "STATE_NAME"]
-highlight_clusters = [0, 1, 2]  # 每行展示这三个 cluster 的高亮效果
+highlight_clusters = [0, 1, 2]  # Each row shows the highlighting of three clusters
 num_clusters = pandas_df["cluster"].nunique()
 
-# 设置对比色
+# Setting the contrasting color
 palette = sns.color_palette("Set1", n_colors=num_clusters)
 color_map = {cid: palette[cid] for cid in range(num_clusters)}
 
-# jitter 函数
 def jitter(arr, strength=0.2):
     return arr + np.random.uniform(-strength, strength, size=arr.shape)
 
-# 创建图
-fig, axes = plt.subplots(len(vars_to_plot), len(highlight_clusters), figsize=(38, 38)) # 加大图像大小防止重叠
+# Create the plot
+fig, axes = plt.subplots(len(vars_to_plot), len(highlight_clusters), figsize=(38, 38)) 
+# Increase image size to prevent overlap
+
 axes = axes.reshape(len(vars_to_plot), len(highlight_clusters))
 
 for row_idx, var in enumerate(vars_to_plot):
     is_numeric = np.issubdtype(pandas_df[var].dtype, np.number)
 
-    # 如果是类别变量，提前准备映射
+    # Prepare the mapping in advance if it's category variable
     if not is_numeric:
         cat_series = pandas_df[var].astype("category")
         categories = dict(enumerate(cat_series.cat.categories))
@@ -187,7 +188,8 @@ for row_idx, var in enumerate(vars_to_plot):
         ax = axes[row_idx, col_idx]
         for cid in range(num_clusters):
             subset = pandas_df[pandas_df["cluster"] == cid]
-            x = subset[var] if is_numeric else jitter(subset[var].astype("category").cat.codes) # 将类别变量（如 EMPLOYMENT_TYPE_NAME）转换为 category 类型。 然后通过 .cat.codes 将每个类别值映射为一个唯一的整数代码（例如，"Full-time" 可以被映射为 0，"Part-time" 映射为 1 等）。 这一步将类别变量从字符串转换为数值，方便在散点图中进行绘制。
+            x = subset[var] if is_numeric else jitter(subset[var].astype("category").cat.codes) 
+            # Convert category variables to category type. Each category value is then mapped to a unique integer code. 
             y = subset["SALARY"]
             alpha = 0.05 if cid != highlight_cid else 0.9
             zorder = 2 if cid == highlight_cid else 1
@@ -200,12 +202,12 @@ for row_idx, var in enumerate(vars_to_plot):
         else:
             ax.set_ylabel("")
 
-        # 设置 x 轴标签为类别名
+        # Set x-axis labels to category names
         if not is_numeric:
             ax.set_xticks(list(categories.keys()))
             ax.set_xticklabels(list(categories.values()), rotation=45, ha='right')
 
-# 整体布局
+# Overall layout
 plt.tight_layout()
 plt.savefig("images/kmeans.png", dpi=300, bbox_inches='tight')
 plt.show()
