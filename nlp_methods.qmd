@@ -54,6 +54,10 @@ tfidf_vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
 X_tfidf = tfidf_vectorizer.fit_transform(body_df["BODY"])
 ```
 
+# Visualizing Job Clusters with Word Clouds
+
+We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster's TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it's technical, managerial, or creative roles, based on the language used in job descriptions.
+
 ## Clustering TF-IDF features with K-Means
 
 ```{python}
