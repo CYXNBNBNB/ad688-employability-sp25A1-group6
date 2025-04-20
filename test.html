@@ -581,54 +581,132 @@ ARI: -0.0170</code></pre>
 </div>
 </div>
 </div>
+<div id="42456ff4" class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建保存目录</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>save_dir <span class="op">=</span> <span class="st">"images/kmeans"</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>os.makedirs(save_dir, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row_idx, var <span class="kw">in</span> <span class="bu">enumerate</span>(vars_to_plot):</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    is_numeric <span class="op">=</span> np.issubdtype(pandas_df[var].dtype, np.number)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> is_numeric:</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>        cat_series <span class="op">=</span> pandas_df[var].astype(<span class="st">"category"</span>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">enumerate</span>(cat_series.cat.categories))</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">20</span>))  <span class="co"># 3行 x 1列</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col_idx, highlight_cid <span class="kw">in</span> <span class="bu">enumerate</span>(highlight_clusters):</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[col_idx]</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cid <span class="kw">in</span> <span class="bu">range</span>(num_clusters):</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>            subset <span class="op">=</span> pandas_df[pandas_df[<span class="st">"cluster"</span>] <span class="op">==</span> cid]</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> subset[var] <span class="cf">if</span> is_numeric <span class="cf">else</span> jitter(subset[var].astype(<span class="st">"category"</span>).cat.codes)</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> subset[<span class="st">"SALARY"</span>]</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>            alpha <span class="op">=</span> <span class="fl">0.03</span> <span class="cf">if</span> cid <span class="op">!=</span> highlight_cid <span class="cf">else</span> <span class="fl">0.9</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>            zorder <span class="op">=</span> <span class="dv">2</span> <span class="cf">if</span> cid <span class="op">==</span> highlight_cid <span class="cf">else</span> <span class="dv">1</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>            ax.scatter(x, y, color<span class="op">=</span>color_map[cid], alpha<span class="op">=</span>alpha, edgecolor<span class="op">=</span><span class="st">'k'</span>, s<span class="op">=</span><span class="dv">40</span>, zorder<span class="op">=</span>zorder)</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> vs SALARY</span><span class="ch">\n</span><span class="ss">Highlight: Cluster </span><span class="sc">{</span>highlight_cid<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(var)</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col_idx <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>            ax.set_ylabel(<span class="st">"SALARY"</span>)</span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>            ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> is_numeric:</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>            ax.set_xticks(<span class="bu">list</span>(categories.keys()))</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>            ax.set_xticklabels(<span class="bu">list</span>(categories.values()), rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 保存图像</span></span>
+<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a>    save_path <span class="op">=</span> os.path.join(save_dir, <span class="ss">f"kmeans_highlight_</span><span class="sc">{</span>row_idx<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss">.png"</span>)</span>
+<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>    plt.savefig(save_path, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test_files/figure-html/cell-9-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test_files/figure-html/cell-9-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="test_files/figure-html/cell-9-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <div id="1daf1c40" class="cell" data-execution_count="125">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>).dropna()</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">688</span>)</span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建管道</span></span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
-<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
-<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
-<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
-<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 多元线性回归（标准化版本）=====</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler, StandardScaler</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml <span class="im">import</span> Pipeline</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> DoubleType</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择字段</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>lr_df <span class="op">=</span> df_cleaned.select(<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>).dropna()</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 类型转换</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>]</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col_name <span class="kw">in</span> num_cols:</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>    lr_df <span class="op">=</span> lr_df.withColumn(col_name, col(col_name).cast(DoubleType()))</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 拼接特征向量</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    inputCols<span class="op">=</span>[<span class="st">"DURATION"</span>, <span class="st">"EDUCATION_LEVELS"</span>, <span class="st">"SALARY_FROM"</span>, <span class="st">"SALARY_TO"</span>],</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    outputCol<span class="op">=</span><span class="st">"assembled_features"</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler(inputCol<span class="op">=</span><span class="st">"assembled_features"</span>, outputCol<span class="op">=</span><span class="st">"features"</span>)</span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">"features"</span>, labelCol<span class="op">=</span><span class="st">"SALARY"</span>)</span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 划分训练测试集</span></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> lr_df.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">688</span>)</span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_data.na.drop(subset<span class="op">=</span>num_cols)</span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建管道</span></span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline(stages<span class="op">=</span>[assembler, scaler, lr])</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipeline.fit(train_data)</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.transform(test_data)</span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 评估</span></span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>evaluator_r2 <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"r2"</span>)</span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a>evaluator_rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">"SALARY"</span>, predictionCol<span class="op">=</span><span class="st">"prediction"</span>, metricName<span class="op">=</span><span class="st">"rmse"</span>)</span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> evaluator_r2.evaluate(predictions)</span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> evaluator_rmse.evaluate(predictions)</span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R²: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>25/04/20 12:55:00 WARN Instrumentation: [4bd690c6] regParam is zero, which might cause numerical instability and overfitting.
 [Stage 6286:&gt;                                                       (0 + 1) / 1]</code></pre>
@@ -642,23 +720,23 @@ RMSE: 1324.86</code></pre>
 </div>
 </div>
 <div id="ccc3b1f2" class="cell" data-execution_count="126">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"SALARY"</span>, y<span class="op">=</span><span class="st">"prediction"</span>, data<span class="op">=</span>pdf)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>plt.plot([pdf.SALARY.<span class="bu">min</span>(), pdf.SALARY.<span class="bu">max</span>()], [pdf.SALARY.<span class="bu">min</span>(), pdf.SALARY.<span class="bu">max</span>()], <span class="st">'r--'</span>)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Actual SALARY"</span>)</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Predicted SALARY"</span>)</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Actual vs Predicted SALARY"</span>)</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"SALARY"</span>, y<span class="op">=</span><span class="st">"prediction"</span>, data<span class="op">=</span>pdf)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>plt.plot([pdf.SALARY.<span class="bu">min</span>(), pdf.SALARY.<span class="bu">max</span>()], [pdf.SALARY.<span class="bu">min</span>(), pdf.SALARY.<span class="bu">max</span>()], <span class="st">'r--'</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Actual SALARY"</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Predicted SALARY"</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Actual vs Predicted SALARY"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="test_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="test_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
