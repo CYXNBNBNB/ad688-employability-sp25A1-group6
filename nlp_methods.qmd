@@ -180,12 +180,19 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=range(k), ytickla
 plt.xlabel("Predicted")
 plt.ylabel("True")
 plt.title("SVM confusion matrix")
+plt.savefig("images/SVM_confusion_matrix.png", dpi=300, bbox_inches='tight')  
 plt.show()
 ```
 
 你将看到两个模型的分类性能指标（precision, recall, f1-score）
 混淆矩阵可以看出哪些聚类易混淆
 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了
+
+![Naive Bayes](images/Naive_Bayes.png){width=65%}
+![SVM](images/SVM.png){width=65%}
+
+
+![SVM confusion matrix](images/SVM_confusion_matrix.png)
 
 # Keyword heat visualization (according to the term frequency)
 
