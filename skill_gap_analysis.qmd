@@ -108,7 +108,7 @@ plt.savefig("images/Skill_Level.png", dpi=300)
 plt.show()
 ```
 
-![Team strengths and gaps](/images/Skill_Level.png)
+![Team strengths and gaps](images/Skill_Level.png)
 缺少解释
 这个我就先不解释了，等大家数据更新完重新画了再解释，我把我数据改了
 
@@ -159,7 +159,7 @@ job_expectation = job_expectation.withColumn(
 job_expectation.show(truncate=False)
 ```
 
-![Job Expectation](/images/job_expectation.png){width=50%}
+![Job Expectation](images/job_expectation.png){width=50%}
 
 We analyze how often each software skill appears in job listings, categorized by the required education level (which we previously converted into scores). First, we join the education score to each job, split the combined skill strings into individual skills, and count how frequently each skill appears at each education score level. Second, we reshape the data so that each skill shows the number of times it appears across all score levels. Finally, we identify the most common score for each skill. If multiple scores tie for the highest count, we will select the lowest one among them—resulting in a "Proficiency_Levels" value that reflects the typical education requirement associated with that skill in the job market.
 
@@ -228,7 +228,7 @@ filtered_skills = skill_score_labeled.filter(col("Skill").isin(target_skills)) \
 filtered_skills.show(truncate=False)
 ```
 
-![Filtered Skills](/images/filtered_skills.png){width=60%}
+![Filtered Skills](images/filtered_skills.png){width=60%}
 
 Now we are able to evaluate how well our team’s skill levels match up with job market expectations. First, we collect the proficiency scores for a set of target skills from our previous results. Then, we rename the skill labels into a more readable and consistent format for easier comparison. Next, we calculate the skill gap for each team member by subtracting the job-required score from their actual skill level. Here, positive values mean the team exceeds the requirement, while negative values show areas for improvement. Finally, we visualize these gaps using a heatmap, making it easy to spot which skills are strong and which need development across the team.
 
@@ -286,7 +286,7 @@ plt.show()
 
 ```
 
-![Gaps between team skill levels and job expectations](/images/Gaps_Between.png)
+![Gaps between team skill levels and job expectations](images/Gaps_Between.png)
 缺少解释
 也一样，更新完数值再解释
 
