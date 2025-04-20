@@ -309,6 +309,13 @@ For job seekers, these findings suggest that on-site positions still offer the h
 
 ![K-means STATE_NAME](images/kmeans/kmeans_highlight_4_STATE_NAME.png)
 
+These scatter plots reveal fascinating geographical salary patterns across all U.S. states for three distinct job market clusters, showing how location influences compensation within different employment segments.
+
+In Cluster 0 (top plot), we see considerable salary variation across states, with the highest-paying positions ($400,000-$500,000) appearing in high-cost states like California, New York, and Tennessee. States such as Colorado, Illinois, and Texas also show strong salary ranges. Most states display a wide salary distribution, typically ranging from $50,000 to $250,000, with fairly consistent median values across locations. This suggests that top-tier compensation is available in multiple regions, though the highest outliers concentrate in traditional economic centers.
+
+Cluster 1 (middle plot) shows an interesting concentration of data points in Alabama, suggesting this cluster might represent industries or roles particularly prevalent in that state. Cluster 2 (bottom plot) shows a more scattered distribution across states, with positions typically ranging from $50,000 to $200,000. Certain states like California, Colorado, and South Carolina show stronger representations in this cluster, but with fewer extremely high-paying outliers compared to Cluster 0. The salary distributions appear somewhat more compressed, suggesting these positions may have more standardized compensation structures regardless of location.
+
+For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.
 
 # Multiple linear regression
 ```{python}
