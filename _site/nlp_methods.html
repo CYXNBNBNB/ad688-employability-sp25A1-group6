@@ -180,12 +180,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#visualizing-job-clusters-with-word-clouds" id="toc-visualizing-job-clusters-with-word-clouds" class="nav-link" data-scroll-target="#visualizing-job-clusters-with-word-clouds"><span class="header-section-number">2</span> Visualizing Job Clusters with Word Clouds</a>
   <ul class="collapse">
   <li><a href="#clustering-tf-idf-features-with-k-means" id="toc-clustering-tf-idf-features-with-k-means" class="nav-link" data-scroll-target="#clustering-tf-idf-features-with-k-means"><span class="header-section-number">2.1</span> Clustering TF-IDF features with K-Means</a></li>
-  <li><a href="#generate-word-clouds-for-each-cluster" id="toc-generate-word-clouds-for-each-cluster" class="nav-link" data-scroll-target="#generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</a></li>
+  <li><a href="#generate-word-clouds-for-each-cluster" id="toc-generate-word-clouds-for-each-cluster" class="nav-link" data-scroll-target="#generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</a>
+  <ul class="collapse">
+  <li><a href="#cluster-0-word-cloud" id="toc-cluster-0-word-cloud" class="nav-link" data-scroll-target="#cluster-0-word-cloud"><span class="header-section-number">2.2.1</span> Cluster 0 Word Cloud</a></li>
+  <li><a href="#cluster-1-word-cloud" id="toc-cluster-1-word-cloud" class="nav-link" data-scroll-target="#cluster-1-word-cloud"><span class="header-section-number">2.2.2</span> Cluster 1 Word Cloud</a></li>
+  <li><a href="#cluster-2-word-cloud" id="toc-cluster-2-word-cloud" class="nav-link" data-scroll-target="#cluster-2-word-cloud"><span class="header-section-number">2.2.3</span> Cluster 2 Word Cloud</a></li>
+  <li><a href="#cluster-3-word-cloud" id="toc-cluster-3-word-cloud" class="nav-link" data-scroll-target="#cluster-3-word-cloud"><span class="header-section-number">2.2.4</span> Cluster 3 Word Cloud</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#distribution-of-the-number-of-jobs-in-each-category" id="toc-distribution-of-the-number-of-jobs-in-each-category" class="nav-link" data-scroll-target="#distribution-of-the-number-of-jobs-in-each-category"><span class="header-section-number">3</span> Distribution of the number of jobs in each category</a></li>
   <li><a href="#training-a-svm-naive-bayes-models-using-tf-idf-features" id="toc-training-a-svm-naive-bayes-models-using-tf-idf-features" class="nav-link" data-scroll-target="#training-a-svm-naive-bayes-models-using-tf-idf-features"><span class="header-section-number">4</span> Training a SVM &amp; Naive Bayes models using TF-IDF features</a>
   <ul class="collapse">
-  <li><a href="#training-two-classifiers" id="toc-training-two-classifiers" class="nav-link" data-scroll-target="#training-two-classifiers"><span class="header-section-number">4.1</span> Training two classifiers</a></li>
+  <li><a href="#training-two-classifiers" id="toc-training-two-classifiers" class="nav-link" data-scroll-target="#training-two-classifiers"><span class="header-section-number">4.1</span> Training two classifiers</a>
+  <ul class="collapse">
+  <li><a href="#naive-bayes-result" id="toc-naive-bayes-result" class="nav-link" data-scroll-target="#naive-bayes-result"><span class="header-section-number">4.1.1</span> Naive Bayes Result</a></li>
+  <li><a href="#svm-result" id="toc-svm-result" class="nav-link" data-scroll-target="#svm-result"><span class="header-section-number">4.1.2</span> SVM Result</a></li>
+  <li><a href="#svm-confusion-matrix" id="toc-svm-confusion-matrix" class="nav-link" data-scroll-target="#svm-confusion-matrix"><span class="header-section-number">4.1.3</span> SVM Confusion Matrix</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#keyword-heat-visualization-according-to-the-term-frequency" id="toc-keyword-heat-visualization-according-to-the-term-frequency" class="nav-link" data-scroll-target="#keyword-heat-visualization-according-to-the-term-frequency"><span class="header-section-number">5</span> Keyword heat visualization (according to the term frequency)</a></li>
   </ul>
@@ -219,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="90cc841a" class="cell" data-execution_count="1">
+<div id="a355a39f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -241,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="a2e86ef9" class="cell" data-execution_count="2">
+<div id="ec170977" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -264,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
 <section id="clustering-tf-idf-features-with-k-means" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means"><span class="header-section-number">2.1</span> Clustering TF-IDF features with K-Means</h2>
-<div id="54be6841" class="cell" data-execution_count="3">
+<div id="6330fc6e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -280,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="generate-word-clouds-for-each-cluster" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster"><span class="header-section-number">2.2</span> Generate word clouds for each cluster</h2>
-<div id="e90e2691" class="cell" data-execution_count="4">
+<div id="8cba01af" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -323,12 +334,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="images/wordcloud/cluster_0_wordcloud.png" class="img-fluid" alt="Cluster 0 Wordcloud"> <img src="images/wordcloud/cluster_1_wordcloud.png" class="img-fluid" alt="Cluster 1 Wordcloud"> <img src="images/wordcloud/cluster_2_wordcloud.png" class="img-fluid" alt="Cluster 2 Wordcloud"> <img src="images/wordcloud/cluster_3_wordcloud.png" class="img-fluid" alt="Cluster 3 Wordcloud"></p>
+<section id="cluster-0-word-cloud" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="cluster-0-word-cloud"><span class="header-section-number">2.2.1</span> Cluster 0 Word Cloud</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/wordcloud/cluster_0_wordcloud.png" class="img-fluid figure-img"></p>
+<figcaption>Cluster 0 Wordcloud</figcaption>
+</figure>
+</div>
+<p>This word cloud for Cluster 0 highlights a strong focus on job-related themes, with “experience”, “data”, “business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like “time” and “support” also appear prominently, pointing to both the practical and strategic dimensions of employment.</p>
+</section>
+<section id="cluster-1-word-cloud" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="cluster-1-word-cloud"><span class="header-section-number">2.2.2</span> Cluster 1 Word Cloud</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/wordcloud/cluster_1_wordcloud.png" class="img-fluid figure-img"></p>
+<figcaption>Cluster 1 Wordcloud</figcaption>
+</figure>
+</div>
+<p>This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on “experience”, “oracle”, “cloud”, and “architecture”. It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems. Terms like “solutions”, “technology”, and “business” suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure. The presence of “architect”, “technical”, and “functional”, points to both high-level system design and hands-on implementation know-how.</p>
+</section>
+<section id="cluster-2-word-cloud" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="cluster-2-word-cloud"><span class="header-section-number">2.2.3</span> Cluster 2 Word Cloud</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/wordcloud/cluster_2_wordcloud.png" class="img-fluid figure-img"></p>
+<figcaption>Cluster 2 Wordcloud</figcaption>
+</figure>
+</div>
+<p>This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with “SAP”, “experience”, “business”, and “consultant” as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions, with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like “HANA”, “integration”, “functional”, and “implementation” points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.</p>
+</section>
+<section id="cluster-3-word-cloud" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="cluster-3-word-cloud"><span class="header-section-number">2.2.4</span> Cluster 3 Word Cloud</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/wordcloud/cluster_3_wordcloud.png" class="img-fluid figure-img"></p>
+<figcaption>Cluster 3 Wordcloud</figcaption>
+</figure>
+</div>
+<p>This word cloud for Cluster 3 showcases the data analytics profession, with “data”, “experience”, “analytics”, and “analysis” dominating the visual. It highlights the business intelligence landscape where SQL skills meet management responsibilities. Terms like “quality”, “reporting”, and “tools” point to the practical implementation side, while “business” suggests the crucial connection between technical analysis and organizational value. This cluster represents the growing field of data-driven decision making.</p>
+</section>
 </section>
 </section>
 <section id="distribution-of-the-number-of-jobs-in-each-category" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Distribution of the number of jobs in each category</h1>
-<div id="250e0934" class="cell" data-execution_count="5">
+<div id="f14f3abb" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -340,13 +390,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/jobs_by_theme.html" width="100%" height="600">
 </iframe>
+<p>The plot visualizes the distribution of jobs across different clusters. The x-axis shows the cluster categories, while the y-axis displays the count or number of jobs within each cluster. From the plot, we can observe that cluster 0 has the highest number of jobs, indicating that this group is the most prevalent, and also followed by cluster 3. Clusters 1 and 2 have lower counts compared to the other two, suggesting these groups are less represented in the dataset.</p>
 </section>
 <section id="training-a-svm-naive-bayes-models-using-tf-idf-features" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Training a SVM &amp; Naive Bayes models using TF-IDF features</h1>
 <p>We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models’ accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.</p>
 <section id="training-two-classifiers" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="training-two-classifiers"><span class="header-section-number">4.1</span> Training two classifiers</h2>
-<div id="b5ef8697" class="cell" data-execution_count="6">
+<div id="077f3ce0" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -372,11 +423,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>y_pred_svm <span class="op">=</span> svm_model.predict(X_test)</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate Naive Bayes</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">🔍 Naive Bayes :"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st"> Naive Bayes :"</span>)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_nb))</span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate SVM</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">🔍 SVM :"</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st"> SVM :"</span>)</span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_svm))</span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix of SVM</span></span>
@@ -390,22 +441,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>你将看到两个模型的分类性能指标（precision, recall, f1-score） 混淆矩阵可以看出哪些聚类易混淆 如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了</p>
-<div class="center">
-<p><img src="images/Naive_Bayes.png" class="img-fluid" style="width:65.0%" alt="Naive Bayes"><br>
-<img src="images/SVM.png" class="img-fluid" style="width:65.0%" alt="SVM"></p>
+<section id="naive-bayes-result" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="naive-bayes-result"><span class="header-section-number">4.1.1</span> Naive Bayes Result</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Naive_Bayes.png" class="img-fluid figure-img" style="width:65.0%"></p>
+<figcaption>Naive Bayes</figcaption>
+</figure>
 </div>
+<p>The Naive Bayes classification model shows strong performance across all four job clusters. The model achieves an overall accuracy of 86% across 14,496 samples. Looking at individual clusters, cluster 1 demonstrates the best performance with precision and recall both at 91%, resulting in an F1-score of 0.91 across 2,886 samples. Cluster 2 follows closely with balanced precision and recall at 90% (F1-score of 0.90), though it has the smallest support with only 1,947 samples. Cluster 0, which contains the largest number of samples (5,514), shows good performance with 82% precision and 87% recall. Cluster 3 has slightly lower metrics with 87% precision and 80% recall. The macro average scores of 0.87 across all metrics indicate consistent performance across the different clusters, suggesting the Naive Bayes model effectively captures the distinctive language patterns in each job cluster identified through the previous TF-IDF analysis and K-means clustering.</p>
+</section>
+<section id="svm-result" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="svm-result"><span class="header-section-number">4.1.2</span> SVM Result</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/SVM.png" class="img-fluid figure-img" style="width:65.0%"></p>
+<figcaption>SVM</figcaption>
+</figure>
+</div>
+<p>The Support Vector Machine (SVM) model also demonstrates exceptional performance in classifying job postings across all four clusters. With an overall accuracy of 98% on the 14,496 samples, the SVM significantly outperforms the Naive Bayes model. All four clusters show remarkably consistent and high precision scores of 0.98. Cluster 2, despite having the smallest sample size (1,947), achieves the highest performance with 0.99 for both recall and F1-score. Clusters 1 and 3 both maintain excellent 0.98 scores across precision, recall, and F1-score, while Cluster 0 (the largest cluster with 5,514 samples) shows slightly lower but still impressive recall at 0.97. The uniformly high macro and weighted averages (0.98) across all metrics indicate that the SVM model excels at distinguishing between the different job clusters based on their TF-IDF features, making it particularly well-suited for this classification task.</p>
+</section>
+<section id="svm-confusion-matrix" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="svm-confusion-matrix"><span class="header-section-number">4.1.3</span> SVM Confusion Matrix</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/SVM_confusion_matrix.png" class="img-fluid figure-img"></p>
 <figcaption>SVM confusion matrix</figcaption>
 </figure>
 </div>
+<p>This confusion matrix for the SVM model provides detailed insight into prediction performance across the four job clusters. The diagonal elements represent correct classifications, showing the model’s impressive accuracy: 5,349 correct predictions for cluster 0, 2,831 for cluster 1, 1,937 for cluster 2, and 4,085 for cluster 3.</p>
+<p>The off-diagonal elements reveal misclassifications. Cluster 0 has the highest number of misclassifications, with 82 samples incorrectly predicted as cluster 3, 56 as cluster 1, and 27 as cluster 2. Cluster 3 shows some confusion with cluster 0 (62 samples). Clusters 1 and 2 demonstrate minimal misclassifications, with cluster 2 having almost perfect separation (only 10 total misclassifications).</p>
+<p>Overall, we can find that the model particularly excels at identifying clusters 1 and 2, while showing slight confusion between clusters 0 and 3. This suggests that while all clusters are well-defined by their TF-IDF features, there may be some overlapping characteristics between job descriptions in clusters 0 and 3 that occasionally cause misclassification.</p>
+</section>
 </section>
 </section>
 <section id="keyword-heat-visualization-according-to-the-term-frequency" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Keyword heat visualization (according to the term frequency)</h1>
-<div id="ec1ebb81" class="cell" data-execution_count="7">
+<div id="e99af5bb" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -430,6 +502,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/Top30_high_frequency.html" width="100%" height="600">
 </iframe>
+<p>This bar chart displays the top 30 most frequently occurring words in job descriptions, ranked by frequency. “Data” is overwhelmingly the most common term, appearing approximately 10000 times, which is nearly 4,000 occurrences more than the second-ranked word “experience” (6100). Other prominent terms include “business” (5400), “sap” (4800), and “job” (4400). The chart shows a steep decline in frequency after the top six words, with words ranking 7th through 30th ranging from about 3400 to 2100 occurrences. The prevalence of technical terms like “data”, “skills”, and “analysis” alongside business and management terminology suggests these job listings are predominantly for data-related roles requiring both technical capabilities and business acumen.</p>
 
 
 </section>

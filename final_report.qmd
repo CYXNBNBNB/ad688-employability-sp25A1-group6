@@ -1,0 +1,47 @@
+---
+title: "Evaluating Personal Job Market Prospects in 2024"
+subtitle: "Final Report"
+author:
+  - name: Yuxuan Chen
+    affiliation: 
+      - ref: bu
+  - name: Shangxuan Zhong
+    affiliation: 
+      - ref: bu
+  - name: Qimin Shen
+    affiliation: 
+      - ref: bu
+  - name: Altyn Baigaliyeva
+    affiliation: 
+      - ref: bu
+
+affiliations:
+  - id: bu
+    name: Boston University
+    department: Department of Economics
+    city: Boston
+    state: MA
+
+date: today
+date-modified: today
+date-format: long
+format: 
+    docx: default
+#    toc: true
+#    number-sections: true
+#    df-print: paged
+#    code-fold: true
+#    theme:
+#      - cosmo
+#      - brand
+#    css: styles.css
+
+# quarto render final_report.qmd --to docx --output final_report.docx
+---
+
+{{< include research_introduction.qmd >}}
+{{< include data_cleaning.qmd >}}
+{{< include eda.qmd >}}
+{{< include ml_methods.qmd >}}
+{{< include nlp_methods.qmd >}}
+

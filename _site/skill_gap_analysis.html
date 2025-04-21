@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="13b43a70" class="cell" data-execution_count="1">
+<div id="4ca9cc1f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="3ed59c7b" class="cell" data-execution_count="2">
+<div id="e0785a69" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="32e2120b" class="cell" data-execution_count="3">
+<div id="e9dfe7c5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -299,12 +299,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="images/Skill_Level.png" class="img-fluid" alt="Team strengths and gaps"> 缺少解释 这个我就先不解释了，等大家数据更新完重新画了再解释，我把我数据改了</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Skill_Level.png" class="img-fluid figure-img"></p>
+<figcaption>Team strengths and gaps</figcaption>
+</figure>
+</div>
+<p>Based on the heatmap, we can see that our team displays varied skill levels across multiple technical domains. The strongest skills across the team are SQL, Excel, Python, PowerBI, and R, where most members show advanced (level 4) proficiency. While SAP Applications and Azure are consistently lower across all team members, with most showing only basic knowledge (level 2).</p>
+<p>Three team members (Yuxuan Chen, Shangxuan Zhong, and Qimin Shen) demonstrate particularly strong data-related skills, with advanced proficiency in multiple areas. Altyn Baigaliyeva has a different skill distribution, showing strength in PowerBI and PowerPoint while maintaining intermediate skills in most other areas.</p>
 </section>
 <section id="compare-team-skills-to-industry-requirements" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="compare-team-skills-to-industry-requirements"><span class="header-section-number">2</span> Compare team skills to industry requirements</h2>
-<p>We add a new column EDU_MATCH to the dataset to check if each person’s actual education level matches the minimum education requirement. If they match, it labels the row as “Match”; otherwise, it marks it as “Mismatch.” This makes it easy to see who meets the education criteria and who doesn’t.</p>
-<div id="5874969c" class="cell" data-execution_count="4">
+<p>We add a new column EDU_MATCH to the dataset to check if each person’s actual education level matches the minimum education requirement. If they match, it labels the row as “Match”; otherwise, it marks it as “Mismatch.” We found that the two groups were identical, so we used the data from one of them.</p>
+<div id="e680f526" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
@@ -317,15 +324,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#df_compare.select("MIN_EDULEVELS", "EDUCATION_LEVELS", "EDU_MATCH").show(truncate=False)</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 统计不匹配的行数</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting mismatched rows</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#unmatched_count = df_cleaned.filter(col("MIN_EDULEVELS") != col("EDUCATION_LEVELS")).count()</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"Not Match：{unmatched_count}")</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 说明EDUCATION_LEVELS和MIN_EDULEVELS一样，但是这个检验的代码还是留着吧</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"Not Match：{unmatched_count}")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Then we create a reference table that links each unique minimum education level required for a job to a corresponding score. It assigns higher scores to higher education levels, for example, a Ph.D.&nbsp;gets a 5, a Master’s a 4, and so on, down to 0 for jobs that list no education requirement. And we think this scoring helps quantify and compare job expectations based on the level of education required.</p>
-<div id="d6d73268" class="cell" data-execution_count="5">
+<div id="4b240548" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col, trim</span>
@@ -355,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>We analyze how often each software skill appears in job listings, categorized by the required education level (which we previously converted into scores). First, we join the education score to each job, split the combined skill strings into individual skills, and count how frequently each skill appears at each education score level. Second, we reshape the data so that each skill shows the number of times it appears across all score levels. Finally, we identify the most common score for each skill. If multiple scores tie for the highest count, we will select the lowest one among them—resulting in a “Proficiency_Levels” value that reflects the typical education requirement associated with that skill in the job market.</p>
-<div id="c26f4649" class="cell" data-execution_count="6">
+<div id="ca2075da" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when</span>
@@ -396,12 +401,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"filtered"</span>, expr(<span class="st">"filter(score_array, x -&gt; x.cnt = max_count)"</span>)) <span class="op">\</span></span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"Proficiency_Levels"</span>, expr(<span class="st">"aggregate(filtered, -1, (acc, x) -&gt; IF(acc = -1 OR x.score &lt; acc, x.score, acc))"</span>))</span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: 显示最终结果</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Show final results</span></span>
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#skill_score_labeled.select("Skill", "5", "4", "3", "2", "1", "0", "Proficiency_Levels").orderBy("Proficiency_Levels", ascending=False).show(truncate=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Here we focus on a specific set of software skills that are relevant to our analysis. First, we define a list of target skills we’re interested in, such as SQL, Excel, Python, Tableau, and others. Then, we filter our previously processed skill data to only include these selected skills, keeping just the skill names and their associated “Proficiency_Levels”. Finally, we sort the result alphabetically by skill name to make it easier to review and compare.</p>
-<div id="59f871d3" class="cell" data-execution_count="7">
+<div id="afb244c3" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> lit</span>
@@ -430,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Now we are able to evaluate how well our team’s skill levels match up with job market expectations. First, we collect the proficiency scores for a set of target skills from our previous results. Then, we rename the skill labels into a more readable and consistent format for easier comparison. Next, we calculate the skill gap for each team member by subtracting the job-required score from their actual skill level. Here, positive values mean the team exceeds the requirement, while negative values show areas for improvement. Finally, we visualize these gaps using a heatmap, making it easy to spot which skills are strong and which need development across the team.</p>
-<div id="93f2281f" class="cell" data-execution_count="8">
+<div id="61b5dbef" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -485,7 +490,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="images/Gaps_Between.png" class="img-fluid" alt="Gaps between team skill levels and job expectations"> 缺少解释 也一样，更新完数值再解释</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Gaps_Between.png" class="img-fluid figure-img"></p>
+<figcaption>Gaps between team skill levels and job expectations</figcaption>
+</figure>
+</div>
+<p>Based on this heatmap, each team member should prioritize different skills to meet market requirements. Yuxuan Chen should focus on improving SAP Applications and Azure skills, which show a -1 deficit. Shangxuan Zhong has many skill gaps, needing development in SAP Applications, Tableau, PowerBI, Azure, and AWS. Qimin Shen similarly needs to improve SAP Applications, Tableau, PowerBI, and Azure. Altyn Baigaliyeva primarily needs to strengthen SAP Applications skills.</p>
+<p>We have searched some information. For SAP training, team members could utilize SAP Learning Hub or LinkedIn Learning’s SAP courses. For Azure, Microsoft Learn offers free structured paths and certification preparation. AWS training is available through AWS Skill Builder, while Tableau offers its own learning paths on Tableau Academy.</p>
+<p>We think that our team could implement a knowledge-sharing program where members with strengths (indicated by +1) mentor those with deficits. For instance, Altyn’s PowerBI expertise could help others, while Shangxuan, Qimin and Yuxuan could lead sessions on data analytics tools like SQL, Python and R. We allagree that, creating collaborative projects that require members to practice weaker skills with support from stronger teammates would accelerate learning.</p>
 
 
 </section>
