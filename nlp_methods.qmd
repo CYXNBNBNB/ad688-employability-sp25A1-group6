@@ -166,11 +166,11 @@ svm_model.fit(X_train, y_train)
 y_pred_svm = svm_model.predict(X_test)
 
 # Evaluate Naive Bayes
-print("\n🔍 Naive Bayes :")
+print("\n Naive Bayes :")
 print(classification_report(y_test, y_pred_nb))
 
 # Evaluate SVM
-print("\n🔍 SVM :")
+print("\n SVM :")
 print(classification_report(y_test, y_pred_svm))
 
 # Confusion Matrix of SVM
@@ -184,11 +184,14 @@ plt.savefig("images/SVM_confusion_matrix.png", dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
-你将看到两个模型的分类性能指标（precision, recall, f1-score）
-混淆矩阵可以看出哪些聚类易混淆
-如果性能不错，说明你提取的 TF-IDF 特征已经非常有区分度了
+### Naive Bayes Result
 
 ![Naive Bayes](images/Naive_Bayes.png){width=65%}
+
+The Naive Bayes classification model shows strong performance across all four job clusters.  The model achieves an overall accuracy of 86% across 14,496 samples.  Looking at individual clusters, cluster 1 demonstrates the best performance with precision and recall both at 91%, resulting in an F1-score of 0.91 across 2,886 samples.  Cluster 2 follows closely with balanced precision and recall at 90% (F1-score of 0.90), though it has the smallest support with only 1,947 samples.  Cluster 0, which contains the largest number of samples (5,514), shows good performance with 82% precision and 87% recall.  Cluster 3 has slightly lower metrics with 87% precision and 80% recall.  The macro average scores of 0.87 across all metrics indicate consistent performance across the different clusters, suggesting the Naive Bayes model effectively captures the distinctive language patterns in each job cluster identified through the previous TF-IDF analysis and K-means clustering.
+
+### SVM Result
+
 ![SVM](images/SVM.png){width=65%}
 
 
