@@ -118,9 +118,22 @@ for i in range(k):
     plt.show()
 ```
 
+###  Cluster 0 Word Cloud
+
 ![Cluster 0 Wordcloud](images/wordcloud/cluster_0_wordcloud.png)
+
+This word cloud for Cluster 0 highlights a strong focus on job-related themes, with "experience", "data", "business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like "time" and "support" also appear prominently, pointing to both the practical and strategic dimensions of employment.
+
+###  Cluster 1 Word Cloud
+
 ![Cluster 1 Wordcloud](images/wordcloud/cluster_1_wordcloud.png)
+
+###  Cluster 2 Word Cloud
+
 ![Cluster 2 Wordcloud](images/wordcloud/cluster_2_wordcloud.png)
+
+###  Cluster 3 Word Cloud
+
 ![Cluster 3 Wordcloud](images/wordcloud/cluster_3_wordcloud.png)
 
 
