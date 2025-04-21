@@ -194,6 +194,9 @@ The Naive Bayes classification model shows strong performance across all four jo
 
 ![SVM](images/SVM.png){width=65%}
 
+The Support Vector Machine (SVM) model also demonstrates exceptional performance in classifying job postings across all four clusters.   With an overall accuracy of 98% on the 14,496 samples, the SVM significantly outperforms the Naive Bayes model.   All four clusters show remarkably consistent and high precision scores of 0.98.   Cluster 2, despite having the smallest sample size (1,947), achieves the highest performance with 0.99 for both recall and F1-score.   Clusters 1 and 3 both maintain excellent 0.98 scores across precision, recall, and F1-score, while Cluster 0 (the largest cluster with 5,514 samples) shows slightly lower but still impressive recall at 0.97.   The uniformly high macro and weighted averages (0.98) across all metrics indicate that the SVM model excels at distinguishing between the different job clusters based on their TF-IDF features, making it particularly well-suited for this classification task.
+
+### SVM Confusion Matrix
 
 ![SVM confusion matrix](images/SVM_confusion_matrix.png)
 
