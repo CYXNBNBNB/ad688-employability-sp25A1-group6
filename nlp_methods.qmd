@@ -230,3 +230,5 @@ fig.show()
 ```
 
 <iframe src="images/Top30_high_frequency.html" width="100%" height="600"></iframe>
+
+This bar chart displays the top 30 most frequently occurring words in job descriptions, ranked by frequency. "Data" is overwhelmingly the most common term, appearing approximately 10000 times, which is nearly 4,000 occurrences more than the second-ranked word "experience" (6100). Other prominent terms include "business" (5400), "sap" (4800), and "job" (4400).    The chart shows a steep decline in frequency after the top six words, with words ranking 7th through 30th ranging from about 3400 to 2100 occurrences. The prevalence of technical terms like "data", "skills", and "analysis" alongside business and management terminology suggests these job listings are predominantly for data-related roles requiring both technical capabilities and business acumen.  
