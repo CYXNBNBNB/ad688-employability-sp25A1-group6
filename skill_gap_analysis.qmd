@@ -286,6 +286,10 @@ plt.show()
 ```
 
 ![Gaps between team skill levels and job expectations](images/Gaps_Between.png)
-缺少解释
-也一样，更新完数值再解释
+
+Based on this heatmap, each team member should prioritize different skills to meet market requirements. Yuxuan Chen should focus on improving SAP Applications and Azure skills, which show a -1 deficit. Shangxuan Zhong has many skill gaps, needing development in SAP Applications, Tableau, PowerBI, Azure, and AWS. Qimin Shen similarly needs to improve SAP Applications, Tableau, PowerBI, and Azure. Altyn Baigaliyeva primarily needs to strengthen SAP Applications skills.
+
+We have searched some information. For SAP training, team members could utilize SAP Learning Hub or LinkedIn Learning's SAP courses. For Azure, Microsoft Learn offers free structured paths and certification preparation. AWS training is available through AWS Skill Builder, while Tableau offers its own learning paths on Tableau Academy.
+
+We think that our team could implement a knowledge-sharing program where members with strengths (indicated by +1) mentor those with deficits. For instance, Altyn's PowerBI expertise could help others, while Shangxuan, Qimin and Yuxuan could lead sessions on data analytics tools like SQL, Python and R. We allagree that, creating collaborative projects that require members to practice weaker skills with support from stronger teammates would accelerate learning.
 
