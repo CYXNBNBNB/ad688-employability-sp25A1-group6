@@ -128,9 +128,13 @@ This word cloud for Cluster 0 highlights a strong focus on job-related themes, w
 
 ![Cluster 1 Wordcloud](images/wordcloud/cluster_1_wordcloud.png)
 
+This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on "experience", "oracle", "cloud",  and "architecture". It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems.  Terms like "solutions",  "technology", and "business" suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure.  The presence of "architect",  "technical",  and "functional", points to both high-level system design and hands-on implementation know-how.
+
 ###  Cluster 2 Word Cloud
 
 ![Cluster 2 Wordcloud](images/wordcloud/cluster_2_wordcloud.png)
+
+This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with "SAP", "experience", "business", and "consultant" as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions, with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like "HANA", "integration", "functional", and "implementation" points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.
 
 ###  Cluster 3 Word Cloud
 
