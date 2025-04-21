@@ -154,6 +154,8 @@ fig.show()
 
 <iframe src="images/jobs_by_theme.html" width="100%" height="600"></iframe>
 
+The plot visualizes the distribution of jobs across different clusters. The x-axis shows the cluster categories, while the y-axis displays the count or number of jobs within each cluster. From the plot, we can observe that cluster 0 has the highest number of jobs, indicating that this group is the most prevalent, and also  followed by cluster 3. Clusters 1 and 2 have lower counts compared to the other two, suggesting these groups are less represented in the dataset.
+
 # Training a SVM & Naive Bayes models using TF-IDF features
 
 We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models' accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.
