@@ -8,4 +8,3 @@ Several key trends make this topic particularly relevant in 2024:
 
 1. AI and Automation Influence: The rapid advancement of AI and automation tools has shifted the skill demands in data science, leading to changes in salary structures for specialized roles such as AI engineers and machine learning researchers.
 
-2. Remote Work and Globalization: The continued rise of remote work has impacted salary expectations, with companies hiring from a broader talent pool across different geographical regions, leading to potential salary standardization or disparities.
