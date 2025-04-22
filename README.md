@@ -10,6 +10,3 @@ This word cloud for Cluster 0 highlights a strong focus on job-related themes, w
 
 This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on "experience", "oracle", "cloud",  and "architecture". It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems.  Terms like "solutions",  "technology", and "business" suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure.  The presence of "architect",  "technical",  and "functional", points to both high-level system design and hands-on implementation know-how.
 
-
-Based on the heatmap, we can see that our team displays varied skill levels across multiple technical domains. The strongest skills across the team are SQL, Excel, Python, PowerBI, and R, where most members show advanced (level 4) proficiency. While SAP Applications and Azure are consistently lower across all team members, with most showing only basic knowledge (level 2). 
-
