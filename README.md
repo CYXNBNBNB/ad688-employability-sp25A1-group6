@@ -14,3 +14,5 @@ This word cloud for Cluster 1 revolves around enterprise technology and cloud-ba
 Based on the heatmap, we can see that our team displays varied skill levels across multiple technical domains. The strongest skills across the team are SQL, Excel, Python, PowerBI, and R, where most members show advanced (level 4) proficiency. While SAP Applications and Azure are consistently lower across all team members, with most showing only basic knowledge (level 2). 
 
 Three team members (Yuxuan Chen, Shangxuan Zhong, and Qimin Shen) demonstrate particularly strong data-related skills, with advanced proficiency in multiple areas. Altyn Baigaliyeva has a different skill distribution, showing strength in PowerBI and PowerPoint while maintaining intermediate skills in most other areas.
+
+We add a new column EDU_MATCH to the dataset to check if each person's actual education level matches the minimum education requirement. If they match, it labels the row as "Match"; otherwise, it marks it as "Mismatch." We found that the two groups were identical, so we used the data from one of them.
