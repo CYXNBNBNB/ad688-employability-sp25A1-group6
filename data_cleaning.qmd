@@ -42,6 +42,8 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 df.show(5)
 ```
 
+<iframe src="data/lightcast_job_postings.html" width="100%" height="200px"></iframe>
+
 ## 1. Update Duration
 
 Calculates the duration of each job posting by finding the difference between its expiration and posted dates. Converts the POSTED and EXPIRED columns from string to date format. Update DURATION if it is null with the number of days between EXPIRED and POSTED, otherwise, the existing value is kept.
@@ -176,3 +178,4 @@ for filename in os.listdir(generated_file_path):
 shutil.rmtree(generated_file_path)
 ```
 
+<iframe src="data/lightcast_cleaned.html" width="100%" height="200px"></iframe>

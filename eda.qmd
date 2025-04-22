@@ -38,7 +38,7 @@ spark = SparkSession.builder.appName("LightcastCleanedData").getOrCreate()
 df_cleaned = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").csv("data/lightcast_cleaned.csv")
 
 # show dataset
-df_cleaned.show()
+df_cleaned.show(5)
 ```
 
 
