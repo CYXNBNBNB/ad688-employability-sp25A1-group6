@@ -15,4 +15,3 @@ Based on the heatmap, we can see that our team displays varied skill levels acro
 
 Three team members (Yuxuan Chen, Shangxuan Zhong, and Qimin Shen) demonstrate particularly strong data-related skills, with advanced proficiency in multiple areas. Altyn Baigaliyeva has a different skill distribution, showing strength in PowerBI and PowerPoint while maintaining intermediate skills in most other areas.
 
-We add a new column EDU_MATCH to the dataset to check if each person's actual education level matches the minimum education requirement. If they match, it labels the row as "Match"; otherwise, it marks it as "Mismatch." We found that the two groups were identical, so we used the data from one of them.
