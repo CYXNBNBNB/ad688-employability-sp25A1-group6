@@ -666,13 +666,12 @@ only showing top 20 rows
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>df_cleaned.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>your 131072x1 screen size is bogus. expect trouble
-25/04/20 01:49:58 WARN Utils: Your hostname, DESKTOP-AEE21PF resolves to a loopback address: 127.0.1.1; using 192.168.167.208 instead (on interface eth0)
-25/04/20 01:49:58 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+25/04/22 18:07:41 WARN Utils: Your hostname, DESKTOP-AEE21PF resolves to a loopback address: 127.0.1.1; using 192.168.167.208 instead (on interface eth0)
+25/04/22 18:07:41 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-25/04/20 01:49:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-25/04/20 01:50:00 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
-25/04/20 01:50:05 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.</code></pre>
+25/04/22 18:07:42 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+25/04/22 18:07:47 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+-------------------+----------------------+----------+----------+----------+--------+--------------------+--------------------+--------------------+-----------+-------------------+--------------------+--------------------+---------------+----------------+---------+--------------------+--------------------+-------------------+----------------+---------------------+-------------+-------------------+-------------+------------------+---------------+--------------------+--------------------+--------------------+-------------+------+-----------+----------------+-------------------+---------+-----------+--------------------+--------------------+------------------+------+--------------------+-----+--------------------+-----+-------------+---------------+--------------------+---------------+--------------------+------------+--------------------+------------+--------------------+------+--------------------+------+--------------------+------+--------------------+------+--------------------+------+--------------------+------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-----------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----------+--------------------+----------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------+--------------------+----------+--------------------+----------+--------------------+----------+---------------+----------+---------------+---------------+--------------------+--------------+--------------------+--------------------------+-------------------------------+--------------------+-------------------------+-----------------------------+----------------------------------+-----------------+----------------------+-----------------------+----------------------------+------------------+-----------------------+-------+--------------------+-------+--------------------+-------+---------------+-------+---------------+-----------------+----------------------+------------+--------------------+------------+--------------------+------------+--------------------+------------+--------------------+------------+--------------------+
@@ -708,7 +707,7 @@ only showing top 20 rows
 <h1>Exploratory Data Analysis (EDA)</h1>
 <section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart">1. Comparison of salary between remote and on-site work (box chart)</h2>
-<div id="a080bcf6" class="cell" data-execution_count="6">
+<div id="a080bcf6" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 .collect() 收集数据</span></span>
@@ -727,8 +726,9 @@ only showing top 20 rows
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: <span class="st">"Job Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/REMOTE_TYPE_NAME&amp;SALARY.html"</span>)</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>fig.write_image(<span class="st">"./images/REMOTE_TYPE_NAME&amp;SALARY.png"</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
@@ -851,7 +851,7 @@ only showing top 20 rows
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">"Viridis"</span>,</span>
 <span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">"SALARY"</span>: <span class="st">"Average Salary ($)"</span>})</span>
 <span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>fig.write_image(<span class="st">"./images/STATE_NAME&amp;SALARY.png"</span>)  <span class="co">##save the pic</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>fig.write_image(<span class="st">"./images/STATE_NAME&amp;SALARY.png"</span>)</span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/STATE_NAME_SALARY.html"</span>)</span>
 <span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -862,7 +862,7 @@ only showing top 20 rows
 </section>
 <section id="the-highest-paying-job" class="level2">
 <h2 class="anchored" data-anchor-id="the-highest-paying-job">3. The highest paying job</h2>
-<div id="a79d862b" class="cell" data-execution_count="8">
+<div id="a79d862b" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 .collect() 收集数据</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> df_cleaned.select(<span class="st">"LIGHTCAST_SECTORS_NAME"</span>, <span class="st">"SALARY"</span>).collect()</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -877,7 +877,7 @@ only showing top 20 rows
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -952,15 +952,16 @@ only showing top 20 rows
 </div>
 </div>
 </div>
-<div id="fb6d00cb" class="cell" data-execution_count="9">
+<div id="fb6d00cb" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(df_pandas.groupby(<span class="st">"LIGHTCAST_SECTORS_NAME"</span>)[<span class="st">"SALARY"</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>),</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Top 10 Industries with Highest Salaries"</span>,</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"LIGHTCAST_SECTORS_NAME"</span>: <span class="st">"Industry"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/LIGHTCAST_SECTORS_NAME&amp;SALARY.html"</span>)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>fig.write_image(<span class="st">"./images/LIGHTCAST_SECTORS_NAME&amp;SALARY.png"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
