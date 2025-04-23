@@ -1,0 +1,19 @@
+---
+title: "Evaluating Personal Job Market Prospects in 2024"
+subtitle: "Final Report"
+date: today
+date-modified: today
+date-format: long
+format: revealjs
+---
+
+
+formate
+
+格式名	说明
+html	网页格式，常用于交互式报告
+pdf	通过 LaTeX 生成的 PDF
+docx	Word 文档格式
+pptx	PowerPoint 演示文稿格式
+epub	电子书格式
+revealjs	基于 Reveal.js 的幻灯片
