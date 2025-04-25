@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="18d69aec" class="cell" data-execution_count="1">
+<div id="120a1b12" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-a-team-based-skills-data-framework" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="creating-a-team-based-skills-data-framework"><span class="header-section-number">1</span> Creating a team-based skills data framework</h2>
 <p>We take a column of software skill names from the cleaned dataset, splits each entry, cleans up the text, and counts how often each skill appears. Then, we grabs the top 30 most frequent skills, and puts them into a tidy table using pandas to make it easier to view.</p>
-<div id="148ee987" class="cell" data-execution_count="2">
+<div id="47eab195" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We build a table showing the skill levels of our team members across various tools like SQL, Excel, Python, and others. Then we create a heatmap to visually highlight each person’s strengths and weaknesses, making it easy to compare skill levels across the team.</p>
-<div id="1a3c96e6" class="cell" data-execution_count="3">
+<div id="90389a10" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -311,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="compare-team-skills-to-industry-requirements" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="compare-team-skills-to-industry-requirements"><span class="header-section-number">2</span> Compare team skills to industry requirements</h2>
 <p>We add a new column EDU_MATCH to the dataset to check if each person’s actual education level matches the minimum education requirement. If they match, it labels the row as “Match”; otherwise, it marks it as “Mismatch.” We found that the two groups were identical, so we used the data from one of them.</p>
-<div id="14f2fd02" class="cell" data-execution_count="4">
+<div id="60cb10f8" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col, when</span>
@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Then we create a reference table that links each unique minimum education level required for a job to a corresponding score. It assigns higher scores to higher education levels, for example, a Ph.D.&nbsp;gets a 5, a Master’s a 4, and so on, down to 0 for jobs that list no education requirement. And we think this scoring helps quantify and compare job expectations based on the level of education required.</p>
-<div id="44fee7b4" class="cell" data-execution_count="5">
+<div id="8a9aa811" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> when, lit, col, trim</span>
@@ -360,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>We analyze how often each software skill appears in job listings, categorized by the required education level (which we previously converted into scores). First, we join the education score to each job, split the combined skill strings into individual skills, and count how frequently each skill appears at each education score level. Second, we reshape the data so that each skill shows the number of times it appears across all score levels. Finally, we identify the most common score for each skill. If multiple scores tie for the highest count, we will select the lowest one among them—resulting in a “Proficiency_Levels” value that reflects the typical education requirement associated with that skill in the job market.</p>
-<div id="c24d38df" class="cell" data-execution_count="6">
+<div id="8e982a90" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> count, array, struct, sort_array, expr, size, element_at, col, lit, greatest, when</span>
@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Here we focus on a specific set of software skills that are relevant to our analysis. First, we define a list of target skills we’re interested in, such as SQL, Excel, Python, Tableau, and others. Then, we filter our previously processed skill data to only include these selected skills, keeping just the skill names and their associated “Proficiency_Levels”. Finally, we sort the result alphabetically by skill name to make it easier to review and compare.</p>
-<div id="47921b80" class="cell" data-execution_count="7">
+<div id="dc761480" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> lit</span>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Now we are able to evaluate how well our team’s skill levels match up with job market expectations. First, we collect the proficiency scores for a set of target skills from our previous results. Then, we rename the skill labels into a more readable and consistent format for easier comparison. Next, we calculate the skill gap for each team member by subtracting the job-required score from their actual skill level. Here, positive values mean the team exceeds the requirement, while negative values show areas for improvement. Finally, we visualize these gaps using a heatmap, making it easy to spot which skills are strong and which need development across the team.</p>
-<div id="3df8d897" class="cell" data-execution_count="8">
+<div id="6d20a56a" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>

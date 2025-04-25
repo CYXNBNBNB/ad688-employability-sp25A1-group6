@@ -356,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-the-dataset" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Load the dataset</h1>
-<div id="4dbe485b" class="cell" data-execution_count="1">
+<div id="50dccda9" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="update-duration" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="update-duration"><span class="header-section-number">2.1</span> 1. Update Duration</h2>
 <p>Calculates the duration of each job posting by finding the difference between its expiration and posted dates. Converts the POSTED and EXPIRED columns from string to date format. Update DURATION if it is null with the number of days between EXPIRED and POSTED, otherwise, the existing value is kept.</p>
-<div id="eaa789cc" class="cell" data-execution_count="2">
+<div id="8d5ba614" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.DURATION = EXPIRED - POSTED</span></span>
@@ -402,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-the-columns" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="clean-the-columns"><span class="header-section-number">2.2</span> 2. Clean the columns</h2>
 <p>Cleans up multiple text columns in the DataFrame by extracting and formatting the content originally enclosed in double quotes. Columns to clean contain those string values often wrapped in brackets, double quotes, or cluttered with newlines and extra spaces. For each of these columns, using regular expressions to remove square brackets, line breaks, and excess whitespace, formats comma-separated items with a proper space after each comma, and removes all double quotes, resulting in cleaner, more readable text entries across the specified columns.</p>
-<div id="4d998229" class="cell" data-execution_count="3">
+<div id="684d5186" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove square brackets, line breaks, spaces, and replace the formatting between commas with “,”, then remove the double quotes</span></span>
@@ -424,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-the-education-level-column" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="clean-the-education-level-column"><span class="header-section-number">2.3</span> 3. Clean the education level column</h2>
 <p>Cleans the EDUCATION_LEVELS column by extracting and retaining only the numeric portion of each entry. Removing surrounding text or symbols, leaving just the numeric education level in the column. This makes the data more consistent and easier to work with for analysis or modeling purposes.</p>
-<div id="8c5ba8b7" class="cell" data-execution_count="4">
+<div id="d52db8c5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.EDUCATION_LEVELS only keeps digits</span></span>
@@ -437,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-the-location-column" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="clean-the-location-column"><span class="header-section-number">2.4</span> 4. Clean the location column</h2>
 <p>Cleans the LOCATION column, ensures that all location information appears on one line, and removes curly braces, resulting a cleaner, more uniform LOCATION column for reading and analyzing</p>
-<div id="3f67fca2" class="cell" data-execution_count="5">
+<div id="c7995aa6" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. LOCATION only keeps data</span></span>
@@ -451,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="update-modeled-duration" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="update-modeled-duration"><span class="header-section-number">2.5</span> 5. Update Modeled Duration</h2>
 <p>Similarly as in updating duration, fills in the value with the number of days between MODELED_EXPIRED and POSTED, helps standardize and complete the duration data for modeled job postings</p>
-<div id="035e954b" class="cell" data-execution_count="6">
+<div id="7210ef6e" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5.MODELED_DURATION = MODELED_EXPIRED - POSTED</span></span>
@@ -473,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-remote-work-types" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="standardize-remote-work-types"><span class="header-section-number">2.6</span> 6. Standardize Remote Work Types</h2>
 <p>Standardizes the values in the REMOTE_TYPE_NAME column to ensure consistency in describing remote work types. Replaces values None and Not Remote with On-Site, changes Hybrid Remote to Hybrid, and keeps Remote as is. Simplify and unify the classification of job postings based on work location</p>
-<div id="cb147074" class="cell" data-execution_count="7">
+<div id="839c17d2" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Standardize Remote Work Types</span></span>
@@ -499,7 +499,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="save-the-cleaned-data" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="save-the-cleaned-data"><span class="header-section-number">2.9</span> 9. Save the cleaned data</h2>
-<div id="2bb0fb7e" class="cell" data-execution_count="8">
+<div id="afa0a2be" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save data</span></span>
@@ -529,7 +529,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>#bibliography: references_analysis.bib csl: csl/econometrica.csl #nocite: ‘<span class="citation" data-cites="*"></span>’ #show all references format: html: toc: true number-sections: false df-print: paged code-fold: true theme: - cosmo - brand css: styles.css</p>
 <p>execute: eval: false #false 不运行 true 运行 echo: true #显示代码</p>
 <hr>
-<div id="7ad7b8db" class="cell" data-execution_count="9">
+<div id="42a06ef8" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -554,7 +554,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="3"><span class="header-section-number">3</span> Exploratory Data Analysis (EDA)</h1>
 <section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart"><span class="header-section-number">3.1</span> 1. Comparison of salary between remote and on-site work (box chart)</h2>
-<div id="efa2f330" class="cell" data-execution_count="10">
+<div id="b2f800e8" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -585,7 +585,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="salary-by-region-map" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="salary-by-region-map"><span class="header-section-number">3.2</span> 2. Salary by region (map)</h2>
-<div id="84906e3b" class="cell" data-execution_count="11">
+<div id="1bdee5cf" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STATE_NAME change to .abbr</span></span>
@@ -631,7 +631,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-highest-paying-job" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="the-highest-paying-job"><span class="header-section-number">3.3</span> 3. The highest paying job</h2>
-<div id="6d050f81" class="cell" data-execution_count="12">
+<div id="6ad8f5c4" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collecting data with .collect()</span></span>
@@ -659,7 +659,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="salary-comparison-between-ai-and-non-ai-positions" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions"><span class="header-section-number">3.4</span> 4. Salary comparison between AI and non-AI positions</h2>
-<div id="8cb246b2" class="cell" data-execution_count="13">
+<div id="03190383" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -704,7 +704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <iframe src="images/AI_RELATED&amp;SALARY.html" width="100%" height="600">
 </iframe>
 <p>This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.</p>
-<div id="4041d3c6" class="cell" data-execution_count="14">
+<div id="f87f804f" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -730,7 +730,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="build-model-and-compute-sse" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="build-model-and-compute-sse"><span class="header-section-number">4.1</span> Build model and compute SSE</h2>
 <p>Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.</p>
-<div id="a62a5c8b" class="cell" data-execution_count="15">
+<div id="b040a826" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
@@ -804,7 +804,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cluster-validation" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="cluster-validation"><span class="header-section-number">4.2</span> Cluster validation</h2>
 <p>We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.</p>
-<div id="fc3438c7" class="cell" data-execution_count="16">
+<div id="d8c8e6bc" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
@@ -843,7 +843,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="comparing-and-show-results" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="comparing-and-show-results"><span class="header-section-number">4.3</span> Comparing and show results</h2>
 <p>After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs.</p>
-<div id="3095cdd4" class="cell" data-execution_count="17">
+<div id="ddda2c18" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -923,7 +923,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.</p>
 <section id="k-means-of-duration" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="k-means-of-duration"><span class="header-section-number">4.4.1</span> K-Means of Duration</h3>
-<div id="2825e80e" class="cell" data-execution_count="18">
+<div id="cdfccbe1" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -1040,7 +1040,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="build-model" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="build-model"><span class="header-section-number">5.1</span> Build model</h2>
 <p>We’re building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can’t handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we’re capturing—and how far off we might be on average.</p>
-<div id="ab7ebff7" class="cell" data-execution_count="19">
+<div id="c8b18c9b" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
@@ -1093,7 +1093,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="results-and-analysis" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="results-and-analysis"><span class="header-section-number">5.2</span> Results and analysis</h2>
 <p>With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.</p>
-<div id="3d20f97e" class="cell" data-execution_count="20">
+<div id="6a62d45c" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
@@ -1124,7 +1124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>This scatter plot compares actual vs.&nbsp;predicted salaries using a linear regression model. The blue dots represent the predictions, while the red dashed line indicates the ideal scenario where predicted salary perfectly matches the actual salary. From the plot, we observe that most predictions are clustered in a narrow range, underestimating high salaries and overestimating lower ones. The model’s R² value of 0.0757 indicates it explains only about 7.6% of the variance in salaries, suggesting limited predictive power. The RMSE of 43053.61 further highlights the large average error in predictions. These insights imply that the model struggles to capture the complexity of salary determination and may benefit from including more relevant features, nonlinear modeling, or feature engineering.</p>
-<div id="4a02a69e" class="cell" data-execution_count="21">
+<div id="6b6fce44" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1148,7 +1148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="a3587edc" class="cell" data-execution_count="22">
+<div id="98ee165d" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -1171,7 +1171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
 <section id="clustering-tf-idf-features-with-k-means" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means"><span class="header-section-number">7.1</span> Clustering TF-IDF features with K-Means</h2>
-<div id="d74fc7f9" class="cell" data-execution_count="23">
+<div id="7568e637" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -1187,7 +1187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="generate-word-clouds-for-each-cluster" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster"><span class="header-section-number">7.2</span> Generate word clouds for each cluster</h2>
-<div id="a3634053" class="cell" data-execution_count="24">
+<div id="4b2f22c3" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -1274,7 +1274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="distribution-of-the-number-of-jobs-in-each-category" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Distribution of the number of jobs in each category</h1>
-<div id="3408cb5f" class="cell" data-execution_count="25">
+<div id="4d140443" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -1293,7 +1293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models’ accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.</p>
 <section id="training-two-classifiers" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="training-two-classifiers"><span class="header-section-number">9.1</span> Training two classifiers</h2>
-<div id="f66b9c52" class="cell" data-execution_count="26">
+<div id="c0d87a74" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1373,7 +1373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="keyword-heat-visualization-according-to-the-term-frequency" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Keyword heat visualization (according to the term frequency)</h1>
-<div id="74a0a1be" class="cell" data-execution_count="27">
+<div id="9ad3a4ec" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
