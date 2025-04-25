@@ -33,25 +33,26 @@ format:
 ::: {.author-card}
 **Yuxuan Chen**  
 Boston University  
-[🌐 GitHub](https://cyxnbnbnb.github.io/)
+![BU Logo](images/bu_logo.png){width=80px}
 :::
 
 ::: {.author-card}
 **Shangxuan Zhong**  
 Boston University  
-[🌐 GitHub](https://zhongshangxuan.github.io/)
+![BU Logo](images/bu_logo.png){width=80px}
 :::
 
 ::: {.author-card}
 **Qimin Shen**  
 Boston University  
-[🌐 GitHub](https://qimin-shen.github.io/my-website/)
+![BU Logo](images/bu_logo.png){width=80px}
 :::
 
 ::: {.author-card}
 **Altyn Ospanova (Baigaliyeva)**  
 Boston University  
-[🌐 GitHub](https://altynliv.github.io/)
+![BU Logo](images/bu_logo.png){width=80px}
 :::
 
 :::
+
