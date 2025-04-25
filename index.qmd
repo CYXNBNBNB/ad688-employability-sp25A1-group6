@@ -27,7 +27,6 @@ format:
     toc: true
     # toc-depth: 2
     css: styles_home.css 
-    footer: "© 2025, Boston, USA"
 --- 
 
 | 👥 Authors               | Affiliation                       |
@@ -36,3 +35,7 @@ format:
 | **Shangxuan Zhong** | Boston University |
 | **Qimin Shen**      | Boston University |
 | **Altyn Ospanova (Baigaliyeva)** | Boston University |
+
+<div style="text-align: center; color: gray; margin-top: 2em;">
+  © 2025, Boston, USA
+</div>
