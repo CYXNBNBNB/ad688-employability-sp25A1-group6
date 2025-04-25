@@ -27,6 +27,7 @@ format:
     toc: true
     # toc-depth: 2
     css: styles_home.css 
+    footer: "© 2025, Boston, USA"
 --- 
 
 | 👥 Authors               | Affiliation                       |
