@@ -2,8 +2,9 @@ project:
   type: website
 format:
   html:
+    css: styles_home.css
     include-after-body: _includes/footer.html
-    
+
 website:
   title: "Job Market Analysis 2024"
   navbar:
