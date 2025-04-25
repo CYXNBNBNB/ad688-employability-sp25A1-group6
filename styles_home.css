@@ -4,6 +4,9 @@
   body {
     font-family: 'Poppins', sans-serif;
   }
+  h1, h2, h3, .title, .subtitle {
+    font-family: 'Poppins', sans-serif !important;
+  }
   
   /* 设置网页背景 */
   body {
