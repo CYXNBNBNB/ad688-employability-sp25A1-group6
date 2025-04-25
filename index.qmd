@@ -17,7 +17,7 @@ about:
       text: Qimin Shen
       href: https://qimin-shen.github.io/my-website/
     - icon: github
-      text: Altyn
+      text: Altyn Ospanova (Baigaliyeva)
       href: https://altynliv.github.io/
 
 
