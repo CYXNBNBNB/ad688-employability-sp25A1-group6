@@ -9,7 +9,7 @@ about:
   links:
     - icon: github
       text: Yuxuan Chen
-      href: https://cyxnbnbnb.github.io/
+      href: https://cyxnbnb.github.io/
     - icon: github
       text: Shangxuan Zhong
       href: https://zhongshangxuan.github.io/
@@ -20,20 +20,38 @@ about:
       text: Altyn Ospanova (Baigaliyeva)
       href: https://altynliv.github.io/
 
-
 format:
   html:
     theme: cosmo
     toc: true
-    # toc-depth: 2
     css: styles_home.css 
     include-after-body: _includes/footer.html
---- 
+---
 
-| 👥 Authors               | Affiliation                       |
-|--------------------|------------------------------------|
-| **Yuxuan Chen**     | Boston University |
-| **Shangxuan Zhong** | Boston University |
-| **Qimin Shen**      | Boston University |
-| **Altyn Ospanova (Baigaliyeva)** | Boston University |
+:::{.authors-container}
 
+::: {.author-card}
+**Yuxuan Chen**  
+Boston University  
+[🌐 GitHub](https://cyxnbnbnb.github.io/)
+:::
+
+::: {.author-card}
+**Shangxuan Zhong**  
+Boston University  
+[🌐 GitHub](https://zhongshangxuan.github.io/)
+:::
+
+::: {.author-card}
+**Qimin Shen**  
+Boston University  
+[🌐 GitHub](https://qimin-shen.github.io/my-website/)
+:::
+
+::: {.author-card}
+**Altyn Ospanova (Baigaliyeva)**  
+Boston University  
+[🌐 GitHub](https://altynliv.github.io/)
+:::
+
+:::
