@@ -179,7 +179,7 @@
     "href": "final_report.html",
     "title": "NLP Methods",
     "section": "",
-    "text": "title: “Research Introduction” subtitle: “Salary & Compensation Trends” date-modified: today date-format: long\nbibliography: references_intro.bib csl: csl/econometrica.csl format: html: bibliography: references_intro.bib csl: csl/econometrica.csl nocite: ‘’ #show all references theme: cosmo toc: true css: styles.css includes: _includes/backtotop.html"
+    "text": "title: “Research Introduction” subtitle: “Salary & Compensation Trends” date-modified: today date-format: long\nbibliography: references_intro.bib csl: csl/econometrica.csl format: html: bibliography: references_intro.bib csl: csl/econometrica.csl nocite: ‘’ #show all references theme: cosmo toc: true css: styles.css includes: after-body:_includes/backtotop.html"
   },
   {
     "objectID": "final_report.html#salary-trends-in-data-science-2024",
