@@ -149,10 +149,8 @@
 .author-card img:hover {
   transform: scale(1.05);
 }
-#title-block-header {
-  padding-top: 3.5rem;
-}
-.quarto-title-block.default {
-  margin-top: 3.5rem;
+
+.about-image {
+  margin-top: 4rem;
 }
 
