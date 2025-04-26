@@ -1,19 +1,70 @@
 ---
-title: "Evaluating Personal Job Market Prospects in 2024"
-subtitle: "Final Report"
-date: today
-date-modified: today
+title: "Job Market Analysis"
+subtitle: "Group 6"
+date: "`r Sys.Date()`"
+date-modified: "`r Sys.Date()`"
 date-format: long
 format: revealjs
+css: presentation.css
+
+# 你每加一个 `---`，就是一张新幻灯片。
 ---
 
+# Research Introduction
+Salary & Compensation Trends
 
-formate
+---
 
-格式名	说明
-html	网页格式，常用于交互式报告
-pdf	通过 LaTeX 生成的 PDF
-docx	Word 文档格式
-pptx	PowerPoint 演示文稿格式
-epub	电子书格式
-revealjs	基于 Reveal.js 的幻灯片
+## 1
+
+
+---
+
+# Data Cleaning
+Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends
+
+---
+
+## dataset
+
+<iframe src="data/lightcast_job_postings.html" width="100%" height="500px"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## cleaned dataset
+
+<iframe src="data/lightcast_cleaned.html" width="100%" height="500px"></iframe>
+
+---
+
+# Exploratory Data Analysis
+
+
+---
+
+# Skill Gap Analysis
+
+
+
+---
+
+# ML Methods
+
+
+---
+
+# NLP Methods
+
+
+
+---
