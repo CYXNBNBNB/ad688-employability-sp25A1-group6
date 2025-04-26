@@ -9,7 +9,7 @@ about:
   links:
     - icon: github
       text: Yuxuan Chen
-      href: https://cyxnbnb.github.io/
+      href: https://cyxnbnbnb.github.io/
     - icon: github
       text: Shangxuan Zhong
       href: https://zhongshangxuan.github.io/
