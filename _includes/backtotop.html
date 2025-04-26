@@ -1,0 +1,11 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const btn = document.querySelector(".back-to-top");
+      window.addEventListener("scroll", () => {
+        // показать кнопку, когда прокрутка больше 200px
+        btn.style.display = window.scrollY > 200 ? "block" : "none";
+      });
+    });
+    </script>
+    
+  
