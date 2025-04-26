@@ -1,11 +1,13 @@
+<!-- <div id="top"></div> нужно у самого body, чтобы ссылка работала -->
+<div id="top"></div>
+
+<a href="#top" class="back-to-top">🔝</a>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const btn = document.querySelector(".back-to-top");
-      window.addEventListener("scroll", () => {
-        // показать кнопку, когда прокрутка больше 200px
-        btn.style.display = window.scrollY > 200 ? "block" : "none";
-      });
-    });
-    </script>
-    
-  
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.querySelector(".back-to-top");
+  window.addEventListener("scroll", () => {
+    btn.style.display = window.scrollY > 200 ? "block" : "none";
+  });
+});
+</script>

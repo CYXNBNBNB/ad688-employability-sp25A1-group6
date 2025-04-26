@@ -2,8 +2,10 @@ project:
   type: website
 format:
   html:
-    include-after-body: _includes/footer.html
-
+    includes:
+      after-body:
+        - _includes/footer.html
+        - _includes/backtotop.html
 website:
   title: "Job Market Analysis 2024"
   navbar:

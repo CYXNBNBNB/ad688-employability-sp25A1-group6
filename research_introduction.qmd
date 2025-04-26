@@ -14,7 +14,8 @@ format:
     theme: cosmo
     toc: true
     css: styles.css
-    includes: _includes/backtotop.html
+    includes:
+     after-body:_includes/backtotop.html
 ---
 
 <div id="top"></div>
