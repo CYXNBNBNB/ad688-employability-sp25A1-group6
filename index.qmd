@@ -28,7 +28,7 @@ format:
     include-after-body: _includes/footer.html
 ---
 
-:::{.authors-container}
+:::{.authors-container style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;"}
 
 ::: {.author-card}
 **Yuxuan Chen**  
@@ -55,4 +55,5 @@ Boston University
 :::
 
 :::
+
 
