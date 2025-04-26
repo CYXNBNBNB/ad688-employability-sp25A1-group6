@@ -136,7 +136,7 @@ h1, h2, h3, .title, .subtitle {
 /* === Fix image under navbar === */
 img.about-image {
   display: block;
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
 }
