@@ -3,6 +3,8 @@ project:
 format:
   html:
     includes:
+      before-body:
+        - _includes/top-anchor.html
       after-body:
         - _includes/footer.html
         - _includes/backtotop.html
