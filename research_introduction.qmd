@@ -31,6 +31,9 @@ Several key trends make this topic particularly relevant in 2024:
 
 5. Industry-Specific Variations: Different industries offer varying compensation packages for data science roles, with sectors such as finance and healthcare often providing higher salaries compared to non-tech industries.
 
+![Project Pipeline](images/project_pipeline.png){width=750px style="display: block; margin: 2rem auto;"}
+
+
 
 ## Expected Findings
 Through this research, we anticipate identifying key patterns in data science salaries, such as:
