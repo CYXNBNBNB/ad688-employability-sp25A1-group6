@@ -152,4 +152,7 @@
 #title-block-header {
   padding-top: 3.5rem;
 }
+.quarto-title-block.default {
+  margin-top: 3.5rem;
+}
 
