@@ -32,3 +32,23 @@ nav, footer, table, p, a, li {
   text-align: center;
 }
 
+.back-to-top {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: none;                /* прячем по умолчанию */
+  background: #307ecc;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+.back-to-top:hover {
+  background: #225fa3;
+}
+
+/* 2) Плавное перемещение при клике */
+html {
+  scroll-behavior: smooth;
+}
