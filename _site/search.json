@@ -116,14 +116,14 @@
     "href": "ppt.html#duration-modeled_duration",
     "title": "Job Market Analysis",
     "section": "DURATION & MODELED_DURATION",
-    "text": "DURATION & MODELED_DURATION\nOnly shows DURATION"
+    "text": "DURATION & MODELED_DURATION\nOnly shows DURATION here DURATION = EXPIRED - POSTED"
   },
   {
     "objectID": "ppt.html#remove-redundant-symbols",
     "href": "ppt.html#remove-redundant-symbols",
     "title": "Job Market Analysis",
     "section": "Remove redundant symbols",
-    "text": "Remove redundant symbols"
+    "text": "Remove redundant symbols\n去除方括号、换行符、空格，并替换逗号之间的格式为”, “，然后去掉双引号"
   },
   {
     "objectID": "ppt.html#clean-the-education-level-column",

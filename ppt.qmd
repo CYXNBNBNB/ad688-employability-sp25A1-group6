@@ -5,10 +5,8 @@ format: revealjs
 revealjs:
   theme: solarized
   transition: fade
-  background: "url('images/background.jpg')"
-
-# 你每加一个 `---`，就是一张新幻灯片。
 ---
+
 <style>
   .reveal {
     background-image: 
@@ -21,16 +19,12 @@ revealjs:
   }
 </style>
 
-
-
-
 # Research Introduction
 Salary & Compensation Trends
 
 ---
 
 ## 1
-
 
 ---
 
@@ -47,24 +41,36 @@ Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends
 
 ## DURATION & MODELED_DURATION
 
-Only shows DURATION
-
-<iframe src="data/data_cleaning/DURATION.html" width="100%" height="500px"></iframe>
+Only shows DURATION here
+DURATION = EXPIRED - POSTED
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/DURATION_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/DURATION.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
 
 ---
 
 ## Remove redundant symbols
+去除方括号、换行符、空格，并替换逗号之间的格式为", "，然后去掉双引号
 <iframe src="data/data_cleaning/remove_redundant_symbols.html" width="200%" height="500px"></iframe>
 
 ---
 
 ## Clean the education level column
-<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="200%" height="500px"></iframe>
+
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/EDUCATION_LEVELS_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
 
 ---
 
 ## Clean the location column
-<iframe src="data/data_cleaning/LOCATION.html" width="100%" height="500px"></iframe>
+
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/LOCATION_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/LOCATION.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
 
 ---
 
@@ -78,28 +84,16 @@ Only shows DURATION
 
 ---
 
-
-
----
-
 # Exploratory Data Analysis
-
 
 ---
 
 # Skill Gap Analysis
 
-
-
 ---
 
 # ML Methods
 
-
 ---
 
 # NLP Methods
-
-
-
----
