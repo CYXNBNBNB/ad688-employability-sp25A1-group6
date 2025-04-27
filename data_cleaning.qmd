@@ -17,6 +17,7 @@ format:
       - cosmo
       - brand
     css: styles.css
+    include-after-body: _includes/footer.html
 
 execute:
   eval: false #false 不运行  true 运行
