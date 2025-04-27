@@ -551,5 +551,33 @@
     "title": "Job Market Analysis",
     "section": "Remove redundant symbols",
     "text": "Remove redundant symbols"
+  },
+  {
+    "objectID": "ppt.html#duration-modeled_duration",
+    "href": "ppt.html#duration-modeled_duration",
+    "title": "Job Market Analysis",
+    "section": "DURATION & MODELED_DURATION",
+    "text": "DURATION & MODELED_DURATION\nOnly shows DURATION"
+  },
+  {
+    "objectID": "ppt.html#education_levels列只保留数字",
+    "href": "ppt.html#education_levels列只保留数字",
+    "title": "Job Market Analysis",
+    "section": "EDUCATION_LEVELS列只保留数字",
+    "text": "EDUCATION_LEVELS列只保留数字"
+  },
+  {
+    "objectID": "ppt.html#对location列进行处理",
+    "href": "ppt.html#对location列进行处理",
+    "title": "Job Market Analysis",
+    "section": "对LOCATION列进行处理",
+    "text": "对LOCATION列进行处理"
+  },
+  {
+    "objectID": "ppt.html#standardize-remote-work-types",
+    "href": "ppt.html#standardize-remote-work-types",
+    "title": "Job Market Analysis",
+    "section": "Standardize Remote Work Types",
+    "text": "Standardize Remote Work Types"
   }
 ]
