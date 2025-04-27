@@ -1,13 +1,28 @@
 ---
 title: "Job Market Analysis"
 subtitle: "Group 6"
-date: "`r Sys.Date()`"
-date-modified: "`r Sys.Date()`"
-date-format: long
 format: revealjs
+revealjs:
+  theme: solarized
+  transition: fade
+  background: "url('images/background.jpg')"
 
 # 你每加一个 `---`，就是一张新幻灯片。
 ---
+<style>
+  .reveal {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.80)),
+      url("images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+
+
+
 
 # Research Introduction
 Salary & Compensation Trends
