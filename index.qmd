@@ -4,7 +4,7 @@ subtitle: "Group 6"
 about:
   template: jolla
   image: "images/home.jpg"
-  image-width: 2em
+  image-width: 1em
   image-shape: round
   links:
     - icon: github
