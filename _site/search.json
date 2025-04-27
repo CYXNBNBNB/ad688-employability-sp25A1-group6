@@ -530,5 +530,26 @@
     "title": "Job Market Analysis",
     "section": "cleaned dataset",
     "text": "cleaned dataset"
+  },
+  {
+    "objectID": "ppt.html#original-dataset",
+    "href": "ppt.html#original-dataset",
+    "title": "Job Market Analysis",
+    "section": "original dataset",
+    "text": "original dataset"
+  },
+  {
+    "objectID": "ppt.html#duration-expired---posted",
+    "href": "ppt.html#duration-expired---posted",
+    "title": "Job Market Analysis",
+    "section": "DURATION = EXPIRED - POSTED",
+    "text": "DURATION = EXPIRED - POSTED"
+  },
+  {
+    "objectID": "ppt.html#remove-redundant-symbols",
+    "href": "ppt.html#remove-redundant-symbols",
+    "title": "Job Market Analysis",
+    "section": "Remove redundant symbols",
+    "text": "Remove redundant symbols"
   }
 ]

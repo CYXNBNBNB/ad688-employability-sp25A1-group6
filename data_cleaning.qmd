@@ -42,7 +42,7 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 df.show(5)
 ```
 
-<iframe src="data/lightcast_job_postings.html" width="100%" height="200px"></iframe>
+<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="200px"></iframe>
 
 ## 1. Update Duration
 
@@ -178,4 +178,4 @@ for filename in os.listdir(generated_file_path):
 shutil.rmtree(generated_file_path)
 ```
 
-<iframe src="data/lightcast_cleaned.html" width="100%" height="200px"></iframe>
+<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="200px"></iframe>
