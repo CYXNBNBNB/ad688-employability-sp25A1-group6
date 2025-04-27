@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="3d25636e" class="cell" data-execution_count="1">
+<div id="a1e2d291" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="build-model-and-compute-sse" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="build-model-and-compute-sse"><span class="header-section-number">1.1</span> Build model and compute SSE</h2>
 <p>Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.</p>
-<div id="a728bf95" class="cell" data-execution_count="2">
+<div id="5baeadf8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
@@ -324,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cluster-validation" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="cluster-validation"><span class="header-section-number">1.2</span> Cluster validation</h2>
 <p>We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.</p>
-<div id="d50ed0b2" class="cell" data-execution_count="3">
+<div id="2722f704" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
@@ -363,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="comparing-and-show-results" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="comparing-and-show-results"><span class="header-section-number">1.3</span> Comparing and show results</h2>
 <p>After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs.</p>
-<div id="a78f1b63" class="cell" data-execution_count="4">
+<div id="01ce4abd" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -443,7 +443,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.</p>
 <section id="k-means-of-duration" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="k-means-of-duration"><span class="header-section-number">1.4.1</span> K-Means of Duration</h3>
-<div id="ec0ca549" class="cell" data-execution_count="5">
+<div id="2b03d162" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -560,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="build-model" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="build-model"><span class="header-section-number">2.1</span> Build model</h2>
 <p>We’re building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can’t handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we’re capturing—and how far off we might be on average.</p>
-<div id="38737969" class="cell" data-execution_count="6">
+<div id="046acf52" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
@@ -613,7 +613,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="results-and-analysis" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="results-and-analysis"><span class="header-section-number">2.2</span> Results and analysis</h2>
 <p>With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.</p>
-<div id="fa63687a" class="cell" data-execution_count="7">
+<div id="383df92c" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
