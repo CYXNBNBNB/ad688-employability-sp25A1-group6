@@ -1,19 +1,99 @@
 ---
-title: "Evaluating Personal Job Market Prospects in 2024"
-subtitle: "Final Report"
-date: today
-date-modified: today
-date-format: long
+title: "Job Market Analysis"
+subtitle: "Group 6"
 format: revealjs
+revealjs:
+  theme: solarized
+  transition: fade
 ---
 
+<style>
+  .reveal {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.80)),
+      url("images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
 
-formate
+# Research Introduction
+Salary & Compensation Trends
 
-格式名	说明
-html	网页格式，常用于交互式报告
-pdf	通过 LaTeX 生成的 PDF
-docx	Word 文档格式
-pptx	PowerPoint 演示文稿格式
-epub	电子书格式
-revealjs	基于 Reveal.js 的幻灯片
+---
+
+## 1
+
+---
+
+# Data Cleaning
+Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends
+
+---
+
+## Original dataset
+
+<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="500px"></iframe>
+
+---
+
+## DURATION & MODELED_DURATION
+
+Only shows DURATION here
+DURATION = EXPIRED - POSTED
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/DURATION_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/DURATION.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
+
+---
+
+## Remove redundant symbols
+去除方括号、换行符、空格，并替换逗号之间的格式为", "，然后去掉双引号
+<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="200%" height="500px"></iframe>
+
+---
+
+## Clean the education level column
+
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/EDUCATION_LEVELS_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
+
+---
+
+## Clean the location column
+
+<div style="display: flex; justify-content: space-between;">
+  <iframe src="data/data_cleaning/LOCATION_0.html" width="48%" height="500px" style="border: none;"></iframe>
+  <iframe src="data/data_cleaning/LOCATION.html" width="48%" height="500px" style="border: none;"></iframe>
+</div>
+
+---
+
+## Standardize Remote Work Types
+
+---
+
+## cleaned dataset
+
+<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="500px"></iframe>
+
+---
+
+# Exploratory Data Analysis
+
+---
+
+# Skill Gap Analysis
+
+---
+
+# ML Methods
+
+---
+
+# NLP Methods
