@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="load-the-dataset" class="level1">
 <h1>Load the dataset</h1>
-<div id="59ecb282" class="cell" data-execution_count="1">
+<div id="7bd3508f" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -245,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="update-duration" class="level2">
 <h2 class="anchored" data-anchor-id="update-duration">1. Update Duration</h2>
 <p>Calculates the duration of each job posting by finding the difference between its expiration and posted dates. Converts the POSTED and EXPIRED columns from string to date format. Update DURATION if it is null with the number of days between EXPIRED and POSTED, otherwise, the existing value is kept.</p>
-<div id="6c73664a" class="cell" data-execution_count="2">
+<div id="9bd7cf95" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.DURATION = EXPIRED - POSTED</span></span>
@@ -270,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-the-columns" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-columns">2. Clean the columns</h2>
 <p>Cleans up multiple text columns in the DataFrame by extracting and formatting the content originally enclosed in double quotes. Columns to clean contain those string values often wrapped in brackets, double quotes, or cluttered with newlines and extra spaces. For each of these columns, using regular expressions to remove square brackets, line breaks, and excess whitespace, formats comma-separated items with a proper space after each comma, and removes all double quotes, resulting in cleaner, more readable text entries across the specified columns.</p>
-<div id="432c9a82" class="cell" data-execution_count="3">
+<div id="7cbca756" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove square brackets, line breaks, spaces, and replace the formatting between commas with “,”, then remove the double quotes</span></span>
@@ -288,13 +288,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                       regexp_replace(regexp_replace(regexp_replace(col(col_name), <span class="vs">r'[\[\]\n\s]+'</span>, <span class="st">''</span>), <span class="vs">r'","'</span>, <span class="st">'", '</span>), <span class="vs">r'"'</span>, <span class="st">''</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="200%" height="500px">
+<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="100%" height="500px">
 </iframe>
 </section>
 <section id="clean-the-education-level-column" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-education-level-column">3. Clean the education level column</h2>
 <p>Cleans the EDUCATION_LEVELS column by extracting and retaining only the numeric portion of each entry. Removing surrounding text or symbols, leaving just the numeric education level in the column. This makes the data more consistent and easier to work with for analysis or modeling purposes.</p>
-<div id="51db26bf" class="cell" data-execution_count="4">
+<div id="47f0c949" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.EDUCATION_LEVELS only keeps digits</span></span>
@@ -303,13 +303,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumn(<span class="st">"EDUCATION_LEVELS"</span>, regexp_extract(<span class="st">"EDUCATION_LEVELS"</span>, <span class="vs">r'(\d+)'</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="200%" height="500px">
+<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="100%" height="500px">
 </iframe>
 </section>
 <section id="clean-the-location-column" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-location-column">4. Clean the location column</h2>
 <p>Cleans the LOCATION column, ensures that all location information appears on one line, and removes curly braces, resulting a cleaner, more uniform LOCATION column for reading and analyzing</p>
-<div id="458e66f9" class="cell" data-execution_count="5">
+<div id="a0556718" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. LOCATION only keeps data</span></span>
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="update-modeled-duration" class="level2">
 <h2 class="anchored" data-anchor-id="update-modeled-duration">5. Update Modeled Duration</h2>
 <p>Similarly as in updating duration, fills in the value with the number of days between MODELED_EXPIRED and POSTED, helps standardize and complete the duration data for modeled job postings</p>
-<div id="31f3d736" class="cell" data-execution_count="6">
+<div id="d7d99423" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5.MODELED_DURATION = MODELED_EXPIRED - POSTED</span></span>
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardize-remote-work-types" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-remote-work-types">6. Standardize Remote Work Types</h2>
 <p>Standardizes the values in the REMOTE_TYPE_NAME column to ensure consistency in describing remote work types. Replaces values None and Not Remote with On-Site, changes Hybrid Remote to Hybrid, and keeps Remote as is. Simplify and unify the classification of job postings based on work location</p>
-<div id="70ada25f" class="cell" data-execution_count="7">
+<div id="59832db2" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Standardize Remote Work Types</span></span>
@@ -373,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="save-the-cleaned-data" class="level2">
 <h2 class="anchored" data-anchor-id="save-the-cleaned-data">9. Save the cleaned data</h2>
-<div id="6a67be0a" class="cell" data-execution_count="8">
+<div id="eb2ba59f" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save data</span></span>
