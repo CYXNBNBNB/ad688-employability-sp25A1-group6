@@ -65,6 +65,8 @@ df = df.withColumn(
 )
 ```
 
+<iframe src="data/data_cleaning/DURATION.html" width="100%" height="500px"></iframe>
+
 ## 2. Clean the columns
 
 Cleans up multiple text columns in the DataFrame by extracting and formatting the content originally enclosed in double quotes. Columns to clean contain those string values often wrapped in brackets, double quotes, or cluttered with newlines and extra spaces. For each of these columns, using regular expressions to remove square brackets, line breaks, and excess whitespace, formats comma-separated items with a proper space after each comma, and removes all double quotes, resulting in cleaner, more readable text entries across the specified columns.
@@ -86,6 +88,8 @@ for col_name in columns_to_clean:
 
 ```
 
+<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="200%" height="500px"></iframe>
+
 ## 3. Clean the education level column
 
 Cleans the EDUCATION_LEVELS column by extracting and retaining only the numeric portion of each entry. Removing surrounding text or symbols, leaving just the numeric education level in the column. This makes the data more consistent and easier to work with for analysis or modeling purposes.
@@ -96,6 +100,8 @@ from pyspark.sql.functions import regexp_extract
 
 df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
 ```
+
+<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="200%" height="500px"></iframe>
 
 ## 4. Clean the location column
 
@@ -109,6 +115,8 @@ df = df.withColumn("LOCATION",
                            regexp_replace(regexp_replace(col("LOCATION"), r"\s*\n\s*", " "), r"[{}]", ""))
 
 ```
+
+<iframe src="data/data_cleaning/LOCATION.html" width="100%" height="500px"></iframe>
 
 ## 5. Update Modeled Duration
 

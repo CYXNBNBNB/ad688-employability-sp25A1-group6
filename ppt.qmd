@@ -43,12 +43,12 @@ Only shows DURATION
 
 ---
 
-## EDUCATION_LEVELS列只保留数字
+## Clean the education level column
 <iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="200%" height="500px"></iframe>
 
 ---
 
-## 对LOCATION列进行处理
+## Clean the location column
 <iframe src="data/data_cleaning/LOCATION.html" width="100%" height="500px"></iframe>
 
 ---
