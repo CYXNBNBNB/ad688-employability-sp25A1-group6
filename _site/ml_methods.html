@@ -176,24 +176,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#k-means" id="toc-k-means" class="nav-link active" data-scroll-target="#k-means"><span class="header-section-number">1</span> K-Means</a>
+  <li><a href="#k-means" id="toc-k-means" class="nav-link active" data-scroll-target="#k-means">K-Means</a>
   <ul class="collapse">
-  <li><a href="#build-model-and-compute-sse" id="toc-build-model-and-compute-sse" class="nav-link" data-scroll-target="#build-model-and-compute-sse"><span class="header-section-number">1.1</span> Build model and compute SSE</a></li>
-  <li><a href="#cluster-validation" id="toc-cluster-validation" class="nav-link" data-scroll-target="#cluster-validation"><span class="header-section-number">1.2</span> Cluster validation</a></li>
-  <li><a href="#comparing-and-show-results" id="toc-comparing-and-show-results" class="nav-link" data-scroll-target="#comparing-and-show-results"><span class="header-section-number">1.3</span> Comparing and show results</a></li>
-  <li><a href="#separate-image-display" id="toc-separate-image-display" class="nav-link" data-scroll-target="#separate-image-display"><span class="header-section-number">1.4</span> Separate image display</a>
+  <li><a href="#build-model-and-compute-sse" id="toc-build-model-and-compute-sse" class="nav-link" data-scroll-target="#build-model-and-compute-sse">Build model and compute SSE</a></li>
+  <li><a href="#cluster-validation" id="toc-cluster-validation" class="nav-link" data-scroll-target="#cluster-validation">Cluster validation</a></li>
+  <li><a href="#comparing-and-show-results" id="toc-comparing-and-show-results" class="nav-link" data-scroll-target="#comparing-and-show-results">Comparing and show results</a></li>
+  <li><a href="#separate-image-display" id="toc-separate-image-display" class="nav-link" data-scroll-target="#separate-image-display">Separate image display</a>
   <ul class="collapse">
-  <li><a href="#k-means-of-duration" id="toc-k-means-of-duration" class="nav-link" data-scroll-target="#k-means-of-duration"><span class="header-section-number">1.4.1</span> K-Means of Duration</a></li>
-  <li><a href="#k-means-of-education-levels" id="toc-k-means-of-education-levels" class="nav-link" data-scroll-target="#k-means-of-education-levels"><span class="header-section-number">1.4.2</span> K-Means of Education Levels</a></li>
-  <li><a href="#k-means-of-employment-types" id="toc-k-means-of-employment-types" class="nav-link" data-scroll-target="#k-means-of-employment-types"><span class="header-section-number">1.4.3</span> K-Means of Employment types</a></li>
-  <li><a href="#k-means-of-remote-types" id="toc-k-means-of-remote-types" class="nav-link" data-scroll-target="#k-means-of-remote-types"><span class="header-section-number">1.4.4</span> K-Means of Remote types</a></li>
-  <li><a href="#k-means-of-different-states" id="toc-k-means-of-different-states" class="nav-link" data-scroll-target="#k-means-of-different-states"><span class="header-section-number">1.4.5</span> K-Means of different states</a></li>
+  <li><a href="#k-means-of-duration" id="toc-k-means-of-duration" class="nav-link" data-scroll-target="#k-means-of-duration">K-Means of Duration</a></li>
+  <li><a href="#k-means-of-education-levels" id="toc-k-means-of-education-levels" class="nav-link" data-scroll-target="#k-means-of-education-levels">K-Means of Education Levels</a></li>
+  <li><a href="#k-means-of-employment-types" id="toc-k-means-of-employment-types" class="nav-link" data-scroll-target="#k-means-of-employment-types">K-Means of Employment types</a></li>
+  <li><a href="#k-means-of-remote-types" id="toc-k-means-of-remote-types" class="nav-link" data-scroll-target="#k-means-of-remote-types">K-Means of Remote types</a></li>
+  <li><a href="#k-means-of-different-states" id="toc-k-means-of-different-states" class="nav-link" data-scroll-target="#k-means-of-different-states">K-Means of different states</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">2</span> Multiple linear regression</a>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression">Multiple linear regression</a>
   <ul class="collapse">
-  <li><a href="#build-model" id="toc-build-model" class="nav-link" data-scroll-target="#build-model"><span class="header-section-number">2.1</span> Build model</a></li>
-  <li><a href="#results-and-analysis" id="toc-results-and-analysis" class="nav-link" data-scroll-target="#results-and-analysis"><span class="header-section-number">2.2</span> Results and analysis</a></li>
+  <li><a href="#build-model" id="toc-build-model" class="nav-link" data-scroll-target="#build-model">Build model</a></li>
+  <li><a href="#results-and-analysis" id="toc-results-and-analysis" class="nav-link" data-scroll-target="#results-and-analysis">Results and analysis</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="daa73783" class="cell" data-execution_count="1">
+<div id="d7102316" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -245,12 +245,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df_cleaned.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="k-means" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> K-Means</h1>
-<section id="build-model-and-compute-sse" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="build-model-and-compute-sse"><span class="header-section-number">1.1</span> Build model and compute SSE</h2>
+<section id="k-means" class="level1">
+<h1>K-Means</h1>
+<section id="build-model-and-compute-sse" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-and-compute-sse">Build model and compute SSE</h2>
 <p>Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.</p>
-<div id="fa245fdc" class="cell" data-execution_count="2">
+<div id="d632c80f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
@@ -321,10 +321,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Looking at this elbow chart, we went with k = 3 instead of k = 9, even though the chart shows k = 9 has a lower error rate. K = 9 would give us too many clusters to make sense of practically. It’s mathematically better with lower error, but having 9 different groups would overcomplicate our analysis and might not add meaningful insights. With k = 3, we get a simpler model that’s easier to interpret and explain to stakeholders.</p>
 </section>
-<section id="cluster-validation" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="cluster-validation"><span class="header-section-number">1.2</span> Cluster validation</h2>
+<section id="cluster-validation" class="level2">
+<h2 class="anchored" data-anchor-id="cluster-validation">Cluster validation</h2>
 <p>We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.</p>
-<div id="306e5241" class="cell" data-execution_count="3">
+<div id="abd78170" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
@@ -360,10 +360,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="comparing-and-show-results" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="comparing-and-show-results"><span class="header-section-number">1.3</span> Comparing and show results</h2>
+<section id="comparing-and-show-results" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-and-show-results">Comparing and show results</h2>
 <p>After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs.</p>
-<div id="c6445d2c" class="cell" data-execution_count="4">
+<div id="61b6d383" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -438,12 +438,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="separate-image-display" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="separate-image-display"><span class="header-section-number">1.4</span> Separate image display</h2>
+<section id="separate-image-display" class="level2">
+<h2 class="anchored" data-anchor-id="separate-image-display">Separate image display</h2>
 <p>We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.</p>
-<section id="k-means-of-duration" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="k-means-of-duration"><span class="header-section-number">1.4.1</span> K-Means of Duration</h3>
-<div id="9eb75057" class="cell" data-execution_count="5">
+<section id="k-means-of-duration" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-of-duration">K-Means of Duration</h3>
+<div id="d2c6a67d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -498,8 +498,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These three scatterplots show the scatterplot of job duration versus salary for each of the three clusters. It seems to be a general trend that as job duration exceeds the 60-80 month mark, the salary distribution becomes more diverse and possibly lower. This suggests that longer positions do not necessarily guarantee higher salaries. A notable feature is the vertical concentration of data points around certain duration values, particularly at the 60-month mark, which may represent common contract durations or career milestone points where people change roles. The highest salaries (up to $500,000) are mostly found in roles with durations of less than 60 months, suggesting that some short- to medium-term roles may be particularly lucrative.</p>
 <p>For job seekers, these results suggest that maximizing pay may actually require changing positions strategically every 3-5 years rather than holding a position for a long period of time. The data suggests that very long tenures of more than 80 months provide diminishing pay returns. Candidates may want to focus on industries or positions in higher-paying clusters, especially those with higher pay in the early and mid-term tenure ranges. Additionally, five years appears to be a critical point in career evaluation to either negotiate a significant salary increase or consider job hopping to maintain salary momentum.</p>
 </section>
-<section id="k-means-of-education-levels" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="k-means-of-education-levels"><span class="header-section-number">1.4.2</span> K-Means of Education Levels</h3>
+<section id="k-means-of-education-levels" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-of-education-levels">K-Means of Education Levels</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/kmeans/kmeans_highlight_1_MIN_EDULEVELS_NAME.png" class="img-fluid figure-img"></p>
@@ -512,8 +512,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cluster 2 (bottom plot) shows a striking concentration of Associate degree holders with competitive salaries between $50,000-$250,000, with some reaching close to $300,000. This suggests this cluster represents a segment of the job market where specialized two-year programs are highly valued, possibly in technical or healthcare fields.</p>
 <p>For job seekers, these findings suggest that the value of different education levels varies significantly depending on which job segment you’re targeting. Associate degrees appear particularly valuable in Cluster 2, while advanced degrees show the highest potential in Cluster 0. Rather than pursuing higher education indiscriminately, job seekers might benefit from identifying which cluster aligns with their career goals and then obtaining the education level that shows the strongest returns within that specific segment of the job market.</p>
 </section>
-<section id="k-means-of-employment-types" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="k-means-of-employment-types"><span class="header-section-number">1.4.3</span> K-Means of Employment types</h3>
+<section id="k-means-of-employment-types" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-of-employment-types">K-Means of Employment types</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/kmeans/kmeans_highlight_2_EMPLOYMENT_TYPE_NAME.png" class="img-fluid figure-img"></p>
@@ -526,8 +526,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cluster 2 (bottom plot) again shows a strong concentration of full-time workers, but with a distinctive salary pattern. The full-time positions here show a particularly dense concentration between $50,000 and $200,000, with some reaching near $300,000. There are very few part-time workers in this cluster, and those present show lower salaries than their full-time counterparts.</p>
 <p>For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.</p>
 </section>
-<section id="k-means-of-remote-types" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="k-means-of-remote-types"><span class="header-section-number">1.4.4</span> K-Means of Remote types</h3>
+<section id="k-means-of-remote-types" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-of-remote-types">K-Means of Remote types</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/kmeans/kmeans_highlight_3_REMOTE_TYPE_NAME.png" class="img-fluid figure-img"></p>
@@ -540,8 +540,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cluster 2 (bottom plot) also shows a predominance of on-site positions, with salary ranges typically between $50,000 and $200,000 and some reaching close to $300,000. Remote positions appear to have a slightly lower salary ceiling in this cluster, and hybrid roles are relatively uncommon, likely representing industries where physical presence is more highly valued.</p>
 <p>For job seekers, these findings suggest that on-site positions still offer the highest salary potential overall, especially in industries represented by Cluster 0. However, remote work doesn’t necessarily mean sacrificing compensation significantly, particularly in Cluster 1 where remote salaries are quite competitive. Job seekers prioritizing work-life balance through remote arrangements might focus on sectors represented in Cluster 1, while those seeking maximum earning potential might target on-site roles in Cluster 0. Hybrid arrangements, though offering flexibility, generally show lower compensation across all clusters and might be more strategic as a negotiation point after securing a higher-paying on-site role.</p>
 </section>
-<section id="k-means-of-different-states" class="level3" data-number="1.4.5">
-<h3 data-number="1.4.5" class="anchored" data-anchor-id="k-means-of-different-states"><span class="header-section-number">1.4.5</span> K-Means of different states</h3>
+<section id="k-means-of-different-states" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-of-different-states">K-Means of different states</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/kmeans/kmeans_highlight_4_STATE_NAME.png" class="img-fluid figure-img"></p>
@@ -555,12 +555,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 </section>
-<section id="multiple-linear-regression" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Multiple linear regression</h1>
-<section id="build-model" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="build-model"><span class="header-section-number">2.1</span> Build model</h2>
+<section id="multiple-linear-regression" class="level1">
+<h1>Multiple linear regression</h1>
+<section id="build-model" class="level2">
+<h2 class="anchored" data-anchor-id="build-model">Build model</h2>
 <p>We’re building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can’t handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we’re capturing—and how far off we might be on average.</p>
-<div id="e3746d66" class="cell" data-execution_count="6">
+<div id="c9cf348b" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
@@ -610,10 +610,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="results-and-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="results-and-analysis"><span class="header-section-number">2.2</span> Results and analysis</h2>
+<section id="results-and-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-analysis">Results and analysis</h2>
 <p>With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.</p>
-<div id="0350d4b0" class="cell" data-execution_count="7">
+<div id="783886e2" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
