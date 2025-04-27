@@ -116,7 +116,7 @@
     "href": "ppt.html#duration-modeled_duration",
     "title": "Job Market Analysis",
     "section": "DURATION & MODELED_DURATION",
-    "text": "DURATION & MODELED_DURATION\nOnly shows DURATION here DURATION = EXPIRED - POSTED"
+    "text": "DURATION & MODELED_DURATION\nOnly shows DURATION here DURATION = EXPIRED - POSTED\n\n\n&lt;iframe src=\"data/data_cleaning/DURATION_0.html\" width=\"48%\" height=\"500px\" style=\"border: none;\"&gt;&lt;/iframe&gt;\n&lt;iframe src=\"data/data_cleaning/DURATION.html\" width=\"48%\" height=\"500px\" style=\"border: none;\"&gt;&lt;/iframe&gt;"
   },
   {
     "objectID": "ppt.html#remove-redundant-symbols",
