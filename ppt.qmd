@@ -51,7 +51,7 @@ DURATION = EXPIRED - POSTED
 ---
 
 ## Remove redundant symbols
-去除方括号、换行符、空格，并替换逗号之间的格式为", "，然后去掉双引号
+Remove [ ], \n, spaces, and replace the formatting between commas with “,” and then remove the double quotes
 <iframe src="data/data_cleaning/remove_redundant_symbols.html" width="200%" height="500px"></iframe>
 
 ---
