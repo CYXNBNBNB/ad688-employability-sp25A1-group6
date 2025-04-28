@@ -65,7 +65,7 @@ import pandas as pd
 df_pandas = pd.DataFrame(data_list, columns=["REMOTE_TYPE_NAME", "SALARY"])
 
 fig = px.box(df_pandas, x="REMOTE_TYPE_NAME", y="SALARY",
-             title="Salary Comparison: Remote vs. On-Site Jobs",
+             title="Salary Comparison: Remote Jobs vs. On-Site Jobs vs. Hybrid Jobs",
              category_orders={"REMOTE_TYPE_NAME": ["On-Site", "Hybrid", "Remote"]},
              labels={"REMOTE_TYPE_NAME": "Job Type", "SALARY": "Salary ($)"})
 
