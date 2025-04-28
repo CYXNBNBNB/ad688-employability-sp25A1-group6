@@ -3,11 +3,13 @@ title: "ML Methods"
 date-modified: today
 date-format: long
 
-#bibliography: references_analysis.bib
+bibliography: references.bib
 csl: csl/econometrica.csl
 #nocite: '@*'  #show all references
 format: 
   html:
+    bibliography: references.bib
+    csl: csl/econometrica.csl
     toc: true
     number-sections: false
     df-print: paged
@@ -284,7 +286,7 @@ For job seekers, these results suggest that maximizing pay may actually require 
 
 These are scatter plots comparing education levels and salary across the three clusters, and we can see distinct patterns in how education relates to compensation within each group.
 
-In Cluster 0 (top plot), there's a wide distribution of salaries across all education levels. Master's degree holders show the highest salary ceiling, with some earning up to $500,000, though most fall between $50,000-$250,000. Associate degree holders surprisingly show strong earnings, often comparable to those with Master's degrees. Bachelor's degree holders and high school graduates show somewhat lower median salaries, which challenges traditional assumptions about education returns.
+In Cluster 0 (top plot), there's a wide distribution of salaries across all education levels. Master's degree holders show the highest salary ceiling, with some earning up to $500,000, though most fall between $50,000-$250,000. Associate degree holders surprisingly show strong earnings, often comparable to those with Master's degrees. Bachelor's degree holders and high school graduates show somewhat lower median salaries, which challenges traditional assumptions about education returns [@quan2023human].
 
 Cluster 1 (middle plot) shows a different pattern, with Bachelor's degree holders and those without formal education labels being particularly prevalent. The salary range is more compressed, typically between $50,000-$200,000, with fewer high outliers. This cluster might represent industries or roles where specific skills matter more than degree level.
 
@@ -304,7 +306,7 @@ Cluster 1 (middle plot) is predominantly composed of full-time positions, with f
 
 Cluster 2 (bottom plot) again shows a strong concentration of full-time workers, but with a distinctive salary pattern. The full-time positions here show a particularly dense concentration between $50,000 and $200,000, with some reaching near $300,000. There are very few part-time workers in this cluster, and those present show lower salaries than their full-time counterparts.
 
-For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.
+For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits [@varvello2023does]. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.
 
 ### K-Means of Remote types
 
@@ -330,7 +332,7 @@ In Cluster 0 (top plot), we see considerable salary variation across states, wit
 
 Cluster 1 (middle plot) shows an interesting concentration of data points in Alabama, suggesting this cluster might represent industries or roles particularly prevalent in that state. Cluster 2 (bottom plot) shows a more scattered distribution across states, with positions typically ranging from $50,000 to $200,000. Certain states like California, Colorado, and South Carolina show stronger representations in this cluster, but with fewer extremely high-paying outliers compared to Cluster 0. The salary distributions appear somewhat more compressed, suggesting these positions may have more standardized compensation structures regardless of location.
 
-For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.
+For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings [@khan2024exploring]. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.
 
 # Multiple linear regression
 

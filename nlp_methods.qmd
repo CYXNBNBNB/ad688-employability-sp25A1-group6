@@ -3,11 +3,13 @@ title: "NLP Methods"
 date-modified: today
 date-format: long
 
-#bibliography: references_analysis.bib
+bibliography: references.bib
 csl: csl/econometrica.csl
 #nocite: '@*'  #show all references
 format: 
   html:
+    bibliography: references.bib
+    csl: csl/econometrica.csl
     toc: true
     number-sections: false
     df-print: paged
@@ -123,25 +125,25 @@ for i in range(k):
 
 ![Cluster 0 Wordcloud](images/wordcloud/cluster_0_wordcloud.png)
 
-This word cloud for Cluster 0 highlights a strong focus on job-related themes, with "experience", "data", "business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like "time" and "support" also appear prominently, pointing to both the practical and strategic dimensions of employment.
+This word cloud for Cluster 0 highlights a strong focus on job-related themes, with "experience", "data", "business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like "time" and "support" also appear prominently, pointing to both the practical and strategic dimensions of employment [@quan2023human].
 
 ###  Cluster 1 Word Cloud
 
 ![Cluster 1 Wordcloud](images/wordcloud/cluster_1_wordcloud.png)
 
-This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on "experience", "oracle", "cloud",  and "architecture". It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems.  Terms like "solutions",  "technology", and "business" suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure.  The presence of "architect",  "technical",  and "functional", points to both high-level system design and hands-on implementation know-how.
+This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on "experience", "oracle", "cloud",  and "architecture". It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems [@khan2024exploring].  Terms like "solutions",  "technology", and "business" suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure.  The presence of "architect",  "technical",  and "functional", points to both high-level system design and hands-on implementation know-how.
 
 ###  Cluster 2 Word Cloud
 
 ![Cluster 2 Wordcloud](images/wordcloud/cluster_2_wordcloud.png)
 
-This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with "SAP", "experience", "business", and "consultant" as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions, with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like "HANA", "integration", "functional", and "implementation" points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.
+This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with "SAP", "experience", "business", and "consultant" as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions [@khan2024exploring], with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like "HANA", "integration", "functional", and "implementation" points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.
 
 ###  Cluster 3 Word Cloud
 
 ![Cluster 3 Wordcloud](images/wordcloud/cluster_3_wordcloud.png)
 
-This word cloud for Cluster 3 showcases the data analytics profession, with "data", "experience", "analytics", and "analysis" dominating the visual.  It highlights the business intelligence landscape where SQL skills meet management responsibilities.  Terms like "quality",  "reporting", and "tools" point to the practical implementation side, while "business" suggests the crucial connection between technical analysis and organizational value.  This cluster represents the growing field of data-driven decision making.
+This word cloud for Cluster 3 showcases the data analytics profession, with "data", "experience", "analytics", and "analysis" dominating the visual.  It highlights the business intelligence landscape where SQL skills meet management responsibilities [@quan2023human].  Terms like "quality",  "reporting", and "tools" point to the practical implementation side, while "business" suggests the crucial connection between technical analysis and organizational value.  This cluster represents the growing field of data-driven decision making.
 
 # Distribution of the number of jobs in each category
 
