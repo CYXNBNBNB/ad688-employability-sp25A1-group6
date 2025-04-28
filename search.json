@@ -473,7 +473,7 @@
     "href": "ppt.html#remove-redundant-symbols",
     "title": "Job Market Analysis",
     "section": "Remove redundant symbols",
-    "text": "Remove redundant symbols\n去除方括号、换行符、空格，并替换逗号之间的格式为”, “，然后去掉双引号"
+    "text": "Remove redundant symbols\nRemove [ ], , spaces, and replace the formatting between commas with “,” and then remove the double quotes"
   },
   {
     "objectID": "ppt.html#clean-the-education-level-column",
