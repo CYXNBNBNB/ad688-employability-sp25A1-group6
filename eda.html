@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -203,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 27, 2025</p>
+      <p class="date-modified">April 28, 2025</p>
     </div>
   </div>
     
@@ -214,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="94ad709f" class="cell" data-execution_count="1">
+<div id="fdf52874" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -237,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Exploratory Data Analysis (EDA)</h1>
 <section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart">1. Comparison of salary between remote and on-site work (box chart)</h2>
-<div id="035f14f7" class="cell" data-execution_count="2">
+<div id="61f5cf18" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -264,11 +283,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/REMOTE_TYPE_NAME&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This box plot titled “Salary Comparison: Remote vs.&nbsp;On-Site Jobs” shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.</p>
+<p>This box plot titled “Salary Comparison: Remote vs.&nbsp;On-Site Jobs” shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases <span class="citation" data-cites="varvello2023does">(<a href="#ref-varvello2023does" role="doc-biblioref">Varvello, Camusso, and Navarro (2023)</a>)</span>.</p>
 </section>
 <section id="salary-by-region-map" class="level2">
 <h2 class="anchored" data-anchor-id="salary-by-region-map">2. Salary by region (map)</h2>
-<div id="f2300191" class="cell" data-execution_count="3">
+<div id="0d0a95c9" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STATE_NAME change to .abbr</span></span>
@@ -310,11 +329,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/STATE_NAME_SALARY.html" width="100%" height="600">
 </iframe>
-<p>The map titled “Average Salary by State” shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country.</p>
+<p>The map titled “Average Salary by State” shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country <span class="citation" data-cites="khan2024exploring">(<a href="#ref-khan2024exploring" role="doc-biblioref">Khan et al. (2024)</a>)</span>.</p>
 </section>
 <section id="the-highest-paying-job" class="level2">
 <h2 class="anchored" data-anchor-id="the-highest-paying-job">3. The highest paying job</h2>
-<div id="3c30a9c5" class="cell" data-execution_count="4">
+<div id="dc6b56f8" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collecting data with .collect()</span></span>
@@ -338,11 +357,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/LIGHTCAST_SECTORS_NAME&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This bar chart titled “Top 10 Industries with Highest Salaries” highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as “GreenJobs:Enabled, Cybersecurity” or “Cybersecurity, DataPrivacy/Protection”. These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives.</p>
+<p>This bar chart titled “Top 10 Industries with Highest Salaries” highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as “GreenJobs:Enabled, Cybersecurity” or “Cybersecurity, DataPrivacy/Protection”. These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives <span class="citation" data-cites="pouliakas2025artificial">(<a href="#ref-pouliakas2025artificial" role="doc-biblioref">Pouliakas, Santangelo, and Dupire (2025)</a>)</span>.</p>
 </section>
 <section id="salary-comparison-between-ai-and-non-ai-positions" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions">4. Salary comparison between AI and non-AI positions</h2>
-<div id="35c20f15" class="cell" data-execution_count="5">
+<div id="407a196c" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -386,13 +405,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="images/AI_RELATED&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.</p>
+<p>This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories <span class="citation" data-cites="Engberg2023Artificial">(<a href="#ref-Engberg2023Artificial" role="doc-biblioref">Engberg et al. (2023)</a>)</span>.</p>
+
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Engberg2023Artificial" class="csl-entry" role="listitem">
+<span class="smallcaps">Engberg, E., M. Koch, M. Lodefalk, and S. Schroeder</span>. (2023): Artificial Intelligence, Tasks, Skills and Wages: Worker-Level Evidence from Germany, Working Paper, Örebro: Örebro University School of Business.
+</div>
+<div id="ref-khan2024exploring" class="csl-entry" role="listitem">
+<span class="smallcaps">Khan, M., G. M. N. Islam, P. K. Ng, A. A. Zainuddin, C. P. Lean, J. Al-Fattah, A. B. Basri, and S. I. Kamarudin</span>. (2024): <span>“Exploring Salary Trends in Data Science, Artificial Intelligence, and Machine Learning: A Comprehensive Analysis,”</span> <em>AIP conference proceedings</em>,. 1AIP Publishing.
+</div>
+<div id="ref-pouliakas2025artificial" class="csl-entry" role="listitem">
+<span class="smallcaps">Pouliakas, K., G. Santangelo, and P. Dupire</span>. (2025): Are Artificial Intelligence (AI) Skills a Reward or a Gamble? Deconstructing the AI Wage Premium in Europe,Institute of Labor Economics (IZA).
+</div>
+<div id="ref-varvello2023does" class="csl-entry" role="listitem">
+<span class="smallcaps">Varvello, J. C., J. Camusso, and A. I. Navarro</span>. (2023): <span>“Does teleworking affect the labor income distribution? Empirical evidence from south american countries,”</span> <em>Empirical Evidence From South American Countries (August 31, 2023)</em>,.
+</div>
+</div></section></div></main> <!-- /main -->
 <div style="text-align: center; color: gray; font-size: 0.9em; margin: 2em 0;">
     © 2025, Boston, USA
   </div>
