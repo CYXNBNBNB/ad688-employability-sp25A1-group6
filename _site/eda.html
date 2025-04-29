@@ -233,7 +233,7 @@ div.csl-indent {
 </header>
 
 
-<div id="b824f5d4" class="cell" data-execution_count="1">
+<div id="66dcf0d3" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -256,7 +256,7 @@ div.csl-indent {
 <h1>Exploratory Data Analysis (EDA)</h1>
 <section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart">1. Comparison of salary between remote and on-site work (box chart)</h2>
-<div id="46adfa05" class="cell" data-execution_count="2">
+<div id="252d982a" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -287,7 +287,7 @@ div.csl-indent {
 </section>
 <section id="salary-by-region-map" class="level2">
 <h2 class="anchored" data-anchor-id="salary-by-region-map">2. Salary by region (map)</h2>
-<div id="d67659af" class="cell" data-execution_count="3">
+<div id="7b376520" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STATE_NAME change to .abbr</span></span>
@@ -318,13 +318,14 @@ div.csl-indent {
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"STATE_NAME"</span>,</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                    scope<span class="op">=</span><span class="st">"usa"</span>, </span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">"Average Salary by State"</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">"Viridis"</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">"SALARY"</span>: <span class="st">"Average Salary ($)"</span>})</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">"IceFire"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                    range_color<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">350000</span>), </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">"SALARY"</span>: <span class="st">"Average Salary ($)"</span>})</span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/STATE_NAME_SALARY.html"</span>)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"./images/STATE_NAME_SALARY.html"</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <iframe src="images/STATE_NAME_SALARY.html" width="100%" height="600">
@@ -333,7 +334,7 @@ div.csl-indent {
 </section>
 <section id="the-highest-paying-job" class="level2">
 <h2 class="anchored" data-anchor-id="the-highest-paying-job">3. The highest paying job</h2>
-<div id="f5403a60" class="cell" data-execution_count="4">
+<div id="0ac32449" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collecting data with .collect()</span></span>
@@ -361,7 +362,7 @@ div.csl-indent {
 </section>
 <section id="salary-comparison-between-ai-and-non-ai-positions" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions">4. Salary comparison between AI and non-AI positions</h2>
-<div id="28616fbe" class="cell" data-execution_count="5">
+<div id="f022343e" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>

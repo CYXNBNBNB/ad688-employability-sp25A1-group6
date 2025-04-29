@@ -110,7 +110,8 @@ fig = px.choropleth(df_pandas,
                     hover_name="STATE_NAME",
                     scope="usa", 
                     title="Average Salary by State",
-                    color_continuous_scale="Viridis",
+                    color_continuous_scale="IceFire",
+                    range_color=(0, 350000), 
                     labels={"SALARY": "Average Salary ($)"})
 
 
