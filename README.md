@@ -12,10 +12,4 @@ We then validated our clusters by comparing them with actual employment types us
 
 To better understand the clusters, we created a series of scatter plots. We looked at how job duration, education, employment type, remote work status, and state related to salary across each cluster.
 
-For example, we found that jobs with shorter durations (under 60 months) tended to offer higher salaries, while very long tenures often led to lower or more stagnant pay. This suggests job seekers might benefit from changing roles every 3–5 years to maximize earnings.
-
-In terms of education, Associate degrees surprisingly had strong returns in some clusters, especially Cluster 2. Cluster 0 favored advanced degrees like Master’s, while Cluster 1 seemed to value experience and skills over formal education.
-
-When we looked at employment types, full-time jobs consistently offered the highest salary potential across all clusters. Part-time and hybrid roles paid less on average, though hybrid roles offered flexibility.
-
-For remote work, on-site roles had the highest pay ceiling, especially in Cluster 0. But in Cluster 1, remote
+For example, we found that jobs with shorter durations (under 60 months) tended to offer higher salaries, while very long t57
