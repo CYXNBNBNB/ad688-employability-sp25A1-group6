@@ -43,7 +43,7 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 df.show(5)
 ```
 
-<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="400px"></iframe>
 
 ## 1. Update Duration
 
@@ -66,7 +66,7 @@ df = df.withColumn(
 )
 ```
 
-<iframe src="data/data_cleaning/DURATION.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/DURATION.html" width="100%" height="400px"></iframe>
 
 ## 2. Clean the columns
 
@@ -89,7 +89,7 @@ for col_name in columns_to_clean:
 
 ```
 
-<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/remove_redundant_symbols.html" width="100%" height="400px"></iframe>
 
 ## 3. Clean the education level column
 
@@ -102,7 +102,7 @@ from pyspark.sql.functions import regexp_extract
 df = df.withColumn("EDUCATION_LEVELS", regexp_extract("EDUCATION_LEVELS", r'(\d+)', 1))
 ```
 
-<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/EDUCATION_LEVELS.html" width="100%" height="400px"></iframe>
 
 ## 4. Clean the location column
 
@@ -117,7 +117,7 @@ df = df.withColumn("LOCATION",
 
 ```
 
-<iframe src="data/data_cleaning/LOCATION.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/LOCATION.html" width="100%" height="400px"></iframe>
 
 ## 5. Update Modeled Duration
 
@@ -187,4 +187,4 @@ for filename in os.listdir(generated_file_path):
 shutil.rmtree(generated_file_path)
 ```
 
-<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="500px"></iframe>
+<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="400px"></iframe>
