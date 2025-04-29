@@ -68,6 +68,11 @@ We performed K-Means clustering on our cleaned job dataset to explore how roles 
 
 We first converted numerical and categorical fields into a format the model could understand, then standardized everything to ensure fairness across variables. We tested different numbers of clusters and plotted the SSE for each—this gave us an Elbow chart. While k = 9 had the lowest error, we chose k = 3 for better interpretability. It gave us fewer, more meaningful groups without overcomplicating the analysis.
 
+We then validated our clusters by comparing them with actual employment types using two metrics—N47
+We performed K-Means clustering on our cleaned job dataset to explore how roles naturally group based on salary, employment type, education level, job duration, remote status, and location.
+
+We first converted numerical and categorical fields into a format the model could understand, then standardized everything to ensure fairness across variables. We tested different numbers of clusters and plotted the SSE for each—this gave us an Elbow chart. While k = 9 had the lowest error, we chose k = 3 for better interpretability. It gave us fewer, more meaningful groups without overcomplicating the analysis.
+
 We then validated our clusters by comparing them with actual employment types using two metrics—Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI). These scores confirmed that our clusters aligned reasonably well with real-world labels.
 
 To better understand the clusters, we created a series of scatter plots. We looked at how job duration, education, employment type, remote work status, and state related to salary across each cluster.
@@ -82,7 +87,9 @@ For remote work, on-site roles had the highest pay ceiling, especially in Cluste
 
 We also found interesting patterns across states. High-paying jobs were concentrated in places like California, New York, and Texas—but several mid-cost states also offered strong salaries in the right clusters.
 
-Lastly, we built a multiple linear regression model to predict salary using the same features. After training, the model had a very low R² of 0.0757, meaning it only explained about 7.6% of salary variation. The RMSE was over $43,000, so predictions were not very accurate. Thi46
+Lastly, we built a multiple linear regression model to predict salary using the same features. After training, the model had a very low R² of 0.0757, meaning it only explained about 7.6% of salary variation. The RMSE was over $43,000, so predictions were not very accurate. This tells us that salary is likely influenced by more complex, possibly nonlinear factors.
+
+
 
 
 
