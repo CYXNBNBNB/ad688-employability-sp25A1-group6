@@ -69,8 +69,4 @@ To safeguard cultural diversity in the face of globalization, several proactive 
 
 Cultural Education: Schools should incorporate local history, literature, and languages into the curriculum. Teaching young people to value their heritage fosters a sense of pride and continuity.
 
-Media Representation: Governments and media producers can support local content creation to ensure cultural narratives are shared in national and international forums. This may include funding films, television, literature, and digital content in indigenous or minority languages.
-
-Cultural Policy and Legislation: Countries can adopt policies to protect endangered languages, traditions, and cultural sites. UNESCO’s Intangible Cultural Heritage program is one example of an international effort to promote such protections.
-
-By recognizing the value of cultural diversity and implementing strategies to preserve it, societies can ensure that globalization becomes a vehicle for mutual enrichment rather than cultural erosion. In the end, a world that respects and celebrates its many cultural identities is a richer, more humane, and more resilient world.
+Media Repre74
