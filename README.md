@@ -28,8 +28,7 @@ In education, the shift toward global curriculums often means less emphasis on l
 Cultural Hybridity and Adaptation
 However, cultural change is not always a loss—it can also be a transformation. Many societies blend global and local influences to create hybrid cultures. For instance, cuisine often evolves through globalization: fusion restaurants may combine elements of Chinese, Mexican, and French culinary traditions. Likewise, musicians may incorporate traditional instruments into contemporary genres, creating new forms of expression that honor both heritage and innovation.
 
-Hybridization demonstrates cultural resilience. Rather than viewing globalization as a one-way force that imposes change, it can be understood as a two-way interaction where local cultures adapt, reinterpret, and sometimes export their own values and aesthetics to the global stage. This process allows for cultural evolution rather than extinction.
-
+Hy89
 Strategies to Protect Cultural Identity
 To safeguard cultural diversity in the face of globalization, several proactive strategies can be employed:
 
