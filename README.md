@@ -14,8 +14,7 @@ One of the most significant advantages of technology in education is accessibili
 
 Moreover, technology enables personalized learning experiences. With the help of artificial intelligence, educational software can adapt to a student’s learning pace, strengths, and weaknesses. For example, adaptive learning platforms can recommend specific exercises to help students reinforce weak areas while allowing them to skip material they already understand. This targeted approach can improve learning efficiency and boost motivation.
 
-Communication between teachers and students has also improved through digital tools. Learning Manaores how globalization affects cultural identity, both positively and negatively, and suggests paths forward for maintaining cultural diversity in a globalized world.
-
+Communication between teachers and students has also improved through digital tools. Learning Manaores how globalization affects cultural identity, both positively and 
 The Positive Aspects of Globalization for Culture
 Globalization does not inherently destroy cultural identity. In many cases, it allows for the exchange and appreciation of diverse cultures. People now have access to films, music, cuisine, and art from all over the world. For instance, Korean pop music (K-pop), Indian Bollywood films, and Japanese anime have gained popularity far beyond their countries of origin. This global reach has helped cultures gain international recognition and respect, fostering cultural pride and economic growth in creative industries.
 
