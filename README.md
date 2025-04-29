@@ -37,11 +37,4 @@ For example, we found that jobs with shorter durations (under 60 months) tended 
 In terms of education, Associate degrees surprisingly had strong returns in some clusters, especially Cluster 2. Cluster 0 favored advanced degrees like Master’s, while Cluster 1 seemed to value experience and skills over formal education.
 
 When we looked at employment types, full-time jobs consistently offered the highest salary potential across all clusters. Part-time and hybrid roles paid less on average, though hybrid roles offered flexibility.
-
-For remote work, on-site roles had the highest pay ceiling, especially in Cluster 0. But in Cluster 1, remote roles were nearly as competitive, showing that remote work can still be lucrative in the right industries.
-
-We also found interesting patterns across states. High-paying jobs were concentrated in places like California, New York, and Texas—but several mid-cost states also offered strong salaries in the right clusters.
-
-Lastly, we built a multiple linear regression model to predict salary using the same features. After training, the model had a very low R² of 0.0757, meaning it only explained about 7.6% of salary variation. The RMSE was over $43,000, so predictions were not very accurate. This tells us that salary is likely influenced by more complex, possibly nonlinear factors.
-
-We performed K-Means clustering on our cleaned job dataset to explore how roles naturally group based on salary, employment type, education level, job duration, remote status, and location.53
+54
