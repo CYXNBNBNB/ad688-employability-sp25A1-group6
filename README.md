@@ -19,11 +19,6 @@ One of the most significant advantages of technology in education is accessibili
 
 Moreover, technology enables personalized learning experiences. With the help of artificial intelligence, educational software can adapt to a student’s learning pace, strengths, and weaknesses. For example, adaptive learning platforms can recommend specific exercises to help students reinforce weak areas while allowing them to skip material they already understand. This targeted approach can improve learning efficiency and boost motivation.
 
-Communication between teachers and students has also improved through digital tools. Learning Management Systems (LMS) like Canvas and Google Classroom allow instructors to distribute materials, collect assignments, and provide feedback seamlessly. Video conferencing tools such as Zoom have made remote instruction feasible, especially during the COVID-19 pandemic. In many ways, technology has made the classroom more dynamic and interactive.
-
-However, there are notable challenges that must be addressed. The digital divide remains a critical issue: not all students have equal access to high-speed internet or modern devices. This inequality can exacerbate educational gaps between different socioeconomic groups. Furthermore, excessive screen time and reliance on technology may reduce opportunities for in-person collaboration and social interaction, which are essential for holistic development.
-
-There is also the concern of data privacy. As students engage more with online platforms, large amounts of personal data are collected. Educational institutions and tech companies must take responsibility for protecting this information and ensuring it is not misused.
-
+Communication between teachers and students has also improved through digital tools. Learning Mana62
 In conclusion, technology has transformed modern education by increasing access, enabling personalization, and enhancing communication. However, it is essential to use these tools wisely and equitably. Policymakers, educators, and technologists must work together to ensure that the benefits of educational technology are accessible to all and that the risks are carefully managed. If applied thoughtfully, technology can be a powerful force for positive change in education.
 
