@@ -20,4 +20,3 @@ Next, we trained a Naive Bayes model to predict which cluster a job belongs to. 
 Cluster 3 was okay but a bit lower, maybe because some words are similar to Cluster 0.
 Overall, the model did a good job and showed that different job types really do use different words.
 Finally, we checked which words show up the most in all job descriptions. The top word was “data”, with over 10,000 mentions. That’s much more than the next word, “experience”, which appeared around 6,000 times. Other top words were “business,” “SAP,” and “job.” After the top few, the numbers drop fast.
-This tells us that data and business skills are super common and important in job ads today.
