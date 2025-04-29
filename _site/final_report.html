@@ -10,7 +10,7 @@
 <meta name="author" content="Shangxuan Zhong">
 <meta name="author" content="Qimin Shen">
 <meta name="author" content="Altyn Baigaliyeva">
-<meta name="dcterms.date" content="2025-04-27">
+<meta name="dcterms.date" content="2025-04-29">
 
 <title>NLP Methods – Job Market Analysis 2024</title>
 <style>
@@ -321,7 +321,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 27, 2025</p>
+      <p class="date">April 29, 2025</p>
     </div>
   </div>
   
@@ -341,7 +341,7 @@ div.csl-indent {
 
 <hr>
 <p>title: “Research Introduction” subtitle: “Salary &amp; Compensation Trends” date-modified: today date-format: long</p>
-<p>bibliography: references_intro.bib csl: csl/econometrica.csl format: html: bibliography: references_intro.bib csl: csl/econometrica.csl #nocite: ‘<span class="citation" data-cites="*"></span>’ #show all references theme: cosmo toc: true css: styles.css includes: after-body:_includes/backtotop.html</p>
+<p>bibliography: references.bib csl: csl/econometrica.csl format: html: bibliography: references.bib csl: csl/econometrica.csl #nocite: ‘<span class="citation" data-cites="*"></span>’ #show all references theme: cosmo toc: true css: styles.css includes: after-body:_includes/backtotop.html</p>
 <hr>
 <section id="salary-trends-in-data-science-2024" class="level2">
 <h2 class="anchored" data-anchor-id="salary-trends-in-data-science-2024">Salary trends in data science 2024</h2>
@@ -381,7 +381,7 @@ div.csl-indent {
 </section>
 <section id="load-the-dataset" class="level1">
 <h1>Load the dataset</h1>
-<div id="1269479a" class="cell" data-execution_count="1">
+<div id="f1fb2e28" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -399,12 +399,12 @@ div.csl-indent {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="200px">
+<iframe src="data/data_cleaning/lightcast_job_postings.html" width="100%" height="500px">
 </iframe>
 <section id="update-duration" class="level2">
 <h2 class="anchored" data-anchor-id="update-duration">1. Update Duration</h2>
 <p>Calculates the duration of each job posting by finding the difference between its expiration and posted dates. Converts the POSTED and EXPIRED columns from string to date format. Update DURATION if it is null with the number of days between EXPIRED and POSTED, otherwise, the existing value is kept.</p>
-<div id="470102bc" class="cell" data-execution_count="2">
+<div id="01bca1cf" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.DURATION = EXPIRED - POSTED</span></span>
@@ -429,7 +429,7 @@ div.csl-indent {
 <section id="clean-the-columns" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-columns">2. Clean the columns</h2>
 <p>Cleans up multiple text columns in the DataFrame by extracting and formatting the content originally enclosed in double quotes. Columns to clean contain those string values often wrapped in brackets, double quotes, or cluttered with newlines and extra spaces. For each of these columns, using regular expressions to remove square brackets, line breaks, and excess whitespace, formats comma-separated items with a proper space after each comma, and removes all double quotes, resulting in cleaner, more readable text entries across the specified columns.</p>
-<div id="590db308" class="cell" data-execution_count="3">
+<div id="88d0f0c0" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove square brackets, line breaks, spaces, and replace the formatting between commas with “,”, then remove the double quotes</span></span>
@@ -453,7 +453,7 @@ div.csl-indent {
 <section id="clean-the-education-level-column" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-education-level-column">3. Clean the education level column</h2>
 <p>Cleans the EDUCATION_LEVELS column by extracting and retaining only the numeric portion of each entry. Removing surrounding text or symbols, leaving just the numeric education level in the column. This makes the data more consistent and easier to work with for analysis or modeling purposes.</p>
-<div id="7e83dc0e" class="cell" data-execution_count="4">
+<div id="dcaac797" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.EDUCATION_LEVELS only keeps digits</span></span>
@@ -468,7 +468,7 @@ div.csl-indent {
 <section id="clean-the-location-column" class="level2">
 <h2 class="anchored" data-anchor-id="clean-the-location-column">4. Clean the location column</h2>
 <p>Cleans the LOCATION column, ensures that all location information appears on one line, and removes curly braces, resulting a cleaner, more uniform LOCATION column for reading and analyzing</p>
-<div id="95ab68dc" class="cell" data-execution_count="5">
+<div id="49117957" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. LOCATION only keeps data</span></span>
@@ -484,7 +484,7 @@ div.csl-indent {
 <section id="update-modeled-duration" class="level2">
 <h2 class="anchored" data-anchor-id="update-modeled-duration">5. Update Modeled Duration</h2>
 <p>Similarly as in updating duration, fills in the value with the number of days between MODELED_EXPIRED and POSTED, helps standardize and complete the duration data for modeled job postings</p>
-<div id="6e66ca78" class="cell" data-execution_count="6">
+<div id="dedd028d" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5.MODELED_DURATION = MODELED_EXPIRED - POSTED</span></span>
@@ -506,7 +506,7 @@ div.csl-indent {
 <section id="standardize-remote-work-types" class="level2">
 <h2 class="anchored" data-anchor-id="standardize-remote-work-types">6. Standardize Remote Work Types</h2>
 <p>Standardizes the values in the REMOTE_TYPE_NAME column to ensure consistency in describing remote work types. Replaces values None and Not Remote with On-Site, changes Hybrid Remote to Hybrid, and keeps Remote as is. Simplify and unify the classification of job postings based on work location</p>
-<div id="c364adad" class="cell" data-execution_count="7">
+<div id="20477739" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Standardize Remote Work Types</span></span>
@@ -532,7 +532,7 @@ div.csl-indent {
 </section>
 <section id="save-the-cleaned-data" class="level2">
 <h2 class="anchored" data-anchor-id="save-the-cleaned-data">9. Save the cleaned data</h2>
-<div id="22e6faf4" class="cell" data-execution_count="8">
+<div id="a36e4e98" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save data</span></span>
@@ -555,14 +555,14 @@ div.csl-indent {
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>shutil.rmtree(generated_file_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="200px">
+<iframe src="data/data_cleaning/lightcast_cleaned.html" width="100%" height="500px">
 </iframe>
 <hr>
 <p>title: “Exploratory Data Analysis” date-modified: today date-format: long</p>
-<p>#bibliography: references_analysis.bib csl: csl/econometrica.csl #nocite: ‘<span class="citation" data-cites="*"></span>’ #show all references format: html: toc: true number-sections: false df-print: paged code-fold: true theme: - cosmo - brand css: styles.css include-after-body: _includes/footer.html</p>
+<p>bibliography: references.bib csl: csl/econometrica.csl #nocite: ‘<span class="citation" data-cites="*"></span>’ #show all references format: html: bibliography: references.bib csl: csl/econometrica.csl toc: true number-sections: false df-print: paged code-fold: true theme: - cosmo - brand css: styles.css include-after-body: _includes/footer.html</p>
 <p>execute: eval: false #false 不运行 true 运行 echo: true #显示代码</p>
 <hr>
-<div id="a285d4b3" class="cell" data-execution_count="9">
+<div id="be241cc0" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -587,7 +587,7 @@ div.csl-indent {
 <h1>Exploratory Data Analysis (EDA)</h1>
 <section id="comparison-of-salary-between-remote-and-on-site-work-box-chart" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-salary-between-remote-and-on-site-work-box-chart">1. Comparison of salary between remote and on-site work (box chart)</h2>
-<div id="2da997cc" class="cell" data-execution_count="10">
+<div id="7fdf16b7" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -603,7 +603,7 @@ div.csl-indent {
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>df_pandas <span class="op">=</span> pd.DataFrame(data_list, columns<span class="op">=</span>[<span class="st">"REMOTE_TYPE_NAME"</span>, <span class="st">"SALARY"</span>])</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(df_pandas, x<span class="op">=</span><span class="st">"REMOTE_TYPE_NAME"</span>, y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Salary Comparison: Remote vs. On-Site Jobs"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">"Salary Comparison: Remote Jobs vs. On-Site Jobs vs. Hybrid Jobs"</span>,</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>             category_orders<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: [<span class="st">"On-Site"</span>, <span class="st">"Hybrid"</span>, <span class="st">"Remote"</span>]},</span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>             labels<span class="op">=</span>{<span class="st">"REMOTE_TYPE_NAME"</span>: <span class="st">"Job Type"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary ($)"</span>})</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
@@ -614,11 +614,11 @@ div.csl-indent {
 </div>
 <iframe src="images/REMOTE_TYPE_NAME&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This box plot titled “Salary Comparison: Remote vs.&nbsp;On-Site Jobs” shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases.</p>
+<p>This box plot titled “Salary Comparison: Remote vs.&nbsp;On-Site Jobs” shows the salary distribution across three job types: On-Site, Hybrid, and Remote. Overall, the median salaries are relatively similar, with Remote roles showing a slightly higher median than the others. On-Site positions have the widest salary range and the highest number of extreme outliers, indicating greater variability in pay. Hybrid roles display a more compact distribution, while Remote jobs also include several high-salary outliers, suggesting they can be competitively compensated. This suggests that Remote and Hybrid positions are not at a financial disadvantage and may even offer slightly better pay in some cases <span class="citation" data-cites="varvello2023does">(<a href="#ref-varvello2023does" role="doc-biblioref">Varvello, Camusso, and Navarro (2023)</a>)</span>.</p>
 </section>
 <section id="salary-by-region-map" class="level2">
 <h2 class="anchored" data-anchor-id="salary-by-region-map">2. Salary by region (map)</h2>
-<div id="ef720945" class="cell" data-execution_count="11">
+<div id="89537115" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STATE_NAME change to .abbr</span></span>
@@ -660,11 +660,11 @@ div.csl-indent {
 </div>
 <iframe src="images/STATE_NAME_SALARY.html" width="100%" height="600">
 </iframe>
-<p>The map titled “Average Salary by State” shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country.</p>
+<p>The map titled “Average Salary by State” shows clear differences in average salaries across the U.S., with brighter colors indicating higher salaries. States like California, Washington, and Colorado stand out with higher average salaries, likely due to strong tech industries and higher living costs. In contrast, southern states such as Mississippi and Alabama appear in darker shades, reflecting lower average pay. Northeastern states like New Jersey and Massachusetts also show relatively high salaries, which aligns with their concentration of finance, healthcare, and education sectors. Overall, the map provides a clear and human-readable visualization of how location influences earning potential across the country <span class="citation" data-cites="khan2024exploring">(<a href="#ref-khan2024exploring" role="doc-biblioref">Khan et al. (2024)</a>)</span>.</p>
 </section>
 <section id="the-highest-paying-job" class="level2">
 <h2 class="anchored" data-anchor-id="the-highest-paying-job">3. The highest paying job</h2>
-<div id="e4bbf4e8" class="cell" data-execution_count="12">
+<div id="16a356af" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collecting data with .collect()</span></span>
@@ -688,11 +688,11 @@ div.csl-indent {
 </div>
 <iframe src="images/LIGHTCAST_SECTORS_NAME&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This bar chart titled “Top 10 Industries with Highest Salaries” highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as “GreenJobs:Enabled, Cybersecurity” or “Cybersecurity, DataPrivacy/Protection”. These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives.</p>
+<p>This bar chart titled “Top 10 Industries with Highest Salaries” highlights the most lucrative sectors based on average salary. The top-paying industries are heavily concentrated in Cybersecurity, Artificial Intelligence, Data Privacy/Protection, and Green Jobs, often appearing in overlapping combinations such as “GreenJobs:Enabled, Cybersecurity” or “Cybersecurity, DataPrivacy/Protection”. These sectors consistently show average salaries above $140,000, with some nearing $155,000. The dominance of tech-driven and security-related fields in the top ranks reflects the high demand for specialized talent in emerging technologies and the growing importance of data protection and sustainability initiatives <span class="citation" data-cites="pouliakas2025artificial">(<a href="#ref-pouliakas2025artificial" role="doc-biblioref">Pouliakas, Santangelo, and Dupire (2025)</a>)</span>.</p>
 </section>
 <section id="salary-comparison-between-ai-and-non-ai-positions" class="level2">
 <h2 class="anchored" data-anchor-id="salary-comparison-between-ai-and-non-ai-positions">4. Salary comparison between AI and non-AI positions</h2>
-<div id="e9730c9c" class="cell" data-execution_count="13">
+<div id="6e9a3099" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -736,8 +736,8 @@ div.csl-indent {
 </div>
 <iframe src="images/AI_RELATED&amp;SALARY.html" width="100%" height="600">
 </iframe>
-<p>This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories.</p>
-<div id="365e32f7" class="cell" data-execution_count="14">
+<p>This boxplot reveals that AI-related industries generally offer higher median salaries compared to non-AI sectors. The interquartile range for AI-related positions is positioned higher on the salary scale and appears slightly wider, suggesting greater variability in mid-range compensation. While non-AI fields show more extreme outliers at the upper end (several blue dots above $400k), AI-related roles display a higher concentration of salaries within the $100k-$200k range, with fewer but still notable outliers. The minimum salary for AI-related positions also appears higher than for non-AI jobs, indicating better entry-level compensation. This visualization confirms the financial premium typically associated with AI expertise, though exceptional compensation exists in both categories <span class="citation" data-cites="Engberg2023Artificial">(<a href="#ref-Engberg2023Artificial" role="doc-biblioref">Engberg et al. (2023)</a>)</span>.</p>
+<div id="a9ee50fb" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -763,7 +763,7 @@ div.csl-indent {
 <section id="build-model-and-compute-sse" class="level2">
 <h2 class="anchored" data-anchor-id="build-model-and-compute-sse">Build model and compute SSE</h2>
 <p>Here we run a clustering analysis on our cleaned dataset to explore how different job roles might naturally group together based on salary, employment type, and a few categorical factors like job duration, education level, remote options, and state. First, we convert the numeric fields to the right type, and encode the categorical ones so the model can understand them. Then we bring everything together into a single feature set, standardize it to keep things fair across scales, and try out different numbers of clusters using K-Means. For each value of k, we fit the model and record the SSE, which gives us a sense of how tight the clusters are. Finally, we plot those values to create an Elbow chart, which helps us visually decide the most reasonable number of clusters to use moving forward.</p>
-<div id="5c0f4c9c" class="cell" data-execution_count="15">
+<div id="d003f179" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.clustering <span class="im">import</span> KMeans</span>
@@ -837,7 +837,7 @@ div.csl-indent {
 <section id="cluster-validation" class="level2">
 <h2 class="anchored" data-anchor-id="cluster-validation">Cluster validation</h2>
 <p>We go on capturing the cluster each data point falls into. We focus on comparing the resulting clusters with the actual employment type to see how well our unsupervised model aligns with that real-world label. We encode the employment types into numeric labels using LabelEncoder, and then use two metrics, Normalized Mutual Information (NMI) and Adjusted Rand Index (ARI), to quantify the similarity between our clusters and the actual labels. These scores give us a sense of whether the model found meaningful groupings or just jumbled everything together, while a higher score means better alignment. So this helps us validate how useful the clustering might actually be.</p>
-<div id="ba0bc391" class="cell" data-execution_count="16">
+<div id="f9a5bbde" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
@@ -876,7 +876,7 @@ div.csl-indent {
 <section id="comparing-and-show-results" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-and-show-results">Comparing and show results</h2>
 <p>After clustering, we wanted to get a clearer, more intuitive sense of what the clusters actually look like. So we built a bunch of scatter plots to visually explore the patterns. We pull each key variables, job duration, education level, employment type, remote status, and state, then compare them against salary while highlighting different clusters one at a time. For categorical variables, we do a bit of behind-the-scenes magic to convert them into numbers for plotting, and we use a jitter function to keep overlapping points from stacking on top of each other. Each row in the grid of plots represents a variable, and each column highlights a different cluster, making it easier to spot what sets one group apart from the others. This helps us interpret the clusters more meaningfully—like whether one cluster tends to include higher salaries or is dominated by remote jobs.</p>
-<div id="ccbb3cda" class="cell" data-execution_count="17">
+<div id="fcd02536" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -956,7 +956,7 @@ div.csl-indent {
 <p>We generate individual plots for each variable we’re analyzing, one plot per variable, showing how salary relates to that variable across the different clusters. For each variable like duration, education, or remote type, we highlight each cluster one at a time (so 3 plots per variable), which really helps us zoom in and understand what makes each cluster unique in relation to salary. And we save all these charts in the image folder.</p>
 <section id="k-means-of-duration" class="level3">
 <h3 class="anchored" data-anchor-id="k-means-of-duration">K-Means of Duration</h3>
-<div id="c4ed1cbb" class="cell" data-execution_count="18">
+<div id="d2397a61" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -1020,7 +1020,7 @@ div.csl-indent {
 </figure>
 </div>
 <p>These are scatter plots comparing education levels and salary across the three clusters, and we can see distinct patterns in how education relates to compensation within each group.</p>
-<p>In Cluster 0 (top plot), there’s a wide distribution of salaries across all education levels. Master’s degree holders show the highest salary ceiling, with some earning up to $500,000, though most fall between $50,000-$250,000. Associate degree holders surprisingly show strong earnings, often comparable to those with Master’s degrees. Bachelor’s degree holders and high school graduates show somewhat lower median salaries, which challenges traditional assumptions about education returns.</p>
+<p>In Cluster 0 (top plot), there’s a wide distribution of salaries across all education levels. Master’s degree holders show the highest salary ceiling, with some earning up to $500,000, though most fall between $50,000-$250,000. Associate degree holders surprisingly show strong earnings, often comparable to those with Master’s degrees. Bachelor’s degree holders and high school graduates show somewhat lower median salaries, which challenges traditional assumptions about education returns <span class="citation" data-cites="quan2023human">(<a href="#ref-quan2023human" role="doc-biblioref">Quan and Raheem (2023)</a>)</span>.</p>
 <p>Cluster 1 (middle plot) shows a different pattern, with Bachelor’s degree holders and those without formal education labels being particularly prevalent. The salary range is more compressed, typically between $50,000-$200,000, with fewer high outliers. This cluster might represent industries or roles where specific skills matter more than degree level.</p>
 <p>Cluster 2 (bottom plot) shows a striking concentration of Associate degree holders with competitive salaries between $50,000-$250,000, with some reaching close to $300,000. This suggests this cluster represents a segment of the job market where specialized two-year programs are highly valued, possibly in technical or healthcare fields.</p>
 <p>For job seekers, these findings suggest that the value of different education levels varies significantly depending on which job segment you’re targeting. Associate degrees appear particularly valuable in Cluster 2, while advanced degrees show the highest potential in Cluster 0. Rather than pursuing higher education indiscriminately, job seekers might benefit from identifying which cluster aligns with their career goals and then obtaining the education level that shows the strongest returns within that specific segment of the job market.</p>
@@ -1037,7 +1037,7 @@ div.csl-indent {
 <p>In Cluster 0 (top plot), full-time positions clearly dominate with the highest salary potential, including outliers reaching $500,000. Full-time roles show a wide salary range from around $50,000 to $300,000, with much higher median and maximum values than other employment types. Part-time positions (&lt; 32 hours) and part-time/full-time flexible roles show similar salary distributions but with notably lower ceilings, mostly staying below $200,000, though a few outliers exist.</p>
 <p>Cluster 1 (middle plot) is predominantly composed of full-time positions, with fewer data points in the part-time categories. The full-time positions in this cluster show a more compressed salary range, typically between $50,000 and $200,000. There are significantly fewer part-time workers represented in this cluster, suggesting it might represent industries or roles where full-time employment is standard.</p>
 <p>Cluster 2 (bottom plot) again shows a strong concentration of full-time workers, but with a distinctive salary pattern. The full-time positions here show a particularly dense concentration between $50,000 and $200,000, with some reaching near $300,000. There are very few part-time workers in this cluster, and those present show lower salaries than their full-time counterparts.</p>
-<p>For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.</p>
+<p>For job seekers, these findings highlight that full-time employment consistently offers the strongest salary potential across all clusters. The substantial salary gap between full-time and other employment types suggests that transitioning from part-time to full-time work could yield significant financial benefits <span class="citation" data-cites="varvello2023does">(<a href="#ref-varvello2023does" role="doc-biblioref">Varvello, Camusso, and Navarro (2023)</a>)</span>. For those who need flexibility, it appears that part-time/full-time flexible arrangements sometimes offer slightly better compensation than strictly part-time roles.</p>
 </section>
 <section id="k-means-of-remote-types" class="level3">
 <h3 class="anchored" data-anchor-id="k-means-of-remote-types">K-Means of Remote types</h3>
@@ -1064,7 +1064,7 @@ div.csl-indent {
 <p>These scatter plots reveal fascinating geographical salary patterns across all U.S. states for three distinct job market clusters, showing how location influences compensation within different employment segments.</p>
 <p>In Cluster 0 (top plot), we see considerable salary variation across states, with the highest-paying positions ($400,000-$500,000) appearing in high-cost states like California, New York, and Tennessee. States such as Colorado, Illinois, and Texas also show strong salary ranges. Most states display a wide salary distribution, typically ranging from $50,000 to $250,000, with fairly consistent median values across locations. This suggests that top-tier compensation is available in multiple regions, though the highest outliers concentrate in traditional economic centers.</p>
 <p>Cluster 1 (middle plot) shows an interesting concentration of data points in Alabama, suggesting this cluster might represent industries or roles particularly prevalent in that state. Cluster 2 (bottom plot) shows a more scattered distribution across states, with positions typically ranging from $50,000 to $200,000. Certain states like California, Colorado, and South Carolina show stronger representations in this cluster, but with fewer extremely high-paying outliers compared to Cluster 0. The salary distributions appear somewhat more compressed, suggesting these positions may have more standardized compensation structures regardless of location.</p>
-<p>For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.</p>
+<p>For job seekers, these findings suggest that geographical flexibility can significantly impact earning potential, particularly for roles in Cluster 0. While high-cost-of-living states like California and New York show the highest salary ceilings, states like Colorado and Texas also offer competitive compensation in many clusters. Job seekers might strategically target positions in Cluster 0 in states with lower living costs but strong salary potential, potentially maximizing real earnings <span class="citation" data-cites="khan2024exploring">(<a href="#ref-khan2024exploring" role="doc-biblioref">Khan et al. (2024)</a>)</span>. Those constrained to specific regions should research which cluster predominates in their location and target industries and roles aligned with the cluster showing the strongest local compensation profile.</p>
 </section>
 </section>
 </section>
@@ -1073,7 +1073,7 @@ div.csl-indent {
 <section id="build-model" class="level2">
 <h2 class="anchored" data-anchor-id="build-model">Build model</h2>
 <p>We’re building a multivariate linear regression model to predict salary, by preprocessing everything carefully before the modeling step. First, we pick the features we believe are relevant, like job duration, education level, employment type, remote status, and state. Since machine learning models can’t handle raw strings, we convert all the categorical fields into numerical format using indexing and one-hot encoding. Then, we combine everything (including the duration field) into a single feature vector and standardize the scale, so each variable has a fair influence on the model. We split the data into training and testing sets, build a pipeline to keep things clean and reproducible, and train a linear regression model. Finally, we evaluate how well our model performs using R² and RMSE, giving us a solid sense of how much of the salary variance we’re capturing—and how far off we might be on average.</p>
-<div id="4c785705" class="cell" data-execution_count="19">
+<div id="85ba8506" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
@@ -1126,7 +1126,7 @@ div.csl-indent {
 <section id="results-and-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-analysis">Results and analysis</h2>
 <p>With two evaluation metrics: R² (how well the model explains salary variation) and RMSE (average prediction error), we create scatter plot is created with actual salaries on the x-axis and predicted on the y-axis, with a red dashed line representing a perfect prediction. And it helps visually assess model accuracy.</p>
-<div id="ab0b2359" class="cell" data-execution_count="20">
+<div id="e051be1b" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> predictions.select(<span class="st">"SALARY"</span>, <span class="st">"prediction"</span>).toPandas()</span>
@@ -1157,7 +1157,7 @@ div.csl-indent {
 </figure>
 </div>
 <p>This scatter plot compares actual vs.&nbsp;predicted salaries using a linear regression model. The blue dots represent the predictions, while the red dashed line indicates the ideal scenario where predicted salary perfectly matches the actual salary. From the plot, we observe that most predictions are clustered in a narrow range, underestimating high salaries and overestimating lower ones. The model’s R² value of 0.0757 indicates it explains only about 7.6% of the variance in salaries, suggesting limited predictive power. The RMSE of 43053.61 further highlights the large average error in predictions. These insights imply that the model struggles to capture the complexity of salary determination and may benefit from including more relevant features, nonlinear modeling, or feature engineering.</p>
-<div id="19c235d9" class="cell" data-execution_count="21">
+<div id="8085d920" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1181,7 +1181,7 @@ div.csl-indent {
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1">
 <h1>Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="93e6e885" class="cell" data-execution_count="22">
+<div id="1503deb1" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -1204,7 +1204,7 @@ div.csl-indent {
 <p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
 <section id="clustering-tf-idf-features-with-k-means" class="level2">
 <h2 class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means">Clustering TF-IDF features with K-Means</h2>
-<div id="be8b21b9" class="cell" data-execution_count="23">
+<div id="33d5d605" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -1220,7 +1220,7 @@ div.csl-indent {
 </section>
 <section id="generate-word-clouds-for-each-cluster" class="level2">
 <h2 class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster">Generate word clouds for each cluster</h2>
-<div id="593dece8" class="cell" data-execution_count="24">
+<div id="dfb19989" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -1271,7 +1271,7 @@ div.csl-indent {
 <figcaption>Cluster 0 Wordcloud</figcaption>
 </figure>
 </div>
-<p>This word cloud for Cluster 0 highlights a strong focus on job-related themes, with “experience”, “data”, “business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like “time” and “support” also appear prominently, pointing to both the practical and strategic dimensions of employment.</p>
+<p>This word cloud for Cluster 0 highlights a strong focus on job-related themes, with “experience”, “data”, “business”, and “job” standing out the most. It suggests that this cluster centers on professional qualifications, workplace expectations, and the value of skills in data and business environments. Terms related to benefits, insurance, and work-life aspects like “time” and “support” also appear prominently, pointing to both the practical and strategic dimensions of employment <span class="citation" data-cites="quan2023human">(<a href="#ref-quan2023human" role="doc-biblioref">Quan and Raheem (2023)</a>)</span>.</p>
 </section>
 <section id="cluster-1-word-cloud" class="level3">
 <h3 class="anchored" data-anchor-id="cluster-1-word-cloud">Cluster 1 Word Cloud</h3>
@@ -1281,7 +1281,7 @@ div.csl-indent {
 <figcaption>Cluster 1 Wordcloud</figcaption>
 </figure>
 </div>
-<p>This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on “experience”, “oracle”, “cloud”, and “architecture”. It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems. Terms like “solutions”, “technology”, and “business” suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure. The presence of “architect”, “technical”, and “functional”, points to both high-level system design and hands-on implementation know-how.</p>
+<p>This word cloud for Cluster 1 revolves around enterprise technology and cloud-based solutions, with strong emphasis on “experience”, “oracle”, “cloud”, and “architecture”. It reflects a technical and strategic domain where roles focus on designing and implementing enterprise systems <span class="citation" data-cites="khan2024exploring">(<a href="#ref-khan2024exploring" role="doc-biblioref">Khan et al. (2024)</a>)</span>. Terms like “solutions”, “technology”, and “business” suggest a blend of IT expertise and business alignment, especially in environments involving enterprise resource planning (ERP) and cloud infrastructure. The presence of “architect”, “technical”, and “functional”, points to both high-level system design and hands-on implementation know-how.</p>
 </section>
 <section id="cluster-2-word-cloud" class="level3">
 <h3 class="anchored" data-anchor-id="cluster-2-word-cloud">Cluster 2 Word Cloud</h3>
@@ -1291,7 +1291,7 @@ div.csl-indent {
 <figcaption>Cluster 2 Wordcloud</figcaption>
 </figure>
 </div>
-<p>This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with “SAP”, “experience”, “business”, and “consultant” as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions, with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like “HANA”, “integration”, “functional”, and “implementation” points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.</p>
+<p>This word cloud for Cluster 2 reveals a strong focus on IT consulting and enterprise systems, with “SAP”, “experience”, “business”, and “consultant” as dominant terms. It clearly centers on the technical implementation and configuration of SAP solutions <span class="citation" data-cites="khan2024exploring">(<a href="#ref-khan2024exploring" role="doc-biblioref">Khan et al. (2024)</a>)</span>, with consulting firms like Accenture and Deloitte featured prominently. The presence of terms like “HANA”, “integration”, “functional”, and “implementation” points to specialized SAP modules and project work. This cluster represents the professional ecosystem of SAP consultants who bridge technical expertise with business process knowledge.</p>
 </section>
 <section id="cluster-3-word-cloud" class="level3">
 <h3 class="anchored" data-anchor-id="cluster-3-word-cloud">Cluster 3 Word Cloud</h3>
@@ -1301,13 +1301,13 @@ div.csl-indent {
 <figcaption>Cluster 3 Wordcloud</figcaption>
 </figure>
 </div>
-<p>This word cloud for Cluster 3 showcases the data analytics profession, with “data”, “experience”, “analytics”, and “analysis” dominating the visual. It highlights the business intelligence landscape where SQL skills meet management responsibilities. Terms like “quality”, “reporting”, and “tools” point to the practical implementation side, while “business” suggests the crucial connection between technical analysis and organizational value. This cluster represents the growing field of data-driven decision making.</p>
+<p>This word cloud for Cluster 3 showcases the data analytics profession, with “data”, “experience”, “analytics”, and “analysis” dominating the visual. It highlights the business intelligence landscape where SQL skills meet management responsibilities <span class="citation" data-cites="quan2023human">(<a href="#ref-quan2023human" role="doc-biblioref">Quan and Raheem (2023)</a>)</span>. Terms like “quality”, “reporting”, and “tools” point to the practical implementation side, while “business” suggests the crucial connection between technical analysis and organizational value. This cluster represents the growing field of data-driven decision making.</p>
 </section>
 </section>
 </section>
 <section id="distribution-of-the-number-of-jobs-in-each-category" class="level1">
 <h1>Distribution of the number of jobs in each category</h1>
-<div id="79cb21de" class="cell" data-execution_count="25">
+<div id="e9005eef" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -1326,7 +1326,7 @@ div.csl-indent {
 <p>We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models’ accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.</p>
 <section id="training-two-classifiers" class="level2">
 <h2 class="anchored" data-anchor-id="training-two-classifiers">Training two classifiers</h2>
-<div id="7a6b4508" class="cell" data-execution_count="26">
+<div id="ef74133e" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1406,7 +1406,7 @@ div.csl-indent {
 </section>
 <section id="keyword-heat-visualization-according-to-the-term-frequency" class="level1">
 <h1>Keyword heat visualization (according to the term frequency)</h1>
-<div id="d3de2cbc" class="cell" data-execution_count="27">
+<div id="b2571b09" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1443,6 +1443,9 @@ div.csl-indent {
 </div>
 <div id="ref-khan2024exploring" class="csl-entry" role="listitem">
 <span class="smallcaps">Khan, M., G. M. N. Islam, P. K. Ng, A. A. Zainuddin, C. P. Lean, J. Al-Fattah, A. B. Basri, and S. I. Kamarudin</span>. (2024): <span>“Exploring Salary Trends in Data Science, Artificial Intelligence, and Machine Learning: A Comprehensive Analysis,”</span> <em>AIP conference proceedings</em>,. 1AIP Publishing.
+</div>
+<div id="ref-pouliakas2025artificial" class="csl-entry" role="listitem">
+<span class="smallcaps">Pouliakas, K., G. Santangelo, and P. Dupire</span>. (2025): Are Artificial Intelligence (AI) Skills a Reward or a Gamble? Deconstructing the AI Wage Premium in Europe,Institute of Labor Economics (IZA).
 </div>
 <div id="ref-quan2023human" class="csl-entry" role="listitem">
 <span class="smallcaps">Quan, T. Z., and M. Raheem</span>. (2023): <span>“Human resource analytics on data science employment based on specialized skill sets with salary prediction,”</span> <em>International Journal of Data Science</em>, 4, 40–59.
