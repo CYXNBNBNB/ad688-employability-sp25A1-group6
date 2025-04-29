@@ -251,7 +251,7 @@ div.csl-indent {
 </header>
 
 
-<div id="5078eabc" class="cell" data-execution_count="1">
+<div id="4e90951a" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -273,7 +273,7 @@ div.csl-indent {
 <section id="extracting-key-terms-from-job-descriptions-using-tf-idf" class="level1">
 <h1>Extracting Key Terms from Job Descriptions Using TF-IDF</h1>
 <p>We start by extracting the job description text from the “BODY” column and convert it into a Pandas DataFrame for easier text processing. To clean it up a bit, we remove line breaks so that the text becomes more uniform and easier to analyze. Then, we apply TF-IDF (Term Frequency-Inverse Document Frequency), which helps us identify and quantify the most important words across all descriptions, ignoring common English stop words. This transformation converts the text into a numerical format, capturing how relevant each word is in a particular document compared to the whole collection.</p>
-<div id="a6a840b4" class="cell" data-execution_count="2">
+<div id="488ad5eb" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -296,7 +296,7 @@ div.csl-indent {
 <p>We applied KMeans clustering to the TF-IDF features of job descriptions to group similar postings into four distinct clusters. Each job was assigned a cluster label, which we then used to explore the top terms that defined each group. By extracting the most influential keywords from each cluster’s TF-IDF centroid, we generated word clouds to visualize the dominant language and themes within each cluster. These word clouds help us quickly grasp the unique focus of different groups, whether it’s technical, managerial, or creative roles, based on the language used in job descriptions.</p>
 <section id="clustering-tf-idf-features-with-k-means" class="level2">
 <h2 class="anchored" data-anchor-id="clustering-tf-idf-features-with-k-means">Clustering TF-IDF features with K-Means</h2>
-<div id="37221593" class="cell" data-execution_count="3">
+<div id="3bfa8ca4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
@@ -312,7 +312,7 @@ div.csl-indent {
 </section>
 <section id="generate-word-clouds-for-each-cluster" class="level2">
 <h2 class="anchored" data-anchor-id="generate-word-clouds-for-each-cluster">Generate word clouds for each cluster</h2>
-<div id="31675fc1" class="cell" data-execution_count="4">
+<div id="8551fad8" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> wordcloud <span class="im">import</span> WordCloud</span>
@@ -399,7 +399,7 @@ div.csl-indent {
 </section>
 <section id="distribution-of-the-number-of-jobs-in-each-category" class="level1">
 <h1>Distribution of the number of jobs in each category</h1>
-<div id="1448abfb" class="cell" data-execution_count="5">
+<div id="971e232b" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
@@ -418,7 +418,7 @@ div.csl-indent {
 <p>We trained two different classifiers, Naive Bayes and Support Vector Machine(SVM), to predict job clusters based on TF-IDF features extracted from job descriptions. By splitting the data into training and testing sets, we evaluated the models’ accuracy in classifying unseen samples. The classification reports provided detailed performance metrics, while a confusion matrix visualized how well the SVM model distinguished between the four clusters. This approach helps us assess the feasibility of using machine learning to automatically categorize job posts based on their content.</p>
 <section id="training-two-classifiers" class="level2">
 <h2 class="anchored" data-anchor-id="training-two-classifiers">Training two classifiers</h2>
-<div id="52d1b8f7" class="cell" data-execution_count="6">
+<div id="8bc3611f" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -498,7 +498,7 @@ div.csl-indent {
 </section>
 <section id="keyword-heat-visualization-according-to-the-term-frequency" class="level1">
 <h1>Keyword heat visualization (according to the term frequency)</h1>
-<div id="edbebe23" class="cell" data-execution_count="7">
+<div id="70c95acc" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
