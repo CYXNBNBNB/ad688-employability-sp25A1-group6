@@ -12,10 +12,4 @@ WIn the 21st century, technology has become deeply integrated into nearly every 
 
 One of the most significant advantages of technology in education is accessibility. Students from remote areas or with limited physical mobility can now access high-quality educational resources online. Platforms such as Khan Academy, Coursera, and edX offer free or affordable courses that were once only available to those attending prestigious institutions. This democratization of knowledge has opened new doors for lifelong learning and skill development.
 
-Moreover, technology enables personalized learning experiences. With the help of artificial intelligence, educational software can adapt to a student’s learning pace, strengths, and weaknesses. For example, adaptive learning platforms can recommend specific exercises to help students reinforce weak areas while allowing them to skip material they already understand. This targeted approach can improve learning efficiency and boost motivation.
-
-Communication between teachers and students has also improved through digital tools. Learning Manaores how globalization affects cultural identity, both positively and 
-The Positive Aspects of Globalization for Culture
-Globalization does not inherently destroy cultural identity. In many cases, it allows for the exchange and appreciation of diverse cultures. People now have access to films, music, cuisine, and art from all over the world. For instance, Korean pop music (K-pop), Indian Bollywood films, and Japanese anime have gained popularity far beyond their countries of origin. This global reach has helped cultures gain international recognition and respect, fostering cultural pride and economic growth in creative industries.
-
-Additionally, globalization encourages intercultural dialogue and understanding. Through international tr68
+Moreover, technolog70
